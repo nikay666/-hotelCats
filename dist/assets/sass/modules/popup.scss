@@ -1,0 +1,286 @@
+.popup{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: -100;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: .2s  ease-in-out;
+
+    &.active{
+        z-index: 100;
+    }
+    
+
+    &-substrate{
+        // position: absolute;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        z-index: 100;
+        background-color: rgba($white, .7);
+    }
+    &__close{
+        position: absolute;
+        top:40px;
+        right: 40px;
+        height: 16px;
+        width: 16px;
+        padding: 10px;
+        border: none;
+        background: none;
+        cursor: pointer;
+
+        &-btn{
+            position: absolute;
+            background-color: $black;
+            height: 2px;
+            width: 100%;
+            border-radius: 5px;
+            top: 50%;
+            left: 0;
+            
+            &:first-child{
+                transform: rotate(45deg);
+            }
+            &:last-child{
+                transform: rotate(-45deg);
+            }
+        }
+    }
+    &-wrap{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: space-around;
+        width: 100%;
+        height: 100%;
+    }
+    &-title{
+        font-family: $f_rubik;
+        font-style: normal;
+        font-weight: bold;
+        font-size: 28px;
+        margin-bottom: 40px;
+    }
+    &-text{
+        color: $black;
+        font-family: $f_rubik;
+        font-style: normal;
+        font-size: 16px;
+        margin: 15px 0;
+    }
+    &-input, &-date{
+        border-radius: 50px;
+        border: 1px solid #D7D7D7;
+        padding: 20px 30px;
+
+    }
+    &-input{
+        margin: 10px 0;
+        width: 100%;
+        outline: none;
+
+        &:active, &:focus { outline: none; }
+        &:active, &:focus {
+            box-shadow: 0px 0px 6px 3px $orange;
+        }
+
+        &::placeholder{
+            color: $black;
+            font-family: $f_rubik;
+            font-style: normal;
+            // font-weight: 400;
+            font-size: 16px;
+            line-height: 140%;
+        }
+    }
+    &-date-group{
+        border:  none;
+        margin: 10px 0;
+        label{
+            font-family: $f_rubik;
+            font-style: normal;
+            font-weight: normal;
+            font-size: 15px;
+        }
+    }
+    &-date{
+        color: rgba($black, .7);
+        max-width: 150px;
+        padding: 20px;
+        cursor: pointer;
+        font-family: $f_rubik;
+        font-style: normal;
+        font-weight: normal;
+        font-size: 16px;
+        position: relative;
+        
+        &::-webkit-calendar-picker-indicator{
+            padding: 0;
+            margin: 0 0 0 5px ;
+            color: $orange;
+            background: transparent;
+            z-index: 102;
+        }
+        &::before{
+            content: '📅';
+            position: absolute;
+            right: 16px;
+            z-index: 100;
+
+        }
+        &:active, &:focus { outline: none; }
+        &:active, &:focus {
+            box-shadow: 0px 0px 6px 3px $orange;
+        }
+        &-text{
+            font-family: $f_rubik;
+            font-style: normal;
+            font-weight: normal;
+            font-size: 15px;
+        }
+    }
+
+    &__booking{
+        &-paw{
+            position: absolute;
+            top: -20px;
+            left: -20px;
+            height: 20%;
+            transform: rotate(115deg);
+        } 
+    }
+
+
+    &__message{
+        padding: 70px 70px 40px 70px;
+        .btn__booking{
+            margin-top: 40px;
+        }
+        .popup-title{
+            margin-bottom: 10px;
+        }
+        &-paw{
+            position: absolute;
+            bottom: -20px;
+            left: -20px;
+            height: 50%;
+            transform: rotate(15deg);    
+        }
+    }
+
+
+    &__booking, &__message{
+        position: fixed;
+        top: 50%;
+        left:  50%;
+        transform: translate(-50%, -50%);
+
+        z-index: -101;
+        width: 500px;
+        box-shadow: 0px 0px 25px rgba(153, 153, 153, 0.25);
+        border-radius: 10px;
+        background-color: $white;
+        padding: 70px;
+        overflow: hidden;
+        transition: .2s  ease-in-out;
+
+        visibility: hidden;
+        opacity: 0;
+
+        &.active{
+            visibility: visible;
+            opacity: 1;
+            width: 570px;
+            z-index: 101;
+        }
+    }
+    &__message{
+        transition: .1s  ease-in-out;
+    }
+    &__message{
+        transition: .3s  ease-in-out;
+        &.active{
+            z-index: 104;
+        }
+    }
+    @media (max-width: 768px) {
+        &__booking, &__message{
+            width: 502px;
+            padding: 30px;
+
+     
+        }
+        &-date{
+            max-width: 135px;
+            font-size: 14px;
+            padding: 20px 15px;
+            &::-webkit-calendar-picker-indicator{
+                margin: 0 0 0 3px ;
+            }
+        }
+
+    }
+    @media (max-width: 576px) {
+        &__booking, &__message{
+            width: 90vw;
+        }
+        &-title{
+            font-size: 24px;
+            margin-bottom: 20px;
+            margin-top: 20px;
+        }
+        &__close{
+            top:20px;
+            right: 20px;
+        }
+        &-text{
+            font-size: 15px;
+        }
+        &-input, &-date{
+            padding: 15px 20px ;
+    
+        }
+        &-input{
+            &::placeholder{
+                font-size: 14px;
+
+            }
+        }
+        &-date-text{
+            display: block;
+            width: 100%;
+            margin-bottom: 15px;
+        }
+        &-date{
+            max-width: 115px;
+            padding: 14px;
+
+            &::-webkit-calendar-picker-indicator{
+                margin: 0 ;
+                padding: 0;
+                color: $orange;
+                background: transparent;
+                z-index: 102;
+                position: absolute;
+                top: 0;
+                bottom: 0;
+                left: 0;
+                right: 0;
+                width: 100%;
+                height: 100%;
+            }
+
+            &::before{
+               display: none;
+    
+            }
+        }
+    }
+}

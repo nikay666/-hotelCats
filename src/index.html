@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Loan</title>
+    <link rel="stylesheet" href="./style.css">
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+</head>
+<body>
+    <header class="header">
+        <div class="main__menu-container">
+            <div class="logo">
+                <a href="" class="logo-link">
+                    <img src="./assets/img/logo.png" alt="" class="logo-img">
+                </a>
+            </div>
+            <nav class="main__menu">
+                <ul class="main__menu-wrap">
+                    <li class="main__menu-item">
+                        <a href="http://localhost:4000/catalog.html">Каталог</a>
+                    </li>
+                    <li class="main__menu-item">
+                        <a href="#why">Почему мы?</a>
+                    </li>
+                    <li class="main__menu-item">
+                        <a href="#rooms">Номера</a>
+                    </li>
+                    <li class="main__menu-item">
+                        <a href="#reviews">Отзывы</a>
+                    </li>
+                    <li class="main__menu-item">
+                        <a href="#map">Как нас найти</a>
+                    </li>
+                </ul>
+                <div class="mobile__more">
+                    <div class="mobile__more-item">
+                        <a href="tel:+8(800)333-55-99">8 (800) 333-55-99 </a>
+                    </div>
+                    <div class="mobile__more-item">
+                        <div class="social__links">
+                            <a href="" class="social__links-item">
+                                <img src="./assets/icons/facebook.svg" alt="">
+                            </a>
+                            <a href="" class="social__links-item">
+                                <img src="./assets/icons/instagram.svg" alt="">
+                            </a>
+                            <a href="" class="social__links-item">
+                                <img src="./assets/icons/vk.svg" alt="">
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </nav>
+            <button class="burger__menu" aria-label="Открыть меню">
+                <span class="burger__menu-span"></span>
+                <span class="burger__menu-span"></span>
+                <span class="burger__menu-span"></span>
+            </button>
+        </div>
+    </header>
+    <main>
+        <div class="main__section banner">
+            <div class="banner__content">
+                <p class="banner__content-suptitle">Санкт-Петербург</p>
+                <h1 class="banner__content-title">Котейка</h1>
+                <div class="banner__content-text">Уютная гостиница для котов и кошек</div>
+
+                <button class="btn__booking  toggle-popup" data-purpose="booking">Забронировать
+                   <span class="btn__booking-icon">
+                        <svg class="btn__booking-img svg" width="21" height="18" viewBox="0 0 21 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M16.8031 6.52459C13.8387 8.22475 14.3435 13.1874 17.5591 13.1874C18.9459 13.1874 20.1462 12.1449 20.6806 10.812C21.9148 7.73361 19.3483 5.06439 16.8031 6.52459Z" fill="#FFFEFD"/>
+                            <path d="M13.7585 7.13911C17.3153 7.13911 18.3803 1.0992 15.0011 0.106215C13.4616 -0.346048 11.7109 0.739136 11.1486 2.72287C10.5177 4.94631 11.7589 7.13911 13.7585 7.13911Z" fill="#FFFEFD"/>
+                            <path d="M12.8437 17.8903C12.3498 17.7537 11.4731 17.6658 10.5555 17.6531C9.58551 17.6389 8.56997 17.7084 7.9129 17.8903C6.13824 18.3847 3.72348 17.1886 4.25331 14.7045C4.74338 12.408 6.50422 12.5389 6.92062 10.3625C7.34017 8.16298 8.97061 7.10147 10.5555 7.18444C12.0223 7.26144 13.4499 8.31922 13.8389 10.363C14.2529 12.5409 16.0101 12.4088 16.4994 14.7045C17.0312 17.1906 14.6114 18.3802 12.8437 17.8903Z" fill="#FFFEFD"/>
+                            <path d="M7.49859 7.13932C8.50467 7.13932 9.36873 6.55499 9.84887 5.66068C11.2762 3.00141 8.93197 -0.680001 6.25571 0.10841C2.87074 1.10414 3.94372 7.13932 7.49859 7.13932Z" fill="#FFFEFD"/>
+                            <path d="M5.89091 11.2099C7.03297 8.41561 4.32591 5.00232 1.74052 6.07629C-1.37374 7.36979 -0.000207816 12.9487 3.42404 12.9487C4.52296 12.9487 5.45682 12.2722 5.89091 11.2099Z" fill="#FFFEFD"/>
+                            <path d="M12.8437 17.8902C12.3497 17.7537 11.473 17.6657 10.5554 17.653V7.1844C12.0223 7.2614 13.4498 8.31917 13.8388 10.363C14.2528 12.5408 16.01 12.4087 16.4994 14.7045C17.0311 17.1905 14.6113 18.3801 12.8437 17.8902Z" fill="#FFFEFD"/>
+                        </svg>
+                   </span>
+                </button>
+                <picture>
+                    <source class="banner__content-decoration" srcset="./assets/img/main-img-dec.svg" media="(min-width: 769px)">
+                    <img class="banner__content-decoration" src="./assets/img/main-img-decoration-mobile.svg" alt="Кот">
+                </picture>
+                <picture>
+                    <source class="banner__content-img" srcset="./assets/img/main-img.png" media="(min-width: 769px)">
+                    <img class="banner__content-img" src="./assets/img/main-img-mobile.png" alt="Кот">
+                </picture>
+            </div>
+        </div>
+        <!-- screen why -->
+        <div class="screen__container" id="why">
+            <div class="screen__container-wrap">
+                <h2 class="like-h2">Почему мы?</h2>
+                <div class="screen__container-content cards__why">
+                    <div class="card__why">
+                        <div class="card__why-img">
+                            <img src="./assets/icons/icon-temp.svg" alt="">
+                        </div>
+                        <p class="card__why-title">Комфортная температура</p>
+                        <p class="card__why-text">Во всех номерах поддерживается комфортная температура в пределах
+                            23 - 25 градусов. В каждом номере можно дополнительно отрегулировать температуру. </p>
+                    </div>
+                    <div class="card__why">
+                        <div class="card__why-img">
+                            <img src="./assets/icons/icon-view.svg" alt="">
+                        </div>
+                        <p class="card__why-title">Видеонаблюдение</p>
+                        <p class="card__why-text">Мы предоставляем доступ в нашу систему. Вы сможете следить
+                            за своим питомцем со своего смартфона или компьютера.</p>
+                    </div>
+                    <div class="card__why">
+                        <div class="card__why-img">
+                            <img src="./assets/icons/icon-car.svg" alt="">
+                        </div>
+                        <p class="card__why-title">Услуги Зоотакси</p>
+                        <p class="card__why-text">Мы приедем за вашим питомцем в любой район Санкт-Петербурга.</p>
+                    </div>
+                    <div class="card__why">
+                        <div class="card__why-img">
+                            <img src="./assets/icons/icon-bowl.svg" alt="">
+                        </div>
+                        <p class="card__why-title">Сбалансированное питание</p>
+                        <p class="card__why-text">Вы можете привезти свой корм
+                            или доверить рацион своего
+                            питомца нашим профессионалам.</p>
+                    </div>
+                    <div class="card__why">
+                        <div class="card__why-img">
+                            <img src="./assets/icons/icon-cat.svg" alt="">
+                        </div>
+                        <p class="card__why-title">Ежедневные прогулки</p>
+                        <p class="card__why-text">По вашему желанию мы выгуливаем вашего питомца два раза в день
+                            на специализированной закрытой территории.</p>
+                    </div>
+                    <div class="card__why">
+                        <div class="card__why-img">
+                            <img src="./assets/icons/icon-foot.svg" alt="">
+                        </div>
+                        <p class="card__why-title">Лучшие ветеринары</p>
+                        <p class="card__why-text">В гостинице 24 часа дежурит ветеринарный врач, который окажет любую помощь в случае необходимости.</p>
+                    </div>
+                </div>
+            </div>
+
+            <img src="./assets/img/paw.svg" alt="" class="absolute_decor why_dec">
+        </div>
+
+        <!-- screen hotel room -->
+        <div class="screen__container" id="rooms">
+            <div class="screen__container-wrap">
+                <h2 class="like-h2">Номера</h2>
+                <div class="screen__container-content slider slider__rooms">
+
+
+                <div class="wrap-medias">
+                    <div class="slider__rooms-medias">
+                        <div class="slider__rooms-img">
+                            <img src="./assets/img/number-gal-0.png" alt="">
+                        </div>
+                        <div class="slider__rooms-desc">
+                            <p class="slider__rooms-title">Эконом плюс</p>
+                            <ul class="slider__rooms-list">
+                                <li>Площадь - 0,90 м2</li>
+                                <li>Размеры (ШхГхВ) — 90х100х180см</li>
+                                <li>Цена за сутки: 200₽</li>
+                            </ul>
+                            <button class="btn__booking btn__booking-dark  toggle-popup" data-purpose="booking">Забронировать
+                                <span class="btn__booking-icon">
+                                    <svg class="btn__booking-img svg" width="21" height="18" viewBox="0 0 21 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M16.8031 6.52459C13.8387 8.22475 14.3435 13.1874 17.5591 13.1874C18.9459 13.1874 20.1462 12.1449 20.6806 10.812C21.9148 7.73361 19.3483 5.06439 16.8031 6.52459Z" fill="#FFFEFD"/>
+                                        <path d="M13.7585 7.13911C17.3153 7.13911 18.3803 1.0992 15.0011 0.106215C13.4616 -0.346048 11.7109 0.739136 11.1486 2.72287C10.5177 4.94631 11.7589 7.13911 13.7585 7.13911Z" fill="#FFFEFD"/>
+                                        <path d="M12.8437 17.8903C12.3498 17.7537 11.4731 17.6658 10.5555 17.6531C9.58551 17.6389 8.56997 17.7084 7.9129 17.8903C6.13824 18.3847 3.72348 17.1886 4.25331 14.7045C4.74338 12.408 6.50422 12.5389 6.92062 10.3625C7.34017 8.16298 8.97061 7.10147 10.5555 7.18444C12.0223 7.26144 13.4499 8.31922 13.8389 10.363C14.2529 12.5409 16.0101 12.4088 16.4994 14.7045C17.0312 17.1906 14.6114 18.3802 12.8437 17.8903Z" fill="#FFFEFD"/>
+                                        <path d="M7.49859 7.13932C8.50467 7.13932 9.36873 6.55499 9.84887 5.66068C11.2762 3.00141 8.93197 -0.680001 6.25571 0.10841C2.87074 1.10414 3.94372 7.13932 7.49859 7.13932Z" fill="#FFFEFD"/>
+                                        <path d="M5.89091 11.2099C7.03297 8.41561 4.32591 5.00232 1.74052 6.07629C-1.37374 7.36979 -0.000207816 12.9487 3.42404 12.9487C4.52296 12.9487 5.45682 12.2722 5.89091 11.2099Z" fill="#FFFEFD"/>
+                                        <path d="M12.8437 17.8902C12.3497 17.7537 11.473 17.6657 10.5554 17.653V7.1844C12.0223 7.2614 13.4498 8.31917 13.8388 10.363C14.2528 12.5408 16.01 12.4087 16.4994 14.7045C17.0311 17.1905 14.6113 18.3801 12.8437 17.8902Z" fill="#FFFEFD"/>
+                                    </svg>
+                                </span>
+                            </button>
+                        </div>
+                    </div>
+
+
+                    <div class="slider__rooms-medias">
+                        <div class="slider__rooms-img">
+                            <img src="./assets/img/number-gal-0.png" alt="">
+                        </div>
+                        <div class="slider__rooms-desc">
+                            <p class="slider__rooms-title">Эконом плюс</p>
+                            <ul class="slider__rooms-list">
+                                <li>Площадь - 0,90 м2</li>
+                                <li>Размеры (ШхГхВ) — 90х100х180см</li>
+                                <li>Цена за сутки: 200₽</li>
+                            </ul>
+                            <button class="btn__booking btn__booking-dark  toggle-popup" data-purpose="booking">Забронировать
+                                <span class="btn__booking-icon">
+                                    <svg class="btn__booking-img svg" width="21" height="18" viewBox="0 0 21 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M16.8031 6.52459C13.8387 8.22475 14.3435 13.1874 17.5591 13.1874C18.9459 13.1874 20.1462 12.1449 20.6806 10.812C21.9148 7.73361 19.3483 5.06439 16.8031 6.52459Z" fill="#FFFEFD"/>
+                                        <path d="M13.7585 7.13911C17.3153 7.13911 18.3803 1.0992 15.0011 0.106215C13.4616 -0.346048 11.7109 0.739136 11.1486 2.72287C10.5177 4.94631 11.7589 7.13911 13.7585 7.13911Z" fill="#FFFEFD"/>
+                                        <path d="M12.8437 17.8903C12.3498 17.7537 11.4731 17.6658 10.5555 17.6531C9.58551 17.6389 8.56997 17.7084 7.9129 17.8903C6.13824 18.3847 3.72348 17.1886 4.25331 14.7045C4.74338 12.408 6.50422 12.5389 6.92062 10.3625C7.34017 8.16298 8.97061 7.10147 10.5555 7.18444C12.0223 7.26144 13.4499 8.31922 13.8389 10.363C14.2529 12.5409 16.0101 12.4088 16.4994 14.7045C17.0312 17.1906 14.6114 18.3802 12.8437 17.8903Z" fill="#FFFEFD"/>
+                                        <path d="M7.49859 7.13932C8.50467 7.13932 9.36873 6.55499 9.84887 5.66068C11.2762 3.00141 8.93197 -0.680001 6.25571 0.10841C2.87074 1.10414 3.94372 7.13932 7.49859 7.13932Z" fill="#FFFEFD"/>
+                                        <path d="M5.89091 11.2099C7.03297 8.41561 4.32591 5.00232 1.74052 6.07629C-1.37374 7.36979 -0.000207816 12.9487 3.42404 12.9487C4.52296 12.9487 5.45682 12.2722 5.89091 11.2099Z" fill="#FFFEFD"/>
+                                        <path d="M12.8437 17.8902C12.3497 17.7537 11.473 17.6657 10.5554 17.653V7.1844C12.0223 7.2614 13.4498 8.31917 13.8388 10.363C14.2528 12.5408 16.01 12.4087 16.4994 14.7045C17.0311 17.1905 14.6113 18.3801 12.8437 17.8902Z" fill="#FFFEFD"/>
+                                    </svg>
+                                </span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="slider__rooms-medias">
+                        <div class="slider__rooms-img">
+                            <img src="./assets/img/number-gal-0.png" alt="">
+                        </div>
+                        <div class="slider__rooms-desc">
+                            <p class="slider__rooms-title">Эконом плюс</p>
+                            <ul class="slider__rooms-list">
+                                <li>Площадь - 0,90 м2</li>
+                                <li>Размеры (ШхГхВ) — 90х100х180см</li>
+                                <li>Цена за сутки: 200₽</li>
+                            </ul>
+                            <button class="btn__booking btn__booking-dark  toggle-popup" data-purpose="booking">Забронировать
+                                <span class="btn__booking-icon">
+                                    <svg class="btn__booking-img svg" width="21" height="18" viewBox="0 0 21 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M16.8031 6.52459C13.8387 8.22475 14.3435 13.1874 17.5591 13.1874C18.9459 13.1874 20.1462 12.1449 20.6806 10.812C21.9148 7.73361 19.3483 5.06439 16.8031 6.52459Z" fill="#FFFEFD"/>
+                                        <path d="M13.7585 7.13911C17.3153 7.13911 18.3803 1.0992 15.0011 0.106215C13.4616 -0.346048 11.7109 0.739136 11.1486 2.72287C10.5177 4.94631 11.7589 7.13911 13.7585 7.13911Z" fill="#FFFEFD"/>
+                                        <path d="M12.8437 17.8903C12.3498 17.7537 11.4731 17.6658 10.5555 17.6531C9.58551 17.6389 8.56997 17.7084 7.9129 17.8903C6.13824 18.3847 3.72348 17.1886 4.25331 14.7045C4.74338 12.408 6.50422 12.5389 6.92062 10.3625C7.34017 8.16298 8.97061 7.10147 10.5555 7.18444C12.0223 7.26144 13.4499 8.31922 13.8389 10.363C14.2529 12.5409 16.0101 12.4088 16.4994 14.7045C17.0312 17.1906 14.6114 18.3802 12.8437 17.8903Z" fill="#FFFEFD"/>
+                                        <path d="M7.49859 7.13932C8.50467 7.13932 9.36873 6.55499 9.84887 5.66068C11.2762 3.00141 8.93197 -0.680001 6.25571 0.10841C2.87074 1.10414 3.94372 7.13932 7.49859 7.13932Z" fill="#FFFEFD"/>
+                                        <path d="M5.89091 11.2099C7.03297 8.41561 4.32591 5.00232 1.74052 6.07629C-1.37374 7.36979 -0.000207816 12.9487 3.42404 12.9487C4.52296 12.9487 5.45682 12.2722 5.89091 11.2099Z" fill="#FFFEFD"/>
+                                        <path d="M12.8437 17.8902C12.3497 17.7537 11.473 17.6657 10.5554 17.653V7.1844C12.0223 7.2614 13.4498 8.31917 13.8388 10.363C14.2528 12.5408 16.01 12.4087 16.4994 14.7045C17.0311 17.1905 14.6113 18.3801 12.8437 17.8902Z" fill="#FFFEFD"/>
+                                    </svg>
+                                </span>
+                            </button>
+                        </div>
+                    </div>
+
+                </div>
+
+                    <div class="slider-nav"  data-slider="rooms">
+                        <div class="slider-dots">
+                            <span class="slider-dot active"></span>
+                            <span class="slider-dot"></span>
+                            <span class="slider-dot"></span>
+                        </div>
+                        <div class="slider-arrows">
+                            <span class="slider-arrow">
+                                <img src="./assets/icons/arrow.svg" alt="" class="arrow-l">
+                            </span>
+                            <span class="slider-arrow">
+                                <img src="./assets/icons/arrow.svg" alt="" class="arrow-r">
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <img src="./assets/img/fish.svg" alt="" class="absolute_decor rooms_dec">
+        </div>
+        <!-- Reviews -->
+        <div class="screen__container" id="reviews">
+            <div class="screen__container-wrap">
+                <h2 class="like-h2">Отзывы</h2>
+                <div class="screen__container-content slider slider__review">
+                    <div class="slider__review-cards">
+
+                        <div class="slider__review-card">
+                            <div class="slider__review-content">
+                                <p class="slider__review-text">
+                                    Первый раз пришлось оставить нашего котика
+                                    в гостинице, очень переживали. Администратор Мария каждый день высылала нам фото нашего питомца, рассказывала, как он себя чувствует.
+                                    И мы и котик остались очень довольны!
+                                </p>
+                                <div class="slider__review-signature">
+                                    <p class="slider__review-name">Валерия Гришаева</p>
+                                    <p class="slider__review-date">15 ноября, 2019</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="slider__review-card">
+                            <div class="slider__review-content">
+                                <p class="slider__review-text">
+                                    Гостиницу для питомцев нам посоветовали друзья. Они всегда оставляют здесь своего кота, когда уезжают. В “Котейке” очень хорошо заботятся о питомцах, в гостинице очень чисто. Всем рекомендую! Будем обращаться еще.
+                                </p>
+                                <div class="slider__review-signature">
+                                    <p class="slider__review-name">Екатерина Минаева</p>
+                                    <p class="slider__review-date">10 октября, 2019</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="slider__review-card">
+                            <div class="slider__review-content">
+                                <p class="slider__review-text">
+                                    Мой кот — настоящая привереда, угодить ему сложно. У меня были особые требования к уходу за ним, и “Котейка” отлично справились. Я часто наблюдал по видео за питомцем со своего телефона, это очень удобно. 
+                                </p>
+                                <div class="slider__review-signature">
+                                    <p class="slider__review-name">Павел Нечаев</p>
+                                    <p class="slider__review-date">4 декабря, 2020</p>
+                                </div>    
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="slider-nav" data-slider="review">
+                        <div class="slider-dots">
+                            <span class="slider-dot active"></span>
+                            <span class="slider-dot"></span>
+                            <span class="slider-dot"></span>
+                        </div>
+                        <div class="slider-arrows">
+                            <span class="slider-arrow">
+                                <img src="./assets/icons/arrow.svg" alt="" class="arrow-l">
+                            </span>
+                            <span class="slider-arrow">
+                                <img src="./assets/icons/arrow.svg" alt="" class="arrow-r">
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <img src="./assets/img/paw.svg" alt="" class="absolute_decor review_dec">
+        </div>
+        <!-- Map  -->
+        <div class="map__container" id="map">
+            <div class="map__container-wrap">
+                <div class="map__container-content">
+                    <h2 class="like-h2">Как нас найти</h2>
+                    <div class="map__container-info">
+                        <p class="map__container-title">Адрес</p>
+                        <p class="map__container-text">Санкт-Петербург,
+                            ул Большая Конюшенная, д 19</p>
+                    </div>
+                    <div class="map__container-info">
+                        <p class="map__container-title">Режим работы</p>
+                        <p class="map__container-text">Ежедневно, с 9:00 до 20:00</p>
+                    </div>
+                    <div class="map__container-info">
+                        <p class="map__container-title">Телефон</p>
+                        <p class="map__container-text">8 (800) 333-55-99</p>
+                    </div>
+                    <div class="map__container-info">
+                        <p class="map__container-title">E-mail</p>
+                        <p class="map__container-text">info@cat-hotel.ru</p>
+                    </div>
+                    <div class="social__links">
+                        <a href="" class="social__links-item">
+                            <img src="./assets/icons/facebook.svg" alt="">
+                        </a>
+                        <a href="" class="social__links-item">
+                            <img src="./assets/icons/instagram.svg" alt="">
+                        </a>
+                        <a href="" class="social__links-item">
+                            <img src="./assets/icons/vk.svg" alt="">
+                        </a>
+                    </div>
+
+                </div>
+                <iframe class="map__container-map" src="https://yandex.ru/map-widget/v1/?um=constructor%3A4e0e9cb75701b0275460a33f73ece143fb998cdcd137810d758e86119effef40&amp;source=constructor"></iframe>
+            </div>
+        </div>
+    </main>
+    <footer class="footer">
+        <!-- <div class="footer__top"> -->
+            <div class="main__menu-container footer__top">
+                <div class="logo">
+                    <a href="" class="logo-link">
+                        <img src="./assets/img/logo.png" alt="" class="logo-img">
+                    </a>
+                </div>
+                <nav class="main__menu">
+                    <ul class="main__menu-wrap">
+                        <li class="main__menu-item">
+                            <a href="#">Почему мы?</a>
+                        </li>
+                        <li class="main__menu-item">
+                            <a href="#">Номера</a>
+                        </li>
+                        <li class="main__menu-item">
+                            <a href="#">Отзывы</a>
+                        </li>
+                        <li class="main__menu-item">
+                            <a href="#">Как нас найти</a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        <!-- </div> -->
+        <div class="footer__bottom">
+            <a href="#" class="footer__bottom-link">&#169; 2019 Все права защищены</a>
+            <a href="#" class="footer__bottom-link made_with_love">Made with <span class="heart">&#9829;</span></a>
+            <a href="#"  class="footer__bottom-link">Политика конфиденциальности</a>
+        </div>
+
+    </footer>
+
+
+    <div class="popup">
+        <div class="popup-substrate"></div>
+
+        <form action="#" class="popup__booking">
+            <button class="popup__close" aria-label="Закрыть"  tabindex="-1">
+                <span class="popup__close-btn"></span>
+                <span class="popup__close-btn"></span>
+            </button>
+            <div class="popup-wrap">
+                <p class="popup-title">Забронировать номер</p>
+                <input type="text" class="popup-input" name="name" placeholder="Ваше имя" required>
+                <input type="text" class="popup-input" name="namePet" placeholder="Имя питомца">
+                <input type="tel" class="popup-input" name="phone" placeholder="Телефон" required>
+                <input type="email" class="popup-input" name="email" placeholder="E-mail" required>
+                <fieldset class="popup-date-group">
+                    <span class="popup-date-text">Дата заезда</span>
+                    <label for="from">с</label>
+                    <input type="date" class="popup-date" name="from">
+                    <label for="to">по</label>
+                    <input type="date" class="popup-date" name="to">
+                </fieldset>
+                <button type="submit" class="popups-submit btn__booking-dark btn__booking" >Отпрвить заявку
+                    <span class="btn__booking-icon">
+                        <svg class="btn__booking-img svg" width="21" height="18" viewBox="0 0 21 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M16.8031 6.52459C13.8387 8.22475 14.3435 13.1874 17.5591 13.1874C18.9459 13.1874 20.1462 12.1449 20.6806 10.812C21.9148 7.73361 19.3483 5.06439 16.8031 6.52459Z" fill="#FFFEFD"/>
+                            <path d="M13.7585 7.13911C17.3153 7.13911 18.3803 1.0992 15.0011 0.106215C13.4616 -0.346048 11.7109 0.739136 11.1486 2.72287C10.5177 4.94631 11.7589 7.13911 13.7585 7.13911Z" fill="#FFFEFD"/>
+                            <path d="M12.8437 17.8903C12.3498 17.7537 11.4731 17.6658 10.5555 17.6531C9.58551 17.6389 8.56997 17.7084 7.9129 17.8903C6.13824 18.3847 3.72348 17.1886 4.25331 14.7045C4.74338 12.408 6.50422 12.5389 6.92062 10.3625C7.34017 8.16298 8.97061 7.10147 10.5555 7.18444C12.0223 7.26144 13.4499 8.31922 13.8389 10.363C14.2529 12.5409 16.0101 12.4088 16.4994 14.7045C17.0312 17.1906 14.6114 18.3802 12.8437 17.8903Z" fill="#FFFEFD"/>
+                            <path d="M7.49859 7.13932C8.50467 7.13932 9.36873 6.55499 9.84887 5.66068C11.2762 3.00141 8.93197 -0.680001 6.25571 0.10841C2.87074 1.10414 3.94372 7.13932 7.49859 7.13932Z" fill="#FFFEFD"/>
+                            <path d="M5.89091 11.2099C7.03297 8.41561 4.32591 5.00232 1.74052 6.07629C-1.37374 7.36979 -0.000207816 12.9487 3.42404 12.9487C4.52296 12.9487 5.45682 12.2722 5.89091 11.2099Z" fill="#FFFEFD"/>
+                            <path d="M12.8437 17.8902C12.3497 17.7537 11.473 17.6657 10.5554 17.653V7.1844C12.0223 7.2614 13.4498 8.31917 13.8388 10.363C14.2528 12.5408 16.01 12.4087 16.4994 14.7045C17.0311 17.1905 14.6113 18.3801 12.8437 17.8902Z" fill="#FFFEFD"/>
+                        </svg>
+                    </span>
+                </button>
+            </div>
+            <img src="./assets/img/paw.svg" alt="" class="popup__booking-paw">
+        </form>
+
+        <div class="popup__message">
+            <button class="popup__close" aria-label="Закрыть"  tabindex="-1">
+                <span class="popup__close-btn"></span>
+                <span class="popup__close-btn"></span>
+            </button>
+            <div class="popup-wrap">
+                <p class="popup-title">Спасибо за заявку!</p>
+                <p class="popup-text">Мы свяжемся с вами в ближайшее время</p>
+        
+                <button class="btn__booking-dark btn__booking btn_ok" >Ок
+                    <span class="btn__booking-icon">
+                        <svg class="btn__booking-img svg" width="21" height="18" viewBox="0 0 21 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M16.8031 6.52459C13.8387 8.22475 14.3435 13.1874 17.5591 13.1874C18.9459 13.1874 20.1462 12.1449 20.6806 10.812C21.9148 7.73361 19.3483 5.06439 16.8031 6.52459Z" fill="#FFFEFD"/>
+                            <path d="M13.7585 7.13911C17.3153 7.13911 18.3803 1.0992 15.0011 0.106215C13.4616 -0.346048 11.7109 0.739136 11.1486 2.72287C10.5177 4.94631 11.7589 7.13911 13.7585 7.13911Z" fill="#FFFEFD"/>
+                            <path d="M12.8437 17.8903C12.3498 17.7537 11.4731 17.6658 10.5555 17.6531C9.58551 17.6389 8.56997 17.7084 7.9129 17.8903C6.13824 18.3847 3.72348 17.1886 4.25331 14.7045C4.74338 12.408 6.50422 12.5389 6.92062 10.3625C7.34017 8.16298 8.97061 7.10147 10.5555 7.18444C12.0223 7.26144 13.4499 8.31922 13.8389 10.363C14.2529 12.5409 16.0101 12.4088 16.4994 14.7045C17.0312 17.1906 14.6114 18.3802 12.8437 17.8903Z" fill="#FFFEFD"/>
+                            <path d="M7.49859 7.13932C8.50467 7.13932 9.36873 6.55499 9.84887 5.66068C11.2762 3.00141 8.93197 -0.680001 6.25571 0.10841C2.87074 1.10414 3.94372 7.13932 7.49859 7.13932Z" fill="#FFFEFD"/>
+                            <path d="M5.89091 11.2099C7.03297 8.41561 4.32591 5.00232 1.74052 6.07629C-1.37374 7.36979 -0.000207816 12.9487 3.42404 12.9487C4.52296 12.9487 5.45682 12.2722 5.89091 11.2099Z" fill="#FFFEFD"/>
+                            <path d="M12.8437 17.8902C12.3497 17.7537 11.473 17.6657 10.5554 17.653V7.1844C12.0223 7.2614 13.4498 8.31917 13.8388 10.363C14.2528 12.5408 16.01 12.4087 16.4994 14.7045C17.0311 17.1905 14.6113 18.3801 12.8437 17.8902Z" fill="#FFFEFD"/>
+                        </svg>
+                    </span>
+                </button>
+                <img src="./assets/img/paw.svg" alt="" class="popup__message-paw">
+            </div>
+        </div>
+    </div>
+<script src="script.js"></script>
+</body>
+</html>

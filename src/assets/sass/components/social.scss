@@ -1,0 +1,12 @@
+.social__links{
+    display: flex;
+
+    &-item{
+        display: block;
+        cursor: pointer;
+        margin-right: 15px;
+        img{
+            width: 100%;
+        }
+    }
+}

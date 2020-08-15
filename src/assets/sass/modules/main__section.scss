@@ -1,0 +1,55 @@
+.main__section{
+    width: 100%;
+    min-height: 504px;
+
+    @media (max-width: 768px) {
+        min-height: 90vh;
+    }
+    @media (max-width: 576px) {
+        min-height: 70vh;
+    }
+
+    &.banner{
+        border-radius: none;
+        overflow: visible;
+        @media (max-width: 768px) {
+            justify-content: start;
+            
+         
+        }
+    }
+
+
+    & .banner{
+        &__content{
+            // overflow: hidden;    
+            margin: 0 150px;     
+            align-items: center;
+
+            &-title{
+                font-size: 62px;
+                // line-height: 140%;
+            }
+            &-text{
+                font-size: 20px;
+                margin: 15px 0 ;  
+            }
+
+            @media (max-width: 768px) {
+                margin-top: 25%;
+
+                &-title, &-text,  &-suptitle{
+                        text-align: center;
+                }
+                &-title{
+                    font-size: 54px;
+                }
+                &-text{
+                    font-size: 20px;
+                }
+                
+            }
+        }
+    }
+
+}

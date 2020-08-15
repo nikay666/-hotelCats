@@ -1,0 +1,176 @@
+.catalog__filters{
+
+    @media (max-width: 768px) {
+        
+        &.active{
+            position: fixed;
+            width: 60%;
+            height: auto;
+            top:50%;
+            left: 50%;
+            padding: 30px;
+            background: $white;
+            border-radius: 5px;
+            transform: translate(-50%, -50%);
+            box-shadow: 0px 0px 25px rgba(208, 208, 208, 0.45);
+            z-index: 11;
+
+            @media (max-width: 576px) {
+                width: 90%;
+            }
+            
+            & .filter-close{
+                display: block;
+                top: 20px;
+                right: 20px;
+            }
+        }
+    }
+}
+.filter-substrate{
+    display: none;
+    position: fixed;
+    top:0;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    background: $white;
+    z-index: 10;
+}
+@media (max-width: 768px) {
+    .filter-substrate.active{
+        display: block;
+        opacity: .9;
+    }
+}
+
+.filter{
+    &-close{
+        display: none;
+    }
+    &-item{
+        margin-bottom: 35px;
+    }
+    &-title{
+        font-family: $f_rubik;
+        font-style: normal;
+        font-weight: 500;
+        font-size: 16px;
+        margin-bottom: 20px;
+    }
+}
+.group{
+
+    &__fromTo{
+        display: flex;
+        justify-content: space-between;
+        .filter{
+            &__input-text{
+                border: 1px solid #E1E1E1;
+                width: 48%;
+                padding: 5px;
+            }
+        }
+    }
+    &__checklist{
+        &-item{
+            margin: 8px 0;
+
+            .custom-checkbox{
+                position: absolute;
+                z-index: -1;
+                opacity: 0;
+
+                & + label{
+                    display: inline-flex;
+                    align-items: center;
+                    user-select: none;
+                    position: relative;
+                    cursor: pointer;
+
+                    &::before{
+                        content: '';
+                        display: inline-block;
+                        width: 20px;
+                        height: 20px;
+                        border: 1px solid #E1E1E1;
+                        margin-right: 0.5em;
+                    }
+                    &::after{
+                        content: "";
+                        position: absolute;
+                        top:0;
+                        left:0;
+                        width: 20px;
+                        height: 20px;
+                        background-image: url("data:image/svg+xml,%3Csvg width='11' height='8' viewBox='0 0 11 8' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 3.25L4.46154 7L10 1' stroke='%23141312' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+                        background-repeat: no-repeat;
+                        background-size: 100% 100%;
+                        
+                        transition: .1s ease-in-out;
+                        transform: translateY(-10px);
+
+                        opacity: 0;
+                        visibility: hidden;
+                    }
+                }
+                &:checked + label, 
+                &:not(:focus):checked + label
+                {
+                    &::after{
+                        transform: translateY(0);
+                        opacity: 1;
+                        visibility: visible;
+                    }
+                    &::before{
+                        border: 1px solid $yellow;
+                    }
+                }
+                &:focus + label,
+                &:not(:checked):focus+ label{
+                    &::before{
+                        border: 1px solid $yellow;
+                    }
+                }
+
+            }
+            label{
+                font-size: 14px;
+            }
+        }
+    }
+}
+
+.btn__filter{
+    font-family: $f_rubik;
+    font-size: 14px;
+
+    // white-space: nowrap;
+
+    border: 2px solid $yellow;
+    box-sizing: border-box;
+    border-radius: 25px;
+    background-color: $white;
+
+    padding: 10px 15px;
+    cursor: pointer;
+    min-width: 150px;
+    margin: 15px auto;
+
+    &-fill{
+        background-color: $yellow;
+    }
+
+    @media (max-width:900px ) {
+        padding: 8px 12px;
+        min-width: 100%;
+        margin: 5px auto;
+    }
+
+}
+.btn__filters.active{
+    display: none;
+    @media (max-width: 768px) {
+        display: block;
+    }
+}

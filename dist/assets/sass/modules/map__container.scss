@@ -1,0 +1,72 @@
+.map__container{
+    width: 100%;
+    padding-top: 120px;
+
+    &-wrap{
+        display: flex;
+        width: 100%;
+        justify-content: space-between;
+    }
+    &-content{
+        background-color: $yellow;
+        width:40%;
+        padding: 70px 111px 70px 180px;
+        p{
+            font-family: $f_rubik;
+        }
+    }
+    &-map{
+        width:60%;
+    }
+    .like-h2{
+        margin-bottom: 50px;
+        text-align: inherit;
+    }
+    &-info{
+        margin-bottom: 35px;
+    }
+    &-title{
+        font-style: normal;
+        font-weight: bold;
+        font-size: 16px;
+        margin-bottom: 15px;
+    }
+    &-text{
+        font-style: normal;
+        font-weight: normal;
+        font-size: 16px;
+    }
+    @media (max-width: 1200px) {
+        &-content{
+            padding: 70px 100px 70px 100px;
+        } 
+    }
+    @media (max-width: 992px) {
+
+        &-content{
+            padding: 60px 45px 60px 45px;
+        } 
+    }
+    @media (max-width: 768px) {
+        .like-h2{
+            margin-bottom: 40px;
+            font-size: 28px;
+        }
+        &-wrap{
+            flex-direction: column;
+        }
+        &-content{
+          width: 100%;
+          padding: 40px 10% 40px 10%;
+        } 
+        &-map{
+            width:100%;
+            height: 300px;
+        }
+        &-info{
+            margin-bottom: 25px;
+        }
+    }
+
+
+}
