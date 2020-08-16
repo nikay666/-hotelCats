@@ -343,15 +343,37 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-function filterTypes(nodes) {
+function popupFilter(nodes) {
+  Object(_filter_template__WEBPACK_IMPORTED_MODULE_1__["bindBtns"])(nodes);
+}
+
+function filterTypes() {//???
+  //сделать  функцию,которая будет фильтроватьт массив data по атрибутам
+  //если это не массив, то преобразоват
+  //возвращаем отфильтрованный массив и  отрисовываем
+  //возможность на будущее: прелооадер,  пока происходит фильтрация    
+}
+
+function filtersControl(data, nodes) {
   nodes.filterItems.forEach(item => {
     const dataAttr = item.dataset.filter;
-    console.log(dataAttr);
+    filterTypes(dataAttr);
   });
 }
 
-function popupFilter(nodes) {
-  Object(_filter_template__WEBPACK_IMPORTED_MODULE_1__["bindBtns"])(nodes);
+function filterSortInit(nodes) {
+  console.log(nodes.btnControlSort);
+  const items = nodes.btnControlSort.querySelectorAll('li');
+  console.log(items);
+  nodes.btnControlSort.addEventListener('click', e => {
+    const target = e.target;
+
+    if (target.classList.contains('btn__sort-arrow')) {
+      items.forEach((item, i) => {
+        i !== 0 ? item.style.display = 'none' : true;
+      });
+    }
+  });
 }
 
 const filter = async () => {
@@ -359,7 +381,8 @@ const filter = async () => {
   if (nodes === false) return;
   popupFilter(nodes);
   const data = await Object(_catalog__WEBPACK_IMPORTED_MODULE_0__["getJSON"])();
-  filterTypes(nodes);
+  filtersControl(data, nodes);
+  filterSortInit(nodes);
 };
 
 /* harmony default export */ __webpack_exports__["default"] = (filter);

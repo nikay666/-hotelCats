@@ -11,7 +11,6 @@ export const initialFilter = () =>{
     const filterAside = document.querySelector('.catalog__filters');
     const filterItems  = document.querySelectorAll('.filter-item');
     const substrate  = document.querySelector('.filter-substrate');
-
     return {
         wrapControlBtns:  wrapFiltertns,
         btnMobileFilters: btnFilters,
