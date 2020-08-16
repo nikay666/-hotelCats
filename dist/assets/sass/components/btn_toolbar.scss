@@ -38,12 +38,15 @@
     width: max-content;
     padding: 12px;
 
+    transition: .2s ease-in-out;
+
     &-arrow{
         position: absolute;
         right: 5%;
         top: 50%;
         transform: translateY(-50%);
         transition: .2s ease-in-out;
+        user-select: none;
     }
 
     &.active{
@@ -53,14 +56,32 @@
 
     &-btn{
         @include btn;
-        padding: 10px 0;
-        padding: 12px 48px 12px 28px;
+        width: 100%;
+        visibility: hidden;
+        opacity: 0;
+        transition: all .2s ease-in-out,  opacity 0s  ease, background-color .1s  ease-in-out ;
+        height: 0;
+        padding-left: 28px;
+        padding-right: 48px;
+        border-radius: 25px;
 
         &.active{
             position: relative;
+            visibility: visible;
+            opacity: 1;
+            height: auto;
+            padding-top: 12px;
+            padding-bottom: 12px;
+
+            &:hover, &:focus{
+                // box-shadow: 0 0 5px 5px rgba(173, 152, 143, 0.18);
+                background-color: rgba($yellow,.5);
+            }
+
         }
     }
 }
+
 .btn__filters{
     display: flex;
     align-items: center;

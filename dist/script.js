@@ -362,18 +362,10 @@ function filtersControl(data, nodes) {
 }
 
 function filterSortInit(nodes) {
-  console.log(nodes.btnControlSort);
+  const btnSort = nodes.btnControlSort;
   const items = nodes.btnControlSort.querySelectorAll('li');
-  console.log(items);
-  nodes.btnControlSort.addEventListener('click', e => {
-    const target = e.target;
-
-    if (target.classList.contains('btn__sort-arrow')) {
-      items.forEach((item, i) => {
-        i !== 0 ? item.style.display = 'none' : true;
-      });
-    }
-  });
+  Object(_filter_template__WEBPACK_IMPORTED_MODULE_1__["defaultBtnSort"])(items);
+  Object(_filter_template__WEBPACK_IMPORTED_MODULE_1__["bindBtnSort"])(btnSort, items);
 }
 
 const filter = async () => {
@@ -393,13 +385,17 @@ const filter = async () => {
 /*!******************************************************!*\
   !*** ./src/js/componenst/catalog/filter.template.js ***!
   \******************************************************/
-/*! exports provided: initialFilter, bindBtns */
+/*! exports provided: initialFilter, bindBtns, defaultBtnSort, bindBtnSort */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "initialFilter", function() { return initialFilter; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "bindBtns", function() { return bindBtns; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "defaultBtnSort", function() { return defaultBtnSort; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "bindBtnSort", function() { return bindBtnSort; });
+/* harmony import */ var _catalog__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./catalog */ "./src/js/componenst/catalog/catalog.js");
+
 const initialFilter = () => {
   const wrapFiltertns = document.querySelector('.catalog__header-buttons');
 
@@ -443,6 +439,62 @@ const bindBtns = nodes => {
     chengeClass(activeClass, 'remove', nodes);
   });
 };
+
+function controlArrowSort(arrow) {
+  if (arrow.dataset.sort === "true") {
+    arrow.style.transform = "translateY(-50%) rotate(180deg)";
+  } else {
+    arrow.style.transform = '';
+  }
+}
+
+function defaultBtnSort(items) {
+  items.forEach((item, i) => {
+    i !== 0 ? item.classList.remove('active') : item.classList.add('active');
+  });
+}
+function bindBtnSort(btnSort, items) {
+  btnSort.addEventListener('click', e => {
+    const target = e.target;
+    controlVisibleSortItems(target, items);
+    controlEventsSortItems(target, items);
+  });
+}
+
+function controlVisibleSortItems(target, items) {
+  if (target.classList.contains('btn__sort-arrow') && target.dataset.sort === "false") {
+    items.forEach(item => {
+      if (!item.classList.contains('active')) {
+        item.classList.add('active');
+      }
+    });
+    target.dataset.sort = "true";
+    controlArrowSort(target);
+  } else if (target.classList.contains('btn__sort-arrow') && target.dataset.sort === "true") {
+    target.dataset.sort = 'false';
+    controlArrowSort(target);
+    defaultBtnSort(items);
+  }
+}
+
+function controlEventsSortItems(target, items) {
+  if (target.tagName === "LI") {
+    console.log(target.dataset.list);
+    changeActiveFilter(target, items);
+    sort(target.dataset.list);
+  }
+}
+
+function changeActiveFilter(active, items) {
+  console.log(items);
+  console.log(active);
+  items.forEach((item, i) => {});
+}
+
+async function sort(value) {
+  //  сортиировка в  зависимости от фильтра
+  const json = await Object(_catalog__WEBPACK_IMPORTED_MODULE_0__["getJSON"])();
+}
 
 /***/ }),
 

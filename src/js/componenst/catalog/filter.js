@@ -1,5 +1,5 @@
 import { getJSON } from "./catalog";
-import { bindBtns, initialFilter } from './filter.template';
+import { bindBtns, initialFilter, defaultBtnSort, bindBtnSort } from './filter.template';
 
 
 function popupFilter(nodes){
@@ -21,20 +21,16 @@ function filtersControl(data, nodes){
     });
 }
 
-function filterSortInit (nodes) {
-    console.log(nodes.btnControlSort)
-    const items = nodes.btnControlSort.querySelectorAll('li');
-    console.log(items);
 
-    nodes.btnControlSort.addEventListener('click', (e) => {
-        const target = e.target;
-        if(target.classList.contains('btn__sort-arrow')){
-            items.forEach((item, i) =>{
-                i !== 0 ? item.style.display = 'none' : true;  
-            });
-        }
-    });
+
+function filterSortInit (nodes) {
+    const  btnSort =   nodes.btnControlSort;
+    const items = nodes.btnControlSort.querySelectorAll('li');
+    defaultBtnSort(items);
+    bindBtnSort(btnSort, items);
 }
+
+
 
 const filter = async () => {
     const nodes  = initialFilter();

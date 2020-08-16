@@ -1263,13 +1263,15 @@
   flex-direction: column;
   align-items: baseline;
   width: max-content;
-  padding: 12px; }
+  padding: 12px;
+  transition: .2s ease-in-out; }
   .btn__sort-arrow {
     position: absolute;
     right: 5%;
     top: 50%;
     transform: translateY(-50%);
-    transition: .2s ease-in-out; }
+    transition: .2s ease-in-out;
+    user-select: none; }
   .btn__sort.active {
     border-radius: 25px; }
   .btn__sort-btn {
@@ -1278,10 +1280,23 @@
     cursor: pointer;
     font-family: "Rubik", sans-serif;
     font-size: 14px;
-    padding: 10px 0;
-    padding: 12px 48px 12px 28px; }
+    width: 100%;
+    visibility: hidden;
+    opacity: 0;
+    transition: all .2s ease-in-out,  opacity 0s  ease, background-color .1s  ease-in-out;
+    height: 0;
+    padding-left: 28px;
+    padding-right: 48px;
+    border-radius: 25px; }
     .btn__sort-btn.active {
-      position: relative; }
+      position: relative;
+      visibility: visible;
+      opacity: 1;
+      height: auto;
+      padding-top: 12px;
+      padding-bottom: 12px; }
+      .btn__sort-btn.active:hover, .btn__sort-btn.active:focus {
+        background-color: rgba(250, 198, 99, 0.5); }
 
 .btn__filters {
   display: flex;
