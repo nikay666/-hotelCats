@@ -1,5 +1,6 @@
 import { getJSON } from "./catalog";
-import { bindBtns, initialFilter, defaultBtnSort, bindBtnSort } from './filter.template';
+import { bindBtns, initialFilter } from './filter.template';
+import {defaultBtnSort, bindBtnSort} from './sort';
 
 
 function popupFilter(nodes){

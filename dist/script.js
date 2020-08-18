@@ -340,6 +340,8 @@ function getOptions(options) {
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _catalog__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./catalog */ "./src/js/componenst/catalog/catalog.js");
 /* harmony import */ var _filter_template__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./filter.template */ "./src/js/componenst/catalog/filter.template.js");
+/* harmony import */ var _sort__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./sort */ "./src/js/componenst/catalog/sort.js");
+
 
 
 
@@ -364,8 +366,8 @@ function filtersControl(data, nodes) {
 function filterSortInit(nodes) {
   const btnSort = nodes.btnControlSort;
   const items = nodes.btnControlSort.querySelectorAll('li');
-  Object(_filter_template__WEBPACK_IMPORTED_MODULE_1__["defaultBtnSort"])(items);
-  Object(_filter_template__WEBPACK_IMPORTED_MODULE_1__["bindBtnSort"])(btnSort, items);
+  Object(_sort__WEBPACK_IMPORTED_MODULE_2__["defaultBtnSort"])(items);
+  Object(_sort__WEBPACK_IMPORTED_MODULE_2__["bindBtnSort"])(btnSort, items);
 }
 
 const filter = async () => {
@@ -385,17 +387,13 @@ const filter = async () => {
 /*!******************************************************!*\
   !*** ./src/js/componenst/catalog/filter.template.js ***!
   \******************************************************/
-/*! exports provided: initialFilter, bindBtns, defaultBtnSort, bindBtnSort */
+/*! exports provided: initialFilter, bindBtns */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "initialFilter", function() { return initialFilter; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "bindBtns", function() { return bindBtns; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "defaultBtnSort", function() { return defaultBtnSort; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "bindBtnSort", function() { return bindBtnSort; });
-/* harmony import */ var _catalog__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./catalog */ "./src/js/componenst/catalog/catalog.js");
-
 const initialFilter = () => {
   const wrapFiltertns = document.querySelector('.catalog__header-buttons');
 
@@ -440,12 +438,41 @@ const bindBtns = nodes => {
   });
 };
 
+/***/ }),
+
+/***/ "./src/js/componenst/catalog/sort.js":
+/*!*******************************************!*\
+  !*** ./src/js/componenst/catalog/sort.js ***!
+  \*******************************************/
+/*! exports provided: defaultBtnSort, bindBtnSort */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "defaultBtnSort", function() { return defaultBtnSort; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "bindBtnSort", function() { return bindBtnSort; });
+/* harmony import */ var _catalog__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./catalog */ "./src/js/componenst/catalog/catalog.js");
+
+
 function controlArrowSort(arrow) {
   if (arrow.dataset.sort === "true") {
     arrow.style.transform = "translateY(-50%) rotate(180deg)";
   } else {
     arrow.style.transform = '';
   }
+}
+
+function stylesForActiveFilter(items, value) {
+  items.forEach(item => {
+    if (item.dataset.active === 'activeFilter') {
+      // value === 'true' ? item.classList.add('open') : item.classList.remove('open');
+      if (value === 'true') {
+        item.classList.add('open');
+      } else {
+        item.classList.remove('open');
+      }
+    }
+  });
 }
 
 function defaultBtnSort(items) {
@@ -470,10 +497,12 @@ function controlVisibleSortItems(target, items) {
     });
     target.dataset.sort = "true";
     controlArrowSort(target);
+    stylesForActiveFilter(items, target.dataset.sort);
   } else if (target.classList.contains('btn__sort-arrow') && target.dataset.sort === "true") {
     target.dataset.sort = 'false';
     controlArrowSort(target);
     defaultBtnSort(items);
+    stylesForActiveFilter(items, target.dataset.sort);
   }
 }
 
@@ -487,8 +516,8 @@ function controlEventsSortItems(target, items) {
 
 function changeActiveFilter(active, items) {
   console.log(items);
-  console.log(active);
-  items.forEach((item, i) => {});
+  console.log(active); // items.forEach((item, i) =>{
+  // });
 }
 
 async function sort(value) {

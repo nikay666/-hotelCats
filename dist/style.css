@@ -1263,7 +1263,7 @@
   flex-direction: column;
   align-items: baseline;
   width: max-content;
-  padding: 12px;
+  padding: 0;
   transition: .2s ease-in-out; }
   .btn__sort-arrow {
     position: absolute;
@@ -1297,6 +1297,13 @@
       padding-bottom: 12px; }
       .btn__sort-btn.active:hover, .btn__sort-btn.active:focus {
         background-color: rgba(250, 198, 99, 0.5); }
+    .btn__sort-btn.active-filter {
+      z-index: 5;
+      box-shadow: 0px 2px 12px rgba(173, 152, 143, 0.18); }
+      .btn__sort-btn.active-filter.open {
+        border-bottom-color: #fac663; }
+      .btn__sort-btn.active-filter:hover, .btn__sort-btn.active-filter:focus {
+        background-color: #FFFEFD; }
 
 .btn__filters {
   display: flex;
