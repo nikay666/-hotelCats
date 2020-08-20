@@ -31,9 +31,9 @@ export function defaultBtnSort(items){
 export function bindBtnSort(btnSort, items){
     btnSort.addEventListener('click', (e) => {
         const target = e.target;
-        controlVisibleSortItems(target, items);
 
-        controlEventsSortItems(target, items);
+        controlVisibleSortItems(target, items);
+        controlEventsSortItems(target, btnSort, items);
     });
 
 }
@@ -59,22 +59,31 @@ function controlVisibleSortItems(target, items){
      }
 }
 
-function controlEventsSortItems(target, items){ 
+function controlEventsSortItems(target, btnSort, items){ 
     if(target.tagName  ===  "LI"){
-        console.log(target.dataset.list);
-        changeActiveFilter(target, items);
+        changeActiveFilter(target, btnSort, items);
         sort(target.dataset.list);
     }
 }
 
-function changeActiveFilter(active, items){
+function changeActiveFilter(active, btnSort, items){
+    const btnArrow = btnSort.querySelector('.btn__sort-arrow');
+    let activeFilter;
+    let textContent;
+    
+    items.forEach(item => {
+        if(item.dataset.active  === 'activeFilter'){
+            activeFilter = item;
 
-    console.log(items);
-    console.log(active)
+            activeFilter.childNodes.forEach(child => { 
+                if(child.dataset && child.dataset.content === 'text') textContent = child;
+            });
+        }
+    });
+    activeFilter.dataset.list = active.dataset.list;
+    textContent.textContent = active.innerHTML;
 
-    // items.forEach((item, i) =>{
-
-    // });
+    controlVisibleSortItems(btnArrow, items);
 }
 
 async function sort(value){
