@@ -507,7 +507,7 @@ function controlVisibleSortItems(target, items) {
 }
 
 function controlEventsSortItems(target, btnSort, items) {
-  if (target.tagName === "LI") {
+  if (target.tagName === "LI" && target.dataset.item === "true") {
     changeActiveFilter(target, btnSort, items);
     sort(target.dataset.list);
   }
@@ -515,18 +515,10 @@ function controlEventsSortItems(target, btnSort, items) {
 
 function changeActiveFilter(active, btnSort, items) {
   const btnArrow = btnSort.querySelector('.btn__sort-arrow');
-  let activeFilter;
-  let textContent;
-  items.forEach(item => {
-    if (item.dataset.active === 'activeFilter') {
-      activeFilter = item;
-      activeFilter.childNodes.forEach(child => {
-        if (child.dataset && child.dataset.content === 'text') textContent = child;
-      });
-    }
-  });
+  const activeFilter = btnSort.querySelector('[data-active="activeFilter"]');
+  const textContent = activeFilter.querySelector('[data-content="text"]');
   activeFilter.dataset.list = active.dataset.list;
-  textContent.textContent = active.innerHTML;
+  textContent.textContent = active.textContent;
   controlVisibleSortItems(btnArrow, items);
 }
 
