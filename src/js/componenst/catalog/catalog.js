@@ -1,10 +1,11 @@
 import { getTemplate} from "./catalog.template";
-import modals from "../modals";
+import { catalogWrap,toHTML } from "../utilits";
+import { typeSortFilter } from "./sort";
 
 const  url  = './assets/catalogList.json';
 
 
-const createCards = (data) => {
+export const createCards = (data) => {
     console.log(data);
     let cards = '';
     data.forEach(item => {
@@ -16,10 +17,6 @@ const createCards = (data) => {
 
 };
 
-const toHTML = (cards,  wrap) => {
-    wrap.insertAdjacentHTML("afterbegin", cards);
-    modals();
-};
 
 export async function getJSON(){
     try {
@@ -32,12 +29,21 @@ export async function getJSON(){
     }
 }
 
+export function  createCatalogItems(json, wrap){
+    const cards = createCards(json);
+    toHTML(cards, wrap);
+}
+
 async function getCatalogItems(wrap) {
     try {
-        // const response = await fetch(url);
         const  json = await getJSON();
-        const cards = createCards(json);
-        toHTML(cards, wrap);
+        const defaultSort =  {
+            direction: 'top',
+            type: 'square'
+        };
+
+        typeSortFilter(defaultSort.direction,  defaultSort.type,  json);
+        createCatalogItems(json, wrap);
 
     } catch (error) {
         console.log(error);
@@ -45,8 +51,8 @@ async function getCatalogItems(wrap) {
 }
 
 
-const catalog = (selectorCatalog)  =>  {
-    const wrap = document.querySelector(selectorCatalog);
+const catalog = ()  =>  {
+    const wrap = catalogWrap();
     if(wrap === null || wrap === undefined){
         return;
     } 

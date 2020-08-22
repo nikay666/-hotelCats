@@ -8,7 +8,7 @@ import filter from './componenst/catalog/filter';
 
 try {
     burgerMenu('.burger__menu','.main__menu', 'active');
-    catalog('.catalog__products');
+    catalog();
     modals();
     form();
     arrow();

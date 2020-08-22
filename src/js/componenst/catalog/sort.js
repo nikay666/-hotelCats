@@ -1,4 +1,5 @@
-import { getJSON } from "./catalog";
+import { getJSON, createCards, createCatalogItems } from "./catalog";
+import { catalogWrap,toHTML } from "../utilits";
 
 function controlArrowSort(arrow){
     if(arrow.dataset.sort === "true"){
@@ -11,7 +12,6 @@ function controlArrowSort(arrow){
 function stylesForActiveFilter(items, value){
     items.forEach(item => {
         if(item.dataset.active  === 'activeFilter'){
-            // value === 'true' ? item.classList.add('open') : item.classList.remove('open');
             if(value === 'true'){
                 item.classList.add('open');
 
@@ -77,8 +77,51 @@ function changeActiveFilter(active, btnSort, items){
     controlVisibleSortItems(btnArrow, items);
 }
 
+
 async function sort(value){
-    //  сортиировка в  зависимости от фильтра
     const json  = await getJSON();
-    
+
+    const direction =  value.split('-')[0];
+    const  type = value.split('-')[1];
+
+    typeSortFilter(direction, type, json);
+
+    console.log(json);
+    let wrap = catalogWrap();
+    wrap.innerHTML  =  '';
+    createCatalogItems(json, wrap);
+
+}
+
+export function typeSortFilter(direction, type, json){
+    if(direction === 'top'){
+        topFilter(type, json);
+    }
+    if(direction === 'bottom'){
+        bottomFilter(type, json);
+    }
+}
+
+function topFilter(type, json){
+    json.sort((a,b) => {
+        if(a[type] > b[type] ){
+            return 1;
+        }
+        if(a[type] < b[type]){
+             return -1;
+        }
+        return 0;
+     });
+}
+
+function bottomFilter(type, json){
+    json.sort((a,b) => {
+        if(a[type] < b[type] ){
+            return 1;
+        }
+        if(a[type] > b[type]){
+             return -1;
+        }
+        return 0;
+    });
 }

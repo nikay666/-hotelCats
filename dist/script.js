@@ -192,18 +192,21 @@ function add(btn, menu, cls) {
 /*!**********************************************!*\
   !*** ./src/js/componenst/catalog/catalog.js ***!
   \**********************************************/
-/*! exports provided: getJSON, default */
+/*! exports provided: createCards, getJSON, createCatalogItems, default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "createCards", function() { return createCards; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getJSON", function() { return getJSON; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "createCatalogItems", function() { return createCatalogItems; });
 /* harmony import */ var _catalog_template__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./catalog.template */ "./src/js/componenst/catalog/catalog.template.js");
-/* harmony import */ var _modals__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../modals */ "./src/js/componenst/modals.js");
+/* harmony import */ var _utilits__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../utilits */ "./src/js/componenst/utilits.js");
+/* harmony import */ var _sort__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./sort */ "./src/js/componenst/catalog/sort.js");
+
 
 
 const url = './assets/catalogList.json';
-
 const createCards = data => {
   console.log(data);
   let cards = '';
@@ -212,12 +215,6 @@ const createCards = data => {
   });
   return cards;
 };
-
-const toHTML = (cards, wrap) => {
-  wrap.insertAdjacentHTML("afterbegin", cards);
-  Object(_modals__WEBPACK_IMPORTED_MODULE_1__["default"])();
-};
-
 async function getJSON() {
   try {
     const response = await fetch(url);
@@ -227,20 +224,27 @@ async function getJSON() {
     console.log(error);
   }
 }
+function createCatalogItems(json, wrap) {
+  const cards = createCards(json);
+  Object(_utilits__WEBPACK_IMPORTED_MODULE_1__["toHTML"])(cards, wrap);
+}
 
 async function getCatalogItems(wrap) {
   try {
-    // const response = await fetch(url);
     const json = await getJSON();
-    const cards = createCards(json);
-    toHTML(cards, wrap);
+    const defaultSort = {
+      direction: 'top',
+      type: 'square'
+    };
+    Object(_sort__WEBPACK_IMPORTED_MODULE_2__["typeSortFilter"])(defaultSort.direction, defaultSort.type, json);
+    createCatalogItems(json, wrap);
   } catch (error) {
     console.log(error);
   }
 }
 
-const catalog = selectorCatalog => {
-  const wrap = document.querySelector(selectorCatalog);
+const catalog = () => {
+  const wrap = Object(_utilits__WEBPACK_IMPORTED_MODULE_1__["catalogWrap"])();
 
   if (wrap === null || wrap === undefined) {
     return;
@@ -444,14 +448,17 @@ const bindBtns = nodes => {
 /*!*******************************************!*\
   !*** ./src/js/componenst/catalog/sort.js ***!
   \*******************************************/
-/*! exports provided: defaultBtnSort, bindBtnSort */
+/*! exports provided: defaultBtnSort, bindBtnSort, typeSortFilter */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "defaultBtnSort", function() { return defaultBtnSort; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "bindBtnSort", function() { return bindBtnSort; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "typeSortFilter", function() { return typeSortFilter; });
 /* harmony import */ var _catalog__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./catalog */ "./src/js/componenst/catalog/catalog.js");
+/* harmony import */ var _utilits__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../utilits */ "./src/js/componenst/utilits.js");
+
 
 
 function controlArrowSort(arrow) {
@@ -465,7 +472,6 @@ function controlArrowSort(arrow) {
 function stylesForActiveFilter(items, value) {
   items.forEach(item => {
     if (item.dataset.active === 'activeFilter') {
-      // value === 'true' ? item.classList.add('open') : item.classList.remove('open');
       if (value === 'true') {
         item.classList.add('open');
       } else {
@@ -523,8 +529,52 @@ function changeActiveFilter(active, btnSort, items) {
 }
 
 async function sort(value) {
-  //  сортиировка в  зависимости от фильтра
   const json = await Object(_catalog__WEBPACK_IMPORTED_MODULE_0__["getJSON"])();
+  const direction = value.split('-')[0];
+  const type = value.split('-')[1];
+  typeSortFilter(direction, type, json);
+  console.log(json);
+  let wrap = Object(_utilits__WEBPACK_IMPORTED_MODULE_1__["catalogWrap"])();
+  wrap.innerHTML = '';
+  Object(_catalog__WEBPACK_IMPORTED_MODULE_0__["createCatalogItems"])(json, wrap);
+}
+
+function typeSortFilter(direction, type, json) {
+  if (direction === 'top') {
+    topFilter(type, json);
+  }
+
+  if (direction === 'bottom') {
+    bottomFilter(type, json);
+  }
+}
+
+function topFilter(type, json) {
+  json.sort((a, b) => {
+    if (a[type] > b[type]) {
+      return 1;
+    }
+
+    if (a[type] < b[type]) {
+      return -1;
+    }
+
+    return 0;
+  });
+}
+
+function bottomFilter(type, json) {
+  json.sort((a, b) => {
+    if (a[type] < b[type]) {
+      return 1;
+    }
+
+    if (a[type] > b[type]) {
+      return -1;
+    }
+
+    return 0;
+  });
 }
 
 /***/ }),
@@ -747,6 +797,29 @@ const modals = () => {
 
 /***/ }),
 
+/***/ "./src/js/componenst/utilits.js":
+/*!**************************************!*\
+  !*** ./src/js/componenst/utilits.js ***!
+  \**************************************/
+/*! exports provided: catalogWrap, toHTML */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "catalogWrap", function() { return catalogWrap; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "toHTML", function() { return toHTML; });
+/* harmony import */ var _modals__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./modals */ "./src/js/componenst/modals.js");
+
+function catalogWrap() {
+  return document.querySelector('.catalog__products');
+}
+const toHTML = (cards, wrap) => {
+  wrap.insertAdjacentHTML("afterbegin", cards);
+  Object(_modals__WEBPACK_IMPORTED_MODULE_0__["default"])();
+};
+
+/***/ }),
+
 /***/ "./src/js/main.js":
 /*!************************!*\
   !*** ./src/js/main.js ***!
@@ -773,7 +846,7 @@ __webpack_require__.r(__webpack_exports__);
 
 try {
   Object(_componenst_burger_menu__WEBPACK_IMPORTED_MODULE_0__["default"])('.burger__menu', '.main__menu', 'active');
-  Object(_componenst_catalog_catalog__WEBPACK_IMPORTED_MODULE_5__["default"])('.catalog__products');
+  Object(_componenst_catalog_catalog__WEBPACK_IMPORTED_MODULE_5__["default"])();
   Object(_componenst_modals__WEBPACK_IMPORTED_MODULE_1__["default"])();
   Object(_componenst_form__WEBPACK_IMPORTED_MODULE_2__["default"])();
   Object(_componenst_arrow__WEBPACK_IMPORTED_MODULE_3__["default"])();
