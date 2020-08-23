@@ -8,3 +8,7 @@ export const toHTML = (cards,  wrap) => {
     wrap.insertAdjacentHTML("afterbegin", cards);
     modals();
 };
+
+export function getEmptyHTMLForWrap(wrap){
+    wrap.innerHTML  =  '';
+}

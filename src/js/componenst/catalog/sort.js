@@ -1,5 +1,5 @@
-import { getJSON, createCards, createCatalogItems } from "./catalog";
-import { catalogWrap,toHTML } from "../utilits";
+import { getJSON, createCatalogItems } from "./catalog";
+import { catalogWrap, getEmptyHTMLForWrap } from "../utilits";
 
 function controlArrowSort(arrow){
     if(arrow.dataset.sort === "true"){
@@ -35,28 +35,30 @@ export function bindBtnSort(btnSort, items){
         controlVisibleSortItems(target, items);
         controlEventsSortItems(target, btnSort, items);
     });
-
 }
 
 function controlVisibleSortItems(target, items){
     if(target.classList.contains('btn__sort-arrow') && target.dataset.sort === "false"){
-        items.forEach(item => {
-             if(!item.classList.contains('active')){
-                 item.classList.add('active');
-             }
-        });
+        addActiveClassForList(items);
+
         target.dataset.sort = "true";
         controlArrowSort(target);
         stylesForActiveFilter(items, target.dataset.sort);
-  
 
      }else if(target.classList.contains('btn__sort-arrow') && target.dataset.sort === "true"){
-
         target.dataset.sort =  'false';
         controlArrowSort(target);
         defaultBtnSort(items);
         stylesForActiveFilter(items, target.dataset.sort);
      }
+}
+
+function addActiveClassForList(items){
+    items.forEach(item => {
+        if(!item.classList.contains('active')){
+            item.classList.add('active');
+        }
+   });
 }
 
 function controlEventsSortItems(target, btnSort, items){ 
@@ -80,17 +82,14 @@ function changeActiveFilter(active, btnSort, items){
 
 async function sort(value){
     const json  = await getJSON();
-
     const direction =  value.split('-')[0];
     const  type = value.split('-')[1];
 
     typeSortFilter(direction, type, json);
-
-    console.log(json);
+    
     let wrap = catalogWrap();
-    wrap.innerHTML  =  '';
+    getEmptyHTMLForWrap(wrap);
     createCatalogItems(json, wrap);
-
 }
 
 export function typeSortFilter(direction, type, json){

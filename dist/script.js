@@ -496,11 +496,7 @@ function bindBtnSort(btnSort, items) {
 
 function controlVisibleSortItems(target, items) {
   if (target.classList.contains('btn__sort-arrow') && target.dataset.sort === "false") {
-    items.forEach(item => {
-      if (!item.classList.contains('active')) {
-        item.classList.add('active');
-      }
-    });
+    addActiveClassForList(items);
     target.dataset.sort = "true";
     controlArrowSort(target);
     stylesForActiveFilter(items, target.dataset.sort);
@@ -510,6 +506,14 @@ function controlVisibleSortItems(target, items) {
     defaultBtnSort(items);
     stylesForActiveFilter(items, target.dataset.sort);
   }
+}
+
+function addActiveClassForList(items) {
+  items.forEach(item => {
+    if (!item.classList.contains('active')) {
+      item.classList.add('active');
+    }
+  });
 }
 
 function controlEventsSortItems(target, btnSort, items) {
@@ -533,9 +537,8 @@ async function sort(value) {
   const direction = value.split('-')[0];
   const type = value.split('-')[1];
   typeSortFilter(direction, type, json);
-  console.log(json);
   let wrap = Object(_utilits__WEBPACK_IMPORTED_MODULE_1__["catalogWrap"])();
-  wrap.innerHTML = '';
+  Object(_utilits__WEBPACK_IMPORTED_MODULE_1__["getEmptyHTMLForWrap"])(wrap);
   Object(_catalog__WEBPACK_IMPORTED_MODULE_0__["createCatalogItems"])(json, wrap);
 }
 
@@ -801,13 +804,14 @@ const modals = () => {
 /*!**************************************!*\
   !*** ./src/js/componenst/utilits.js ***!
   \**************************************/
-/*! exports provided: catalogWrap, toHTML */
+/*! exports provided: catalogWrap, toHTML, getEmptyHTMLForWrap */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "catalogWrap", function() { return catalogWrap; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "toHTML", function() { return toHTML; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getEmptyHTMLForWrap", function() { return getEmptyHTMLForWrap; });
 /* harmony import */ var _modals__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./modals */ "./src/js/componenst/modals.js");
 
 function catalogWrap() {
@@ -817,6 +821,9 @@ const toHTML = (cards, wrap) => {
   wrap.insertAdjacentHTML("afterbegin", cards);
   Object(_modals__WEBPACK_IMPORTED_MODULE_0__["default"])();
 };
+function getEmptyHTMLForWrap(wrap) {
+  wrap.innerHTML = '';
+}
 
 /***/ }),
 
