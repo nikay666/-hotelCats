@@ -98,14 +98,12 @@ __webpack_require__.r(__webpack_exports__);
 const HEIGHT = '800';
 
 const showArrow = arrow => {
-  console.log('showArrow');
   arrow.style.visibility = 'visible';
   arrow.style.opacity = '1';
   arrow.dataset.show = 'true';
 };
 
 const hideArrow = arrow => {
-  console.log('hideArrow');
   arrow.style.visibility = 'hidden';
   arrow.style.opacity = '0';
   arrow.dataset.show = 'false';
