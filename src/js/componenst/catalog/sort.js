@@ -79,6 +79,9 @@ function changeActiveFilter(active, btnSort, items){
     controlVisibleSortItems(btnArrow, items);
 }
 
+// async function controlSort(){
+//объединть  сортировку  из фильтра и из кнопки
+// }
 
 async function sort(value){
     const json  = await getJSON();
