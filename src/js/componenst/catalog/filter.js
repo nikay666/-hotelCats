@@ -107,7 +107,9 @@ export default filter;
 
 
 function filterMaskInputsOnlyNumers(e){
-    if(e.key.match(/\D/ig)) {
+    console.log(e.key)
+    if(e.key.match(/\D/ig) ) {
+        if(e.key === 'Backspace' ) return;
         e.preventDefault();
     }
 }

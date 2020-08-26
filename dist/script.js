@@ -359,7 +359,6 @@ function filterTypes() {//???
 }
 
 function listenerFilerEvents(wrap) {
-  // console.log(wrap)
   const inputs = wrap.querySelectorAll('[data-filter="price"]');
   const buttons = wrap.querySelectorAll('[data-filter="button"]');
   inputs.forEach(input => {
@@ -386,7 +385,8 @@ function listenerFilerEvents(wrap) {
       controlCheckboxsFilter(target);
     }
   });
-}
+} //  служебная
+
 
 function controlCheckboxsFilter(target) {
   if (target.dataset.filter === 'square') {
@@ -438,7 +438,10 @@ const filter = async () => {
 /* harmony default export */ __webpack_exports__["default"] = (filter);
 
 function filterMaskInputsOnlyNumers(e) {
+  console.log(e.key);
+
   if (e.key.match(/\D/ig)) {
+    if (e.key === 'Backspace') return;
     e.preventDefault();
   }
 }
