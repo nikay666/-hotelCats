@@ -24,7 +24,7 @@ function listenerFilerEvents(wrap){
     inputs.forEach(input =>{
        input.addEventListener('keydown', (e) => {
            const  target =  e.target;
-           filterMaskInputsOnlyNumers(e);
+           maskInputsOnlyNumers(e);
    
            console.log(target.value)
        });
@@ -106,7 +106,7 @@ export default filter;
 
 
 
-function filterMaskInputsOnlyNumers(e){
+function maskInputsOnlyNumers(e){
     console.log(e.key)
     if(e.key.match(/\D/ig) ) {
         if(e.key === 'Backspace' ) return;
