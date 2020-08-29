@@ -7,16 +7,6 @@ function popupFilter(nodes){
     bindBtns(nodes);
 }
 
-function filterTypes(){
-    //???
-    //сделать  функцию,которая будет фильтроватьт массив data по атрибутам
-    //если это не массив, то преобразоват
-    //возвращаем отфильтрованный массив и  отрисовываем
-    //возможность на будущее: прелооадер,  пока происходит фильтрация  
-
-}
-
-
 function listenerFilerEvents(wrap){
     const inputs = wrap.querySelectorAll('[data-filter="price"]');
     const  buttons = wrap. querySelectorAll('[data-filter="button"]');
