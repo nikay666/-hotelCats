@@ -186,6 +186,38 @@ function add(btn, menu, cls) {
 
 /***/ }),
 
+/***/ "./src/js/componenst/catalog/Loader.js":
+/*!*********************************************!*\
+  !*** ./src/js/componenst/catalog/Loader.js ***!
+  \*********************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _filter_template__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./filter.template */ "./src/js/componenst/catalog/filter.template.js");
+
+
+const Loader = value => {
+  if (value) {
+    const loader = `
+        <div id="loader" class="loader">
+        <div class="lds-roller"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
+        </div>
+        `;
+    const wrap = document.querySelector('body');
+    wrap.insertAdjacentHTML("afterbegin", loader);
+  } else {
+    const loader = document.getElementById('loader');
+    console.log(loader);
+    loader.remove();
+  }
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (Loader);
+
+/***/ }),
+
 /***/ "./src/js/componenst/catalog/catalog.js":
 /*!**********************************************!*\
   !*** ./src/js/componenst/catalog/catalog.js ***!
@@ -201,6 +233,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _catalog_template__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./catalog.template */ "./src/js/componenst/catalog/catalog.template.js");
 /* harmony import */ var _utilits__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../utilits */ "./src/js/componenst/utilits.js");
 /* harmony import */ var _sort__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./sort */ "./src/js/componenst/catalog/sort.js");
+/* harmony import */ var _Loader__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./Loader */ "./src/js/componenst/catalog/Loader.js");
+
 
 
 
@@ -216,7 +250,8 @@ const createCards = data => {
 async function getJSON() {
   try {
     const response = await fetch(url);
-    const json = await response.json();
+    const json = await response.json(); // await timeoutForTesting(3000)
+
     return json;
   } catch (error) {
     console.log(error);
@@ -343,6 +378,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _catalog__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./catalog */ "./src/js/componenst/catalog/catalog.js");
 /* harmony import */ var _filter_template__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./filter.template */ "./src/js/componenst/catalog/filter.template.js");
 /* harmony import */ var _sort__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./sort */ "./src/js/componenst/catalog/sort.js");
+/* harmony import */ var _Loader__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./Loader */ "./src/js/componenst/catalog/Loader.js");
+
 
 
 
@@ -351,20 +388,13 @@ function popupFilter(nodes) {
   Object(_filter_template__WEBPACK_IMPORTED_MODULE_1__["bindBtns"])(nodes);
 }
 
-function filterTypes() {//???
-  //сделать  функцию,которая будет фильтроватьт массив data по атрибутам
-  //если это не массив, то преобразоват
-  //возвращаем отфильтрованный массив и  отрисовываем
-  //возможность на будущее: прелооадер,  пока происходит фильтрация  
-}
-
 function listenerFilerEvents(wrap) {
   const inputs = wrap.querySelectorAll('[data-filter="price"]');
   const buttons = wrap.querySelectorAll('[data-filter="button"]');
   inputs.forEach(input => {
     input.addEventListener('keydown', e => {
       const target = e.target;
-      filterMaskInputsOnlyNumers(e);
+      maskInputsOnlyNumers(e);
       console.log(target.value);
     });
   });
@@ -414,8 +444,7 @@ function filtersControl(data, nodes) {
   console.log(nodes);
   nodes.filterItems.forEach(item => {
     const dataAttr = item.dataset.filter;
-    console.log(dataAttr);
-    filterTypes(dataAttr);
+    console.log(dataAttr); // filterTypes(dataAttr);
   });
 }
 
@@ -427,17 +456,19 @@ function filterSortInit(nodes) {
 }
 
 const filter = async () => {
+  Object(_Loader__WEBPACK_IMPORTED_MODULE_3__["default"])(true);
   const nodes = Object(_filter_template__WEBPACK_IMPORTED_MODULE_1__["initialFilter"])();
   if (nodes === false) return;
   popupFilter(nodes);
   const data = await Object(_catalog__WEBPACK_IMPORTED_MODULE_0__["getJSON"])();
+  Object(_Loader__WEBPACK_IMPORTED_MODULE_3__["default"])(false);
   filtersControl(data, nodes);
   filterSortInit(nodes);
 };
 
 /* harmony default export */ __webpack_exports__["default"] = (filter);
 
-function filterMaskInputsOnlyNumers(e) {
+function maskInputsOnlyNumers(e) {
   console.log(e.key);
 
   if (e.key.match(/\D/ig)) {
@@ -519,6 +550,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "typeSortFilter", function() { return typeSortFilter; });
 /* harmony import */ var _catalog__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./catalog */ "./src/js/componenst/catalog/catalog.js");
 /* harmony import */ var _utilits__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../utilits */ "./src/js/componenst/utilits.js");
+/* harmony import */ var _Loader__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Loader */ "./src/js/componenst/catalog/Loader.js");
+
 
 
 
@@ -597,7 +630,9 @@ function changeActiveFilter(active, btnSort, items) {
 
 
 async function sort(value) {
+  Object(_Loader__WEBPACK_IMPORTED_MODULE_2__["default"])(true);
   const json = await Object(_catalog__WEBPACK_IMPORTED_MODULE_0__["getJSON"])();
+  Object(_Loader__WEBPACK_IMPORTED_MODULE_2__["default"])(false);
   const direction = value.split('-')[0];
   const type = value.split('-')[1];
   typeSortFilter(direction, type, json);
@@ -868,7 +903,7 @@ const modals = () => {
 /*!**************************************!*\
   !*** ./src/js/componenst/utilits.js ***!
   \**************************************/
-/*! exports provided: catalogWrap, toHTML, getEmptyHTMLForWrap */
+/*! exports provided: catalogWrap, toHTML, getEmptyHTMLForWrap, timeoutForTesting */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -876,6 +911,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "catalogWrap", function() { return catalogWrap; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "toHTML", function() { return toHTML; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getEmptyHTMLForWrap", function() { return getEmptyHTMLForWrap; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "timeoutForTesting", function() { return timeoutForTesting; });
 /* harmony import */ var _modals__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./modals */ "./src/js/componenst/modals.js");
 
 function catalogWrap() {
@@ -888,6 +924,7 @@ const toHTML = (cards, wrap) => {
 function getEmptyHTMLForWrap(wrap) {
   wrap.innerHTML = '';
 }
+const timeoutForTesting = m => new Promise(r => setTimeout(r, m));
 
 /***/ }),
 

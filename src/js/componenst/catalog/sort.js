@@ -1,5 +1,6 @@
 import { getJSON, createCatalogItems } from "./catalog";
 import { catalogWrap, getEmptyHTMLForWrap } from "../utilits";
+import Loader from "./Loader";
 
 function controlArrowSort(arrow){
     if(arrow.dataset.sort === "true"){
@@ -84,7 +85,12 @@ function changeActiveFilter(active, btnSort, items){
 // }
 
 async function sort(value){
+    Loader(true);
+
     const json  = await getJSON();
+    
+    Loader(false);
+
     const direction =  value.split('-')[0];
     const  type = value.split('-')[1];
 

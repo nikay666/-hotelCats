@@ -1,6 +1,7 @@
 import { getTemplate} from "./catalog.template";
-import { catalogWrap,toHTML } from "../utilits";
+import { catalogWrap,toHTML, timeoutForTesting } from "../utilits";
 import { typeSortFilter } from "./sort";
+import Loader from "./Loader";
 
 const  url  = './assets/catalogList.json';
 
@@ -22,6 +23,7 @@ export async function getJSON(){
     try {
         const response = await fetch(url);
         const  json = await response.json();
+        // await timeoutForTesting(3000)
         return  json;
 
     } catch (error) {

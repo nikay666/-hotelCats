@@ -1,6 +1,7 @@
 import { getJSON } from "./catalog";
 import { bindBtns, initialFilter } from './filter.template';
 import {defaultBtnSort, bindBtnSort} from './sort';
+import Loader from "./Loader";
 
 
 function popupFilter(nodes){
@@ -22,6 +23,7 @@ function listenerFilerEvents(wrap){
 
     buttons.forEach(button => {
         button.addEventListener('click', (e) => { 
+
             const target = e.target;
             if(target.dataset.f_button){
                 controlButtonsFilter(target);
@@ -67,7 +69,7 @@ function filtersControl(data, nodes){
     nodes.filterItems.forEach(item => {
         const dataAttr = item.dataset.filter;
         console.log(dataAttr)
-        filterTypes(dataAttr);
+        // filterTypes(dataAttr);
     });
 }
 
@@ -83,10 +85,15 @@ function filterSortInit (nodes) {
 
 
 const filter = async () => {
+    Loader(true);
+
     const nodes  = initialFilter();
     if(nodes  ===  false) return;
     popupFilter(nodes);
+
     const data = await getJSON();
+    Loader(false);
+    
     filtersControl(data, nodes);
     filterSortInit(nodes);
 };
