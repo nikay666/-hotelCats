@@ -1,5 +1,3 @@
-import { initialFilter } from "./filter.template";
-
 const Loader  = (value) => {
     if(value){
         const loader = `

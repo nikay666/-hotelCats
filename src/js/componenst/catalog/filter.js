@@ -1,7 +1,8 @@
-import { getJSON } from "./catalog";
+import { getJSON, createCatalogItems } from "./catalog";
 import { bindBtns, initialFilter } from './filter.template';
 import {defaultBtnSort, bindBtnSort} from './sort';
 import Loader from "./Loader";
+import { catalogWrap, getEmptyHTMLForWrap } from "../utilits";
 
 
 function popupFilter(nodes){
@@ -33,23 +34,77 @@ function listenerFilerEvents(wrap){
 
     wrap.addEventListener('click', (e) => {
         const target = e.target;
+
         if(target.type === "checkbox"){
-            console.log('checkbox')
-            controlCheckboxsFilter(target);
+            controlCheckboxsFilter(target, wrap);
 
         }
     });
 }
-
 //  служебная
-function controlCheckboxsFilter(target){
-    if(target.dataset.filter ===  'square'){
-        console.log('square');
-    }
-    if(target.dataset.filter ===  'equipment'){
-        console.log('equipment');
-    }
+async function controlCheckboxsFilter(target, wrapFilter){
+    Loader(true);
+    const inputs = wrapFilter.querySelectorAll(`[data-filter]`);
+    const checked =  []; 
+
+    inputs.forEach(input => {
+       if(input.checked === true) checked.push({[input.dataset.filter]: input}) 
+    });
+    console.log('checked',checked)
+
+    const squareCheck = checked.filter(check => {
+        if(check['square']) return true
+    })
+    const squareOptions = checked.filter(check => {
+        if(check['options']) return true
+    })
+
+    const json  = await getJSON();
+
+    const res = filters(json, squareCheck, squareOptions);
+
+    let wrap = catalogWrap();
+    getEmptyHTMLForWrap(wrap);
+
+    res.length === 0 ? 
+    noItems(wrap)
+    : createCatalogItems(res, wrap);
+
+    Loader(false)
 }
+
+function  noItems(wrap){
+    wrap.insertAdjacentHTML("afterbegin", '<h3>К сожалениию, с такими характеристиками ничего нет:(</h3>');
+}
+function filters(json, squareCheck, squareOptions){
+    let res = json;
+    if(squareCheck.length !==  0 ){
+        res = res.filter(item => {
+            let r =  false;
+            console.log(item)
+            squareCheck.forEach(check => {
+                console.log(check['square'].id)
+                if(item.square === check['square'].id) r  = true
+            })
+            return r;
+        });
+    }
+    if(squareOptions.length !== 0){
+        res = res.filter(item => {
+            let r =  false;
+            squareOptions.forEach(check => { 
+                item.options.forEach(op =>{  
+                    if(op.data  === check['options'].id)  r = true 
+                })
+            })
+            return r;
+        });
+    }
+    console.log(res);
+    return res
+
+}
+
 
 //  служебная
 function controlButtonsFilter(target){
@@ -61,19 +116,15 @@ function controlButtonsFilter(target){
     }
 }
 
-
 function filtersControl(data, nodes){
     listenerFilerEvents(nodes.wrapFilter);
 
-        console.log(nodes)
+    console.log(nodes)
     nodes.filterItems.forEach(item => {
         const dataAttr = item.dataset.filter;
         console.log(dataAttr)
-        // filterTypes(dataAttr);
     });
 }
-
-
 
 function filterSortInit (nodes) {
     const  btnSort =   nodes.btnControlSort;
@@ -82,14 +133,13 @@ function filterSortInit (nodes) {
     bindBtnSort(btnSort, items);
 }
 
-
-
 const filter = async () => {
-    Loader(true);
 
     const nodes  = initialFilter();
+
     if(nodes  ===  false) return;
     popupFilter(nodes);
+    Loader(true);
 
     const data = await getJSON();
     Loader(false);
@@ -98,11 +148,10 @@ const filter = async () => {
     filterSortInit(nodes);
 };
 
-
 export default filter;
 
 
-
+//  служебная
 function maskInputsOnlyNumers(e){
     console.log(e.key)
     if(e.key.match(/\D/ig) ) {
@@ -110,3 +159,5 @@ function maskInputsOnlyNumers(e){
         e.preventDefault();
     }
 }
+
+

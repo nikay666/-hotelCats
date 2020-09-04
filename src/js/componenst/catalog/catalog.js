@@ -1,7 +1,6 @@
 import { getTemplate} from "./catalog.template";
 import { catalogWrap,toHTML, timeoutForTesting } from "../utilits";
 import { typeSortFilter } from "./sort";
-import Loader from "./Loader";
 
 const  url  = './assets/catalogList.json';
 

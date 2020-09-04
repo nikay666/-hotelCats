@@ -1029,6 +1029,9 @@
     width: 48%;
     padding: 5px; }
 
+.group__checklist sup {
+  font-size: 10px; }
+
 .group__checklist-item {
   margin: 8px 0; }
   .group__checklist-item .custom-checkbox {

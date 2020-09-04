@@ -25,7 +25,7 @@ export function getTemplate(item){
             <p class="card-title">${item.type}</p>
             <div class="card__desc">
                 <p class="card-text">Размеры (ШхГхВ) - ${item.size}</p>
-                <p class="card-text">Площадь - ${item.square}</p>
+                <p class="card-text">Площадь - ${item.square} м<sup>2</sup></p>
 
                 <div class="card__group">
                     <p class="card-text">Оснащение номера</p>

@@ -195,9 +195,6 @@ function add(btn, menu, cls) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _filter_template__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./filter.template */ "./src/js/componenst/catalog/filter.template.js");
-
-
 const Loader = value => {
   if (value) {
     const loader = `
@@ -233,8 +230,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _catalog_template__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./catalog.template */ "./src/js/componenst/catalog/catalog.template.js");
 /* harmony import */ var _utilits__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../utilits */ "./src/js/componenst/utilits.js");
 /* harmony import */ var _sort__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./sort */ "./src/js/componenst/catalog/sort.js");
-/* harmony import */ var _Loader__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./Loader */ "./src/js/componenst/catalog/Loader.js");
-
 
 
 
@@ -328,7 +323,7 @@ function getTemplate(item) {
             <p class="card-title">${item.type}</p>
             <div class="card__desc">
                 <p class="card-text">Размеры (ШхГхВ) - ${item.size}</p>
-                <p class="card-text">Площадь - ${item.square}</p>
+                <p class="card-text">Площадь - ${item.square} м<sup>2</sup></p>
 
                 <div class="card__group">
                     <p class="card-text">Оснащение номера</p>
@@ -379,6 +374,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _filter_template__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./filter.template */ "./src/js/componenst/catalog/filter.template.js");
 /* harmony import */ var _sort__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./sort */ "./src/js/componenst/catalog/sort.js");
 /* harmony import */ var _Loader__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./Loader */ "./src/js/componenst/catalog/Loader.js");
+/* harmony import */ var _utilits__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../utilits */ "./src/js/componenst/utilits.js");
+
 
 
 
@@ -411,21 +408,96 @@ function listenerFilerEvents(wrap) {
     const target = e.target;
 
     if (target.type === "checkbox") {
-      console.log('checkbox');
-      controlCheckboxsFilter(target);
+      controlCheckboxsFilter(target, wrap);
     }
   });
 } //  служебная
 
 
-function controlCheckboxsFilter(target) {
-  if (target.dataset.filter === 'square') {
-    console.log('square');
+async function controlCheckboxsFilter(target, wrapFilter) {
+  Object(_Loader__WEBPACK_IMPORTED_MODULE_3__["default"])(true);
+  const inputs = wrapFilter.querySelectorAll(`[data-filter]`);
+  const checked = []; // console.log(inputs)
+
+  inputs.forEach(input => {
+    if (input.checked === true) checked.push({
+      [input.dataset.filter]: input
+    });
+  });
+  console.log('checked', checked);
+  const squareCheck = checked.filter(check => {
+    if (check['square']) return true;
+  });
+  const squareOptions = checked.filter(check => {
+    if (check['options']) return true;
+  });
+  const json = await Object(_catalog__WEBPACK_IMPORTED_MODULE_0__["getJSON"])();
+  const res = filters(json, squareCheck, squareOptions);
+  let wrap = Object(_utilits__WEBPACK_IMPORTED_MODULE_4__["catalogWrap"])();
+  Object(_utilits__WEBPACK_IMPORTED_MODULE_4__["getEmptyHTMLForWrap"])(wrap);
+  res.length === 0 ? noItems(wrap) : Object(_catalog__WEBPACK_IMPORTED_MODULE_0__["createCatalogItems"])(res, wrap);
+  Object(_Loader__WEBPACK_IMPORTED_MODULE_3__["default"])(false);
+}
+
+function noItems(wrap) {
+  wrap.insertAdjacentHTML("afterbegin", '<h3>К сожалениию, с такими характеристиками ничего нет:(</h3>');
+}
+
+function filters(json, squareCheck, squareOptions) {
+  let res = json;
+
+  if (squareCheck.length !== 0) {
+    res = res.filter(item => {
+      let r = false;
+      console.log(item);
+      squareCheck.forEach(check => {
+        console.log(check['square'].id);
+        if (item.square === check['square'].id) r = true;
+      });
+      return r;
+    });
   }
 
-  if (target.dataset.filter === 'equipment') {
-    console.log('equipment');
+  if (squareOptions.length !== 0) {
+    res = res.filter(item => {
+      let r = false;
+      squareOptions.forEach(check => {
+        item.options.forEach(op => {
+          if (op.data === check['options'].id) r = true;
+        });
+      });
+      return r;
+    });
   }
+
+  console.log(res);
+  return res;
+}
+
+function filterSquare(json, checked, target) {
+  return json.filter(item => {
+    let res = null;
+    checked.forEach(input => {
+      if (item[target.dataset.filter] === input.id) {
+        res = item[target.dataset.filter];
+      }
+    });
+    return res;
+  });
+}
+
+function filterOptions(json, checked, target) {
+  return json.filter(options => {
+    let res = null;
+    options[target.dataset.filter].forEach(item => {
+      checked.forEach(input => {
+        if (item.data === input.id) {
+          res = options[target.dataset.filter];
+        }
+      });
+    });
+    return res;
+  });
 } //  служебная
 
 
@@ -444,7 +516,7 @@ function filtersControl(data, nodes) {
   console.log(nodes);
   nodes.filterItems.forEach(item => {
     const dataAttr = item.dataset.filter;
-    console.log(dataAttr); // filterTypes(dataAttr);
+    console.log(dataAttr);
   });
 }
 
@@ -456,17 +528,17 @@ function filterSortInit(nodes) {
 }
 
 const filter = async () => {
-  Object(_Loader__WEBPACK_IMPORTED_MODULE_3__["default"])(true);
   const nodes = Object(_filter_template__WEBPACK_IMPORTED_MODULE_1__["initialFilter"])();
   if (nodes === false) return;
   popupFilter(nodes);
+  Object(_Loader__WEBPACK_IMPORTED_MODULE_3__["default"])(true);
   const data = await Object(_catalog__WEBPACK_IMPORTED_MODULE_0__["getJSON"])();
   Object(_Loader__WEBPACK_IMPORTED_MODULE_3__["default"])(false);
   filtersControl(data, nodes);
   filterSortInit(nodes);
 };
 
-/* harmony default export */ __webpack_exports__["default"] = (filter);
+/* harmony default export */ __webpack_exports__["default"] = (filter); //  служебная
 
 function maskInputsOnlyNumers(e) {
   console.log(e.key);
