@@ -47,3 +47,48 @@ export  const bindBtns = (nodes) => {
 };
 
 
+
+export function filterOptions(res, optionsCheck ){
+    res = res.filter(item => {
+        let r =  false;
+        optionsCheck.forEach(check => { 
+            item.options.forEach(op =>{  
+                if(op.data  === check['options'].id)  r = true 
+            })
+        })
+        return r;
+    });
+    return res;
+}
+
+export function filterSquare(res, squareCheck ){
+    res = res.filter(item => {
+        let r =  false;
+        squareCheck.forEach(check => {
+            if(item.square === check['square'].id) r  = true
+        })
+        return r;
+    });
+    return res;
+}
+
+export function filterPrice(res, price){
+    const to = price.get('to')
+    const from = price.get('from')
+
+    if(to){
+    res = res.filter(item  =>  {
+        let r = false;
+        if(+item.price <= +to) r  = true;
+        return r;
+    })
+    }
+    if(from){
+    res = res.filter(item  =>  {
+        let r = false;
+        if(+item.price >= +from) r  = true;
+        return r;
+        })
+    }
+    return res;
+}

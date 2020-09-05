@@ -1,8 +1,8 @@
 import { getJSON, createCatalogItems } from "./catalog";
-import { bindBtns, initialFilter } from './filter.template';
+import { bindBtns, initialFilter, filterPrice, filterSquare, filterOptions } from './filter.template';
 import {defaultBtnSort, bindBtnSort} from './sort';
 import Loader from "./Loader";
-import { catalogWrap, getEmptyHTMLForWrap } from "../utilits";
+import { catalogWrap, getEmptyHTMLForWrap, noItems } from "../utilits";
 
 
 function popupFilter(nodes){
@@ -14,11 +14,9 @@ function listenerFilerEvents(wrap){
     const  buttons = wrap. querySelectorAll('[data-filter="button"]');
 
     inputs.forEach(input =>{
-       input.addEventListener('keydown', (e) => {
-           const  target =  e.target;
+       input.addEventListener('keyup', (e) => {
            maskInputsOnlyNumers(e);
-   
-           console.log(target.value)
+           controlInputsFilter(wrap)
        });
     });
 
@@ -36,73 +34,75 @@ function listenerFilerEvents(wrap){
         const target = e.target;
 
         if(target.type === "checkbox"){
-            controlCheckboxsFilter(target, wrap);
+            controlInputsFilter(wrap);
 
         }
     });
 }
+
+
 //  служебная
-async function controlCheckboxsFilter(target, wrapFilter){
+async function controlInputsFilter(wrapFilter){
     Loader(true);
     const inputs = wrapFilter.querySelectorAll(`[data-filter]`);
-    const checked =  []; 
-
-    inputs.forEach(input => {
-       if(input.checked === true) checked.push({[input.dataset.filter]: input}) 
-    });
-    console.log('checked',checked)
-
-    const squareCheck = checked.filter(check => {
-        if(check['square']) return true
-    })
-    const squareOptions = checked.filter(check => {
-        if(check['options']) return true
-    })
+    const checked =  getChecked(inputs); 
+    const optionsCheck = getChekedByType(checked, 'options')
+    const squareCheck = getChekedByType(checked, 'square')
+   
+    const price = getPrice(inputs, 'price')
 
     const json  = await getJSON();
-
-    const res = filters(json, squareCheck, squareOptions);
+    const res = filters(json, squareCheck, optionsCheck, price);
 
     let wrap = catalogWrap();
     getEmptyHTMLForWrap(wrap);
-
-    res.length === 0 ? 
-    noItems(wrap)
-    : createCatalogItems(res, wrap);
-
+    res.length === 0 ? noItems(wrap) : createCatalogItems(res, wrap);
     Loader(false)
 }
 
-function  noItems(wrap){
-    wrap.insertAdjacentHTML("afterbegin", '<h3  style="margin: 0 auto">К сожалениию, с такими характеристиками ничего нет:(</h3>');
+function getPrice(inputs,  type){
+    const price = new Map();
+    inputs.forEach(input => { 
+        if(input.dataset.filter ===  type){
+            if(input.value  === undefined  || input.value  === '') return;
+            input.dataset.price === 'from' 
+            ? price.set('from', input.value )  
+            : price.set('to', input.value )  
+        }
+    })
+    return price
 }
-function filters(json, squareCheck, squareOptions){
-    let res = json;
-    if(squareCheck.length !==  0 ){
-        res = res.filter(item => {
-            let r =  false;
-            console.log(item)
-            squareCheck.forEach(check => {
-                console.log(check['square'].id)
-                if(item.square === check['square'].id) r  = true
-            })
-            return r;
-        });
-    }
-    if(squareOptions.length !== 0){
-        res = res.filter(item => {
-            let r =  false;
-            squareOptions.forEach(check => { 
-                item.options.forEach(op =>{  
-                    if(op.data  === check['options'].id)  r = true 
-                })
-            })
-            return r;
-        });
-    }
-    console.log(res);
-    return res
 
+function filters(json, squareCheck, optionsCheck, price){
+    let res = json;
+
+    if(squareCheck.length !==  0 ){
+        res =  filterSquare(res,  squareCheck);
+    }
+    if(optionsCheck.length !== 0){
+        res = filterOptions(res,  optionsCheck);
+    }
+    if(price.size > 0){
+        res = filterPrice(res, price)
+    }
+
+    return res
+}
+
+//  служебная
+function getChecked(inputs){
+    const checked  = [];
+    inputs.forEach(input => {
+        if(input.checked === true) checked.push({[input.dataset.filter]: input}) 
+    });
+    return checked
+}
+
+//  служебная
+function getChekedByType(arr, type){
+    return arr.filter(check => {
+        if(check[type]) return true
+    })
 }
 
 
@@ -118,8 +118,6 @@ function controlButtonsFilter(target){
 
 function filtersControl(data, nodes){
     listenerFilerEvents(nodes.wrapFilter);
-
-    console.log(nodes)
     nodes.filterItems.forEach(item => {
         const dataAttr = item.dataset.filter;
         console.log(dataAttr)
@@ -153,7 +151,6 @@ export default filter;
 
 //  служебная
 function maskInputsOnlyNumers(e){
-    console.log(e.key)
     if(e.key.match(/\D/ig) ) {
         if(e.key === 'Backspace' ) return;
         e.preventDefault();

@@ -14,3 +14,7 @@ export function getEmptyHTMLForWrap(wrap){
 }
 
 export const timeoutForTesting = m => new Promise(r => setTimeout(r, m))
+
+export const noItems  = (wrap) => {
+    wrap.insertAdjacentHTML("afterbegin", '<h3  style="margin: 0 auto">К сожалениию, с такими характеристиками ничего нет:(</h3>');
+}

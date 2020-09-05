@@ -10,7 +10,6 @@ const Loader  = (value) => {
         wrap.insertAdjacentHTML("afterbegin", loader);
     } else{
         const loader = document.getElementById('loader');
-        console.log(loader)
         loader.remove();
     }
 
