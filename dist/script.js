@@ -417,8 +417,7 @@ function listenerFilerEvents(wrap) {
 async function controlCheckboxsFilter(target, wrapFilter) {
   Object(_Loader__WEBPACK_IMPORTED_MODULE_3__["default"])(true);
   const inputs = wrapFilter.querySelectorAll(`[data-filter]`);
-  const checked = []; // console.log(inputs)
-
+  const checked = [];
   inputs.forEach(input => {
     if (input.checked === true) checked.push({
       [input.dataset.filter]: input
@@ -440,7 +439,7 @@ async function controlCheckboxsFilter(target, wrapFilter) {
 }
 
 function noItems(wrap) {
-  wrap.insertAdjacentHTML("afterbegin", '<h3>К сожалениию, с такими характеристиками ничего нет:(</h3>');
+  wrap.insertAdjacentHTML("afterbegin", '<h3  style="margin: 0 auto">К сожалениию, с такими характеристиками ничего нет:(</h3>');
 }
 
 function filters(json, squareCheck, squareOptions) {
@@ -472,32 +471,6 @@ function filters(json, squareCheck, squareOptions) {
 
   console.log(res);
   return res;
-}
-
-function filterSquare(json, checked, target) {
-  return json.filter(item => {
-    let res = null;
-    checked.forEach(input => {
-      if (item[target.dataset.filter] === input.id) {
-        res = item[target.dataset.filter];
-      }
-    });
-    return res;
-  });
-}
-
-function filterOptions(json, checked, target) {
-  return json.filter(options => {
-    let res = null;
-    options[target.dataset.filter].forEach(item => {
-      checked.forEach(input => {
-        if (item.data === input.id) {
-          res = options[target.dataset.filter];
-        }
-      });
-    });
-    return res;
-  });
 } //  служебная
 
 

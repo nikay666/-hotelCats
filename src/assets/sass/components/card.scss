@@ -8,6 +8,7 @@ $mg_card-p: 8px;
     border: 1px solid #E1E1E1;
     box-shadow: 0px 0px 25px rgba(208, 208, 208, 0.25);
     border-radius: $br-card;
+    height: fit-content;
 
     &:nth-child(3n){
         margin-right: 0; 
@@ -19,8 +20,9 @@ $mg_card-p: 8px;
         margin-bottom: 15px;
     }
 
-    @media (max-width: 1050px) {
-        width: 49%;
+
+    @media (max-width: 1150px) {
+        width: 48%;
         margin: 0;
         margin-top: 15px;
         margin-bottom: 15px;
@@ -31,12 +33,6 @@ $mg_card-p: 8px;
 
     @media (max-width: 900px) {
         width: 48%;
-        // margin: 0;
-        // margin-top: 15px;
-        // margin-bottom: 15px;
-        // &:nth-child(2n){
-        //     margin-right: 0; 
-        // }
     }
     @media (max-width: 576px) {
         width: 100%;

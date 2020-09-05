@@ -74,7 +74,7 @@ async function controlCheckboxsFilter(target, wrapFilter){
 }
 
 function  noItems(wrap){
-    wrap.insertAdjacentHTML("afterbegin", '<h3>К сожалениию, с такими характеристиками ничего нет:(</h3>');
+    wrap.insertAdjacentHTML("afterbegin", '<h3  style="margin: 0 auto">К сожалениию, с такими характеристиками ничего нет:(</h3>');
 }
 function filters(json, squareCheck, squareOptions){
     let res = json;
