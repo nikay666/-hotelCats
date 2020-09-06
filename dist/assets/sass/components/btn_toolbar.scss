@@ -48,6 +48,8 @@
         transform: translateY(-50%);
         transition: .2s ease-in-out;
         user-select: none;
+        border: none;
+        background: none;
     }
 
     &.active{

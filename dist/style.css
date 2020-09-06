@@ -1370,7 +1370,9 @@
     top: 50%;
     transform: translateY(-50%);
     transition: .2s ease-in-out;
-    user-select: none; }
+    user-select: none;
+    border: none;
+    background: none; }
   .btn__sort.active {
     border-radius: 25px; }
   .btn__sort-btn {
@@ -1566,3 +1568,6 @@ iframe {
 
 ul {
   list-style: none; }
+
+fieldset {
+  border: none; }

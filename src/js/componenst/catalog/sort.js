@@ -39,6 +39,7 @@ export function bindBtnSort(btnSort, items){
 }
 
 function controlVisibleSortItems(target, items){
+    console.log(target)
     if(target.classList.contains('btn__sort-arrow') && target.dataset.sort === "false"){
         addActiveClassForList(items);
 
@@ -76,6 +77,8 @@ function changeActiveFilter(active, btnSort, items){
 
     activeFilter.dataset.list = active.dataset.list;
     textContent.textContent = active.textContent;
+
+    console.log(btnArrow);
 
     controlVisibleSortItems(btnArrow, items);
 }

@@ -76,18 +76,36 @@
 
                     <ul class="btn__sort btn__toolbar active">
 
-                        <li data-active="activeFilter" data-list="top-square" class="btn__sort-btn active active-filter" href="#">
-                            <span data-content="text" class="textContent" >
+                        <li data-active="activeFilter" data-list="top-square" class="btn__sort-btn active active-filter">
+                            <span data-content="text" class="textContent" aria-label="Сортировка по увеличениию">
                                 &#8593; По площади 
                             </span>
-                            <span data-content="arrow" class="material-icons btn__sort-arrow" data-sort="false">expand_more</span>
+                            <!-- <button  class="btn__sort-arrow" data-sort="false" data-content="arrow" >
+                                <span class="material-icons">expand_more</span>
+                            </button> -->
+                            <button aria-label="Раскрыть список" class="material-icons  btn__sort-arrow" data-sort="false" data-content="arrow" >expand_more</button>
                         </li>
-                        <li data-list="top-square" data-item="true" class="btn__sort-btn" href="#">
-                            &#8593; По площади 
+                        <li 
+                            data-list="top-square" 
+                            data-item="true" 
+                            class="btn__sort-btn" 
+                        >&#8593; По площади 
                         </li>
-                        <li data-list="bottom-square"  data-item="true" class="btn__sort-btn" href="#">&#8595; По площади</li>
-                        <li data-list="top-price" data-item="true"  class="btn__sort-btn" href="#">&#8593; По цене</li>
-                        <li data-list="bottom-price" data-item="true" class="btn__sort-btn" href="#">&#8595; По цене</li>
+                        <li 
+                            data-list="bottom-square"  
+                            data-item="true" 
+                            class="btn__sort-btn" 
+                        >&#8595;По площади</li>
+                        <li 
+                            data-list="top-price" 
+                            data-item="true"  
+                            class="btn__sort-btn" 
+                        >&#8593; По цене</li>
+                        <li 
+                            data-list="bottom-price" 
+                            data-item="true" 
+                            class="btn__sort-btn" 
+                        >&#8595;По цене</li>
                     </ul>
                 </div>
             </div>
@@ -100,20 +118,20 @@
                         <span class="popup__close-btn"></span>
                         <span class="popup__close-btn"></span>
                     </button>
-                    <div class="filter-item"  data-filter="price">
-                        <p class="filter-title">Цена за сутки, ₽</p>
+                    <fieldset class="filter-item"  data-filter="price">
+                        <legend class="filter-title">Цена за сутки, ₽</legend>
                         <div class="group__fromTo">
                             <input type="text" name="from" data-filter="price" data-price="from" class="filter__input-text" placeholder="от 100"  min="100">
                             <input type="text" name="to" data-filter="price" data-price="to"  class="filter__input-text" placeholder="до 600" max="600">
                         </div>
-                    </div>
-                    <div class="filter-item" data-filter="square">
-                        <p class="filter-title">Площадь</p>
+                    </fieldset>
+                    <fieldset class="filter-item" data-filter="square">
+                        <legend class="filter-title">Площадь</legend>
                         <div class="group__checklist">
                             <div class="group__checklist-item">
                                 <input type="checkbox" data-filter="square" class="custom-checkbox" id="0,63" name="0,63"
                                 >
-                                <label for="0,63">0,63 м<sup>2</sup></label>
+                                <label for="0,63" >0,63 м<sup aria-label="квадратных">2</sup></label>
                             </div>
                             <div class="group__checklist-item">
                                 <input type="checkbox" data-filter="square" class="custom-checkbox" id="0,90" name="0,90">
@@ -136,9 +154,9 @@
                                 <label for="2,88">2,88 м<sup>2</sup></label>
                             </div>
                         </div>
-                    </div>
-                    <div class="filter-item" data-filter="equipment">
-                        <p class="filter-title">Оснащение номера</p>
+                    </fieldset>
+                    <fieldset class="filter-item" data-filter="equipment">
+                        <legend class="filter-title">Оснащение номера</legend>
                         <div class="group__checklist">
 
                             <div class="group__checklist-item">
@@ -165,7 +183,7 @@
                             </div>
 
                         </div>
-                    </div>
+                    </fieldset>
                     <button data-filter="button" data-f_button="accept" class="btn__filter btn__filter-fill">Прменить</button>
                     <button data-filter="button" data-f_button="clear" class="btn__filter">Сбросить фильтр</button>
                 </aside>

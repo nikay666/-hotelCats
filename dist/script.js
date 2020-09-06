@@ -2128,7 +2128,7 @@ function getOptions(options) {
   let res = '';
   options.forEach(el => {
     res += `
-        <div data-icon="${el.data}" class="prompt-icon">
+        <div data-icon="${el.data}" class="prompt-icon" aria-label="${formatName(el.name)}">
             <img src="${el.icon}" alt="">
             <span class="prompt-text" aria-label="${formatName(el.name)}">
                 ${formatName(el.name)}
@@ -2463,6 +2463,8 @@ function bindBtnSort(btnSort, items) {
 }
 
 function controlVisibleSortItems(target, items) {
+  console.log(target);
+
   if (target.classList.contains('btn__sort-arrow') && target.dataset.sort === "false") {
     addActiveClassForList(items);
     target.dataset.sort = "true";
@@ -2497,6 +2499,7 @@ function changeActiveFilter(active, btnSort, items) {
   const textContent = activeFilter.querySelector('[data-content="text"]');
   activeFilter.dataset.list = active.dataset.list;
   textContent.textContent = active.textContent;
+  console.log(btnArrow);
   controlVisibleSortItems(btnArrow, items);
 } // async function controlSort(){
 //объединть  сортировку  из фильтра и из кнопки

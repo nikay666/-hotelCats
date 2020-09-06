@@ -49,7 +49,7 @@ export function getOptions(options){
     let res = '';
     options.forEach(el => {
         res  +=  `
-        <div data-icon="${el.data}" class="prompt-icon">
+        <div data-icon="${el.data}" class="prompt-icon" aria-label="${formatName(el.name)}">
             <img src="${el.icon}" alt="">
             <span class="prompt-text" aria-label="${formatName(el.name)}">
                 ${formatName(el.name)}
