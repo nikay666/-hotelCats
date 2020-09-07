@@ -2097,7 +2097,7 @@ function getTemplate(item) {
   return `
     <div class="card">
         <div class="card__img">
-            <img src="${item.img}" alt="">
+            <img loading="lazy" src="${item.img}" alt="">
         </div>
         <div class="card__content">
             <p class="card-title">${item.type}</p>
@@ -2145,11 +2145,12 @@ function getOptions(options) {
 /*!*********************************************!*\
   !*** ./src/js/componenst/catalog/filter.js ***!
   \*********************************************/
-/*! exports provided: default */
+/*! exports provided: controlInputsFilter, default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "controlInputsFilter", function() { return controlInputsFilter; });
 /* harmony import */ var core_js_modules_web_dom_collections_iterator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! core-js/modules/web.dom-collections.iterator */ "./node_modules/core-js/modules/web.dom-collections.iterator.js");
 /* harmony import */ var core_js_modules_web_dom_collections_iterator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_web_dom_collections_iterator__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _catalog__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./catalog */ "./src/js/componenst/catalog/catalog.js");
@@ -2182,7 +2183,7 @@ function listenerFilerEvents(wrap) {
       const target = e.target;
 
       if (target.dataset.f_button) {
-        controlButtonsFilter(target);
+        controlButtonsFilter(target, wrap);
       }
     });
   });
@@ -2259,17 +2260,17 @@ function getChekedByType(arr, type) {
 } //  служебная
 
 
-function controlButtonsFilter(target) {
-  if (target.dataset.f_button === 'accept') {
-    console.log('accept');
-  }
-
+function controlButtonsFilter(target, wrapFilter) {
   if (target.dataset.f_button === 'clear') {
-    console.log('clear');
+    const inputs = wrapFilter.querySelectorAll(`[data-filter]`);
+    inputs.forEach(input => {
+      input.checked ? input.checked = false : input.value ? input.value = '' : null;
+    });
+    controlInputsFilter(wrapFilter);
   }
 }
 
-function filtersControl(data, nodes) {
+function filtersControl(nodes) {
   listenerFilerEvents(nodes.wrapFilter);
   nodes.filterItems.forEach(item => {
     const dataAttr = item.dataset.filter;
@@ -2287,11 +2288,11 @@ function filterSortInit(nodes) {
 const filter = async () => {
   const nodes = Object(_filter_template__WEBPACK_IMPORTED_MODULE_2__["initialFilter"])();
   if (nodes === false) return;
-  popupFilter(nodes);
-  Object(_Loader__WEBPACK_IMPORTED_MODULE_4__["default"])(true);
-  const data = await Object(_catalog__WEBPACK_IMPORTED_MODULE_1__["getJSON"])();
-  Object(_Loader__WEBPACK_IMPORTED_MODULE_4__["default"])(false);
-  filtersControl(data, nodes);
+  popupFilter(nodes); // Loader(true);
+  // const data = await getJSON();
+  // Loader(false);
+
+  filtersControl(nodes);
   filterSortInit(nodes);
 };
 
@@ -2425,6 +2426,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _catalog__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./catalog */ "./src/js/componenst/catalog/catalog.js");
 /* harmony import */ var _utilits__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../utilits */ "./src/js/componenst/utilits.js");
 /* harmony import */ var _Loader__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Loader */ "./src/js/componenst/catalog/Loader.js");
+/* harmony import */ var _filter_template__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./filter.template */ "./src/js/componenst/catalog/filter.template.js");
+
 
 
 
@@ -2463,8 +2466,6 @@ function bindBtnSort(btnSort, items) {
 }
 
 function controlVisibleSortItems(target, items) {
-  console.log(target);
-
   if (target.classList.contains('btn__sort-arrow') && target.dataset.sort === "false") {
     addActiveClassForList(items);
     target.dataset.sort = "true";

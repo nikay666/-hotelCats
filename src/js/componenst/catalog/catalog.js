@@ -17,7 +17,6 @@ export const createCards = (data) => {
 
 };
 
-
 export async function getJSON(){
     try {
         const response = await fetch(url);

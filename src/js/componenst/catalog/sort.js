@@ -1,6 +1,7 @@
 import { getJSON, createCatalogItems } from "./catalog";
 import { catalogWrap, getEmptyHTMLForWrap } from "../utilits";
 import Loader from "./Loader";
+import { initialFilter } from "./filter.template";
 
 function controlArrowSort(arrow){
     if(arrow.dataset.sort === "true"){
@@ -39,7 +40,6 @@ export function bindBtnSort(btnSort, items){
 }
 
 function controlVisibleSortItems(target, items){
-    console.log(target)
     if(target.classList.contains('btn__sort-arrow') && target.dataset.sort === "false"){
         addActiveClassForList(items);
 
@@ -91,6 +91,7 @@ async function sort(value){
     Loader(true);
 
     const json  = await getJSON();
+    
     
     Loader(false);
 

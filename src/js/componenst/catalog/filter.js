@@ -1,6 +1,6 @@
 import { getJSON, createCatalogItems } from "./catalog";
 import { bindBtns, initialFilter, filterPrice, filterSquare, filterOptions } from './filter.template';
-import {defaultBtnSort, bindBtnSort} from './sort';
+import {defaultBtnSort, bindBtnSort, typeSortFilter} from './sort';
 import Loader from "./Loader";
 import { catalogWrap, getEmptyHTMLForWrap, noItems } from "../utilits";
 
@@ -25,7 +25,7 @@ function listenerFilerEvents(wrap){
 
             const target = e.target;
             if(target.dataset.f_button){
-                controlButtonsFilter(target);
+                controlButtonsFilter(target, wrap);
             }
         });
     });
@@ -42,7 +42,7 @@ function listenerFilerEvents(wrap){
 
 
 //  служебная
-async function controlInputsFilter(wrapFilter){
+export async function controlInputsFilter(wrapFilter ){
     Loader(true);
     const inputs = wrapFilter.querySelectorAll(`[data-filter]`);
     const checked =  getChecked(inputs); 
@@ -107,16 +107,18 @@ function getChekedByType(arr, type){
 
 
 //  служебная
-function controlButtonsFilter(target){
-    if(target.dataset.f_button === 'accept'){
-        console.log('accept');
-    }
+function controlButtonsFilter(target,wrapFilter){
     if(target.dataset.f_button === 'clear'){
-        console.log('clear');
+        const inputs = wrapFilter.querySelectorAll(`[data-filter]`);
+        inputs.forEach(input =>{ 
+            input.checked ?  (input.checked = false )
+            : input.value ? input.value='' : null 
+        })
+        controlInputsFilter(wrapFilter)
     }
 }
 
-function filtersControl(data, nodes){
+function filtersControl(nodes){
     listenerFilerEvents(nodes.wrapFilter);
     nodes.filterItems.forEach(item => {
         const dataAttr = item.dataset.filter;
@@ -137,12 +139,12 @@ const filter = async () => {
 
     if(nodes  ===  false) return;
     popupFilter(nodes);
-    Loader(true);
+    // Loader(true);
 
-    const data = await getJSON();
-    Loader(false);
+    // const data = await getJSON();
+    // Loader(false);
     
-    filtersControl(data, nodes);
+    filtersControl(nodes);
     filterSortInit(nodes);
 };
 

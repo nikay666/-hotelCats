@@ -19,7 +19,7 @@ export function getTemplate(item){
     return `
     <div class="card">
         <div class="card__img">
-            <img src="${item.img}" alt="">
+            <img loading="lazy" src="${item.img}" alt="">
         </div>
         <div class="card__content">
             <p class="card-title">${item.type}</p>
