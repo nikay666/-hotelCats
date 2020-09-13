@@ -448,7 +448,6 @@
 .screen__container {
   width: 100%;
   position: relative;
-  overflow: hidden;
   padding: 120px 100px 0  100px; }
   .screen__container-wrap {
     margin: 0 auto;
