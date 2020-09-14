@@ -2633,17 +2633,32 @@ const forms = state => {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+// const classes = {
+//     slider: '.slider',
+//     contentWrap: '.slider__rooms-medias',
+//     slidesWrap: '.wrap-medias',
+//     img: '.slider__rooms-img',
+//     description: '.slider__rooms-desc',
+//     dots: '.slider-dots',
+//     dot: '.slider-dot',
+//     arrow: '.slider-arrows',
+//     prevArrow: '.slider-arrow-l',
+//     nextArrow:  '.slider-arrow-r',
+//     idRoom: 'rooms',
+//     idReviews: 'reviews',
+//     activeClass: 'active'
+// }
 const classes = {
   slider: '.slider',
-  contentWrap: '.slider__rooms-medias',
-  slidesWrap: '.wrap-medias',
+  contentWrap: '[data-slider="item"]',
+  slidesWrap: '[data-slider="wrap-content"]',
   img: '.slider__rooms-img',
   description: '.slider__rooms-desc',
   dots: '.slider-dots',
-  dot: '.slider-dot',
+  dot: '[data-slider="dot"]',
   arrow: '.slider-arrows',
-  prevArrow: '.slider-arrow-l',
-  nextArrow: '.slider-arrow-r',
+  prevArrow: '[data-arrow="left"]',
+  nextArrow: '[data-arrow="right"]',
   idRoom: 'rooms',
   idReviews: 'reviews',
   activeClass: 'active'
@@ -2654,7 +2669,7 @@ class Slider {
     this.wrap = wrap;
     this.slides = this.wrap.querySelectorAll(classes.contentWrap);
     this.slidesWrap = this.wrap.querySelector(classes.slidesWrap);
-    this.dots = this.wrap.querySelectorAll(classes.dot);
+    this.dotsWrap = this.wrap.querySelector(classes.dots);
     this.prev = this.wrap.querySelector(classes.prevArrow);
     this.next = this.wrap.querySelector(classes.nextArrow);
     this.slideIndex = 0;
@@ -2703,12 +2718,18 @@ class Slider {
   }
 
   bindBtns() {
-    this.prev.addEventListener('click', e => {
+    this.prev.addEventListener('click', () => {
       this.changeSlide(-1);
     });
-    this.next.addEventListener('click', e => {
+    this.next.addEventListener('click', () => {
       this.changeSlide(1);
     });
+  }
+
+  renderDots() {
+    const dotsTemplate = createDots(this.slides.length);
+    this.dotsWrap.insertAdjacentHTML('afterbegin', dotsTemplate);
+    this.dots = this.wrap.querySelectorAll(classes.dot);
   }
 
   binding() {
@@ -2717,6 +2738,7 @@ class Slider {
   }
 
   init() {
+    this.renderDots();
     this.binding();
     this.showSlides(this.slideIndex);
     this.changeDots(this.slideIndex);
@@ -2725,13 +2747,26 @@ class Slider {
 }
 
 const gallery = () => {
-  const wrapRooms = document.getElementById(classes.idRoom); // const wrapReviews = document.getElementById(classes.idReviews);
-
+  const wrapRooms = document.getElementById(classes.idRoom);
+  const wrapReviews = document.getElementById(classes.idReviews);
   const sliderRoom = new Slider(wrapRooms);
   sliderRoom.init();
+  const sliderReviews = new Slider(wrapReviews);
+  sliderReviews.init();
 };
 
 /* harmony default export */ __webpack_exports__["default"] = (gallery);
+
+function createDots(length) {
+  let dots = '';
+
+  for (let i = 0; i < length; i++) {
+    dots += `<span class="slider-dot" data-slider="dot"></span>`;
+  }
+
+  console.log(dots);
+  return dots;
+}
 
 function slideChangeClasses(slide, direction) {
   if (direction === 1) {

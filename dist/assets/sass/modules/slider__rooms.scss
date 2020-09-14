@@ -153,21 +153,12 @@
     animation-fill-mode: both;
 }
 .left{
-    // opacity: 0;
-    // transform: translate(100%, 0);
-    // position: absolute;
     animation-name: slideInLeft;
     transition: .2s ease-in-out;
-
 }
-
 .right{
-    // position: relative;
-    // transition: .5s cubic-bezier(0.18, 0.64, 0.57, 1.09),  opacity .4s ease-in-out  ;
-    // opacity: 1;
     animation-name: slideInRight;
     transition: .2s ease-in-out;
-
 }
 
 @keyframes slideInLeft {
