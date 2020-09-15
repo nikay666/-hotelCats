@@ -2633,21 +2633,6 @@ const forms = state => {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-// const classes = {
-//     slider: '.slider',
-//     contentWrap: '.slider__rooms-medias',
-//     slidesWrap: '.wrap-medias',
-//     img: '.slider__rooms-img',
-//     description: '.slider__rooms-desc',
-//     dots: '.slider-dots',
-//     dot: '.slider-dot',
-//     arrow: '.slider-arrows',
-//     prevArrow: '.slider-arrow-l',
-//     nextArrow:  '.slider-arrow-r',
-//     idRoom: 'rooms',
-//     idReviews: 'reviews',
-//     activeClass: 'active'
-// }
 const classes = {
   slider: '.slider',
   contentWrap: '[data-slider="item"]',
@@ -2751,7 +2736,7 @@ const gallery = () => {
   const wrapReviews = document.getElementById(classes.idReviews);
   const sliderRoom = new Slider(wrapRooms);
   sliderRoom.init();
-  const sliderReviews = new Slider(wrapReviews);
+  const sliderReviews = new Slider(wrapReviews, 2);
   sliderReviews.init();
 };
 

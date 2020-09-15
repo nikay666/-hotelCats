@@ -1,19 +1,3 @@
-// const classes = {
-//     slider: '.slider',
-//     contentWrap: '.slider__rooms-medias',
-//     slidesWrap: '.wrap-medias',
-//     img: '.slider__rooms-img',
-//     description: '.slider__rooms-desc',
-//     dots: '.slider-dots',
-//     dot: '.slider-dot',
-//     arrow: '.slider-arrows',
-//     prevArrow: '.slider-arrow-l',
-//     nextArrow:  '.slider-arrow-r',
-//     idRoom: 'rooms',
-//     idReviews: 'reviews',
-//     activeClass: 'active'
-// }
-
 const classes = {
     slider: '.slider',
     contentWrap: '[data-slider="item"]',
@@ -40,7 +24,8 @@ class Slider {
         this.prev = this.wrap.querySelector(classes.prevArrow);
         this.next = this.wrap.querySelector(classes.nextArrow)
         this.slideIndex = 0;
-        this.activeClass =  classes.activeClass
+        this.activeClass = classes.activeClass
+
     }
 
     showSlides(n){
@@ -55,7 +40,10 @@ class Slider {
             slide.style.display = 'none' 
         })
         this.changeDots(this.slideIndex)
-        this.slides[this.slideIndex].style.display = '' 
+
+
+            this.slides[this.slideIndex].style.display = '' 
+        
     }
 
     changeSlide(n){
@@ -119,9 +107,8 @@ const gallery = ()  => {
     const sliderRoom =  new Slider(wrapRooms);
     sliderRoom.init();
 
-    const sliderReviews = new Slider(wrapReviews)
+    const sliderReviews = new Slider(wrapReviews, 2)
     sliderReviews.init()
-
 }
 
 export default gallery;
