@@ -118,7 +118,6 @@ function createDots(length){
     for(let i = 0;  i < length; i++){
         dots += `<span class="slider-dot" data-slider="dot"></span>`
     }
-    console.log(dots)
     
     return dots;
 }
