@@ -6,7 +6,7 @@
         position: relative;
         height: 60px;
         display: block;
-
+        margin-top: 15px;
 
     }
     &-dots{
@@ -46,9 +46,6 @@
         right: 0;
         bottom: 0;
         display: flex;
-
-        // height: 36px;
-        // width: 80px;
 
         .slider-arrow{
             display: flex;

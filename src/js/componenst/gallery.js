@@ -13,8 +13,6 @@ const classes = {
     idReviews: 'reviews',
     activeClass: 'active'
 }
-
-
 class Slider {
     constructor(wrap){
         this.wrap = wrap
@@ -25,9 +23,8 @@ class Slider {
         this.next = this.wrap.querySelector(classes.nextArrow)
         this.slideIndex = 0;
         this.activeClass = classes.activeClass
-
     }
-
+    
     showSlides(n){
         if(n > this.slides.length - 1){
             this.slideIndex = 0
@@ -40,15 +37,15 @@ class Slider {
             slide.style.display = 'none' 
         })
         this.changeDots(this.slideIndex)
-
-
-            this.slides[this.slideIndex].style.display = '' 
+        this.slides[this.slideIndex].style.display = '' 
         
     }
 
     changeSlide(n){
         this.slideIndex += n;
-        this.showSlides(this.slideIndex)
+        const  count = this.count < 0 ?  -1: 1
+        this.showSlides(this.slideIndex, count)
+
         slideChangeClasses(this.slides[this.slideIndex], n) 
     }
 
@@ -79,8 +76,9 @@ class Slider {
             this.changeSlide(1)
         })
     }
-    renderDots(){
-        const dotsTemplate = createDots(this.slides.length);
+    renderDots(count = this.slides.length ){
+        this.dotsWrap.innerHTML =  '';
+        const dotsTemplate = createDots(count)
         this.dotsWrap.insertAdjacentHTML('afterbegin', dotsTemplate)
         this.dots = this.wrap.querySelectorAll(classes.dot)
     }
@@ -99,16 +97,10 @@ class Slider {
 }
 
 
-const gallery = ()  => {
+const gallery = () => {
     const wrapRooms =  document.getElementById(classes.idRoom);
-
-    const wrapReviews = document.getElementById(classes.idReviews);
-
     const sliderRoom =  new Slider(wrapRooms);
     sliderRoom.init();
-
-    const sliderReviews = new Slider(wrapReviews, 2)
-    sliderReviews.init()
 }
 
 export default gallery;

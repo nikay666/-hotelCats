@@ -1,8 +1,13 @@
 .slider__review{
+    width: 100vw;
+    overflow-x: scroll;
+    overflow-y: hidden;
+    &::-webkit-scrollbar { width: 0; }
 
     &-cards{
         display: flex;
         width: fit-content;
+        padding-right: 10%;
     }
     &-card{
         background-color: $white;
@@ -55,7 +60,7 @@
 
     @media (max-width: 992px) {
         &-card{
-            width: 100%;
+            width: 75vw;
         }
         &-content{
             &::before{
@@ -65,26 +70,45 @@
         }
     
     }
+    
+    @media (max-width: 800px) {
+        &-content{
+            &::before{
+                top: 0%;
+                left: -10%;
+            }
+        }
+    }
     @media (max-width: 580px) {
         &-content{
             &::before{
                 top: 0%;
-                left: -11%;
+                left: -15%;
             }
         }
     }
     @media (max-width: 450px) {
         &-content{
             &::before{
-                left: -15%;
+                left: -25%;
             }
         }
     }
     @media  (max-width: 350px)  {
         &-content{
             &::before{
-                left: -35%;
+                left: -13%;
+                font-size: 40px;
             }
+        }
+        &-card{
+            padding: 25px 15px 25px 35px;;
+        }
+        &-signature{
+            flex-wrap: wrap;
+        }
+        &-text{
+            font-size: 14px;
         }
     }
 }

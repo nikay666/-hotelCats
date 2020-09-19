@@ -2632,7 +2632,8 @@ class Slider {
 
   changeSlide(n) {
     this.slideIndex += n;
-    this.showSlides(this.slideIndex);
+    const count = this.count < 0 ? -1 : 1;
+    this.showSlides(this.slideIndex, count);
     slideChangeClasses(this.slides[this.slideIndex], n);
   }
 
@@ -2663,8 +2664,9 @@ class Slider {
     });
   }
 
-  renderDots() {
-    const dotsTemplate = createDots(this.slides.length);
+  renderDots(count = this.slides.length) {
+    this.dotsWrap.innerHTML = '';
+    const dotsTemplate = createDots(count);
     this.dotsWrap.insertAdjacentHTML('afterbegin', dotsTemplate);
     this.dots = this.wrap.querySelectorAll(classes.dot);
   }
@@ -2685,11 +2687,8 @@ class Slider {
 
 const gallery = () => {
   const wrapRooms = document.getElementById(classes.idRoom);
-  const wrapReviews = document.getElementById(classes.idReviews);
   const sliderRoom = new Slider(wrapRooms);
   sliderRoom.init();
-  const sliderReviews = new Slider(wrapReviews, 2);
-  sliderReviews.init();
 };
 
 /* harmony default export */ __webpack_exports__["default"] = (gallery);
@@ -2701,7 +2700,6 @@ function createDots(length) {
     dots += `<span class="slider-dot" data-slider="dot"></span>`;
   }
 
-  console.log(dots);
   return dots;
 }
 
