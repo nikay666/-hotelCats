@@ -99,8 +99,10 @@ class Slider {
 
 const gallery = () => {
     const wrapRooms =  document.getElementById(classes.idRoom);
-    const sliderRoom =  new Slider(wrapRooms);
-    sliderRoom.init();
+    if(wrapRooms){
+        const sliderRoom =  new Slider(wrapRooms);
+        sliderRoom.init();
+    }
 }
 
 export default gallery;

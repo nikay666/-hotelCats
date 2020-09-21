@@ -2687,8 +2687,11 @@ class Slider {
 
 const gallery = () => {
   const wrapRooms = document.getElementById(classes.idRoom);
-  const sliderRoom = new Slider(wrapRooms);
-  sliderRoom.init();
+
+  if (wrapRooms) {
+    const sliderRoom = new Slider(wrapRooms);
+    sliderRoom.init();
+  }
 };
 
 /* harmony default export */ __webpack_exports__["default"] = (gallery);
