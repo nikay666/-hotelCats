@@ -1,4 +1,6 @@
-const forms = (state) => {
-    console.log('form');
+import { bindBtnSort } from "./catalog/sort";
+
+const forms = (form) => {
+        
 };
 export default forms;

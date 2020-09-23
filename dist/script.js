@@ -2568,9 +2568,10 @@ function bottomFilter(type, json) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-const forms = state => {
-  console.log('form');
-};
+/* harmony import */ var _catalog_sort__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./catalog/sort */ "./src/js/componenst/catalog/sort.js");
+
+
+const forms = form => {};
 
 /* harmony default export */ __webpack_exports__["default"] = (forms);
 
