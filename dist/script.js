@@ -2568,10 +2568,13 @@ function bottomFilter(type, json) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _catalog_sort__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./catalog/sort */ "./src/js/componenst/catalog/sort.js");
+const forms = (form = null) => {
+  if (form === null) return null; // var f = document.forms.namedItem("booking");
+  // const f  =  document.querySelector('form')
+  // const formData = new FormData(f)
 
-
-const forms = form => {};
+  console.log(form);
+};
 
 /* harmony default export */ __webpack_exports__["default"] = (forms);
 
@@ -2728,6 +2731,9 @@ function slideChangeClasses(slide, direction) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _form__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./form */ "./src/js/componenst/form.js");
+
+
 function bindForm(selectors) {
   const popup = document.querySelector(selectors.popup),
         substrate = document.querySelector(selectors.substrate),
@@ -2768,8 +2774,9 @@ function bindForm(selectors) {
     closePopup();
   });
   btnSubmit.addEventListener('click', e => {
-    e.preventDefault();
-    submitForm();
+    e.preventDefault(); // submitForm(form);
+
+    Object(_form__WEBPACK_IMPORTED_MODULE_0__["default"])(form);
     closePopup(true);
   });
 
@@ -2781,7 +2788,7 @@ function bindForm(selectors) {
 }
 
 function showOkMessage(selectors, substrate, popup) {
-  console.log(selectors);
+  // console.log(selectors)
   const messageForm = document.querySelector(selectors.message),
         btnClose = messageForm.querySelector(selectors.close),
         btnOk = messageForm.querySelector(selectors.ok),

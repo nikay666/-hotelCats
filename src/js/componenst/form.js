@@ -1,6 +1,10 @@
-import { bindBtnSort } from "./catalog/sort";
+const forms = (form = null) => {
+    if(form  ===  null) return null; 
+    
+    // var f = document.forms.namedItem("booking");
+    // const f  =  document.querySelector('form')
+    // const formData = new FormData(f)
+    console.log(form)    
 
-const forms = (form) => {
-        
 };
 export default forms;

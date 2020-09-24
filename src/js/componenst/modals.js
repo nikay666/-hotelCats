@@ -1,3 +1,4 @@
+import forms from "./form";
 
 function bindForm(selectors){
     const popup = document.querySelector(selectors.popup),
@@ -42,7 +43,7 @@ function bindForm(selectors){
 
     btnSubmit.addEventListener('click', (e) => {
         e.preventDefault();
-        submitForm();
+        forms(form)
         closePopup(true);
     });
 
@@ -52,7 +53,6 @@ function bindForm(selectors){
     init();
 }
 function showOkMessage(selectors, substrate, popup ) {
-    console.log(selectors)
     const messageForm = document.querySelector(selectors.message),
           btnClose = messageForm.querySelector(selectors.close),
           btnOk  =  messageForm.querySelector(selectors.ok),
