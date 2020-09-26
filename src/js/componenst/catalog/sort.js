@@ -1,7 +1,6 @@
 import { getJSON, createCatalogItems } from "./catalog";
 import { catalogWrap, getEmptyHTMLForWrap } from "../utilits";
 import Loader from "./Loader";
-import { initialFilter } from "./filter.template";
 
 function controlArrowSort(arrow){
     if(arrow.dataset.sort === "true"){
@@ -82,10 +81,6 @@ function changeActiveFilter(active, btnSort, items){
 
     controlVisibleSortItems(btnArrow, items);
 }
-
-// async function controlSort(){
-//объединть  сортировку  из фильтра и из кнопки
-// }
 
 async function sort(value){
     Loader(true);
