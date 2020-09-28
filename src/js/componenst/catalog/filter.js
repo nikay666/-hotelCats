@@ -56,6 +56,7 @@ export async function controlInputsFilter(wrapFilter ){
 
     let wrap = catalogWrap();
     getEmptyHTMLForWrap(wrap);
+
     res.length === 0 ? noItems(wrap) : createCatalogItems(res, wrap);
     Loader(false)
 }

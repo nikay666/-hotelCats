@@ -1999,7 +1999,7 @@ const Loader = value => {
 /*!**********************************************!*\
   !*** ./src/js/componenst/catalog/catalog.js ***!
   \**********************************************/
-/*! exports provided: createCards, getJSON, createCatalogItems, default */
+/*! exports provided: createCards, getJSON, createCatalogItems, getCatalogItems, default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -2007,6 +2007,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "createCards", function() { return createCards; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getJSON", function() { return getJSON; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "createCatalogItems", function() { return createCatalogItems; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getCatalogItems", function() { return getCatalogItems; });
 /* harmony import */ var _catalog_template__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./catalog.template */ "./src/js/componenst/catalog/catalog.template.js");
 /* harmony import */ var _utilits__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../utilits */ "./src/js/componenst/utilits.js");
 /* harmony import */ var _sort__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./sort */ "./src/js/componenst/catalog/sort.js");
@@ -2015,7 +2016,6 @@ __webpack_require__.r(__webpack_exports__);
 
 const url = './assets/catalogList.json';
 const createCards = data => {
-  console.log(data);
   let cards = '';
   data.forEach(item => {
     cards += Object(_catalog_template__WEBPACK_IMPORTED_MODULE_0__["getTemplate"])(item);
@@ -2036,29 +2036,26 @@ function createCatalogItems(json, wrap) {
   const cards = createCards(json);
   Object(_utilits__WEBPACK_IMPORTED_MODULE_1__["toHTML"])(cards, wrap);
 }
+const defaultSort = {
+  direction: 'top',
+  type: 'square'
+};
+const defaultFilter = {}; //TODO  Сделать так  чтобы  оно  работало из  разных мест, сохраняя  в  себе результат
 
-async function getCatalogItems(wrap) {
-  try {
-    const json = await getJSON();
-    const defaultSort = {
-      direction: 'top',
-      type: 'square'
-    };
-    Object(_sort__WEBPACK_IMPORTED_MODULE_2__["typeSortFilter"])(defaultSort.direction, defaultSort.type, json);
-    createCatalogItems(json, wrap);
-  } catch (error) {
-    console.log(error);
-  }
+function getCatalogItems(json, wrap, sort = defaultSort, filter = defaultFilter) {
+  Object(_sort__WEBPACK_IMPORTED_MODULE_2__["typeSortFilter"])(sort.direction, sort.type, json);
+  createCatalogItems(json, wrap);
 }
 
-const catalog = () => {
+const catalog = async () => {
   const wrap = Object(_utilits__WEBPACK_IMPORTED_MODULE_1__["catalogWrap"])();
 
   if (wrap === null || wrap === undefined) {
     return;
   }
 
-  getCatalogItems(wrap);
+  const json = await getJSON();
+  getCatalogItems(json, wrap);
 };
 
 /* harmony default export */ __webpack_exports__["default"] = (catalog);
@@ -2426,8 +2423,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _catalog__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./catalog */ "./src/js/componenst/catalog/catalog.js");
 /* harmony import */ var _utilits__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../utilits */ "./src/js/componenst/utilits.js");
 /* harmony import */ var _Loader__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Loader */ "./src/js/componenst/catalog/Loader.js");
-/* harmony import */ var _filter_template__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./filter.template */ "./src/js/componenst/catalog/filter.template.js");
-
 
 
 
@@ -2490,7 +2485,7 @@ function addActiveClassForList(items) {
 function controlEventsSortItems(target, btnSort, items) {
   if (target.tagName === "LI" && target.dataset.item === "true") {
     changeActiveFilter(target, btnSort, items);
-    sort(target.dataset.list);
+    Sort(target.dataset.list);
   }
 }
 
@@ -2502,21 +2497,21 @@ function changeActiveFilter(active, btnSort, items) {
   textContent.textContent = active.textContent;
   console.log(btnArrow);
   controlVisibleSortItems(btnArrow, items);
-} // async function controlSort(){
-//объединть  сортировку  из фильтра и из кнопки
-// }
+}
 
-
-async function sort(value) {
+async function Sort(value) {
   Object(_Loader__WEBPACK_IMPORTED_MODULE_2__["default"])(true);
   const json = await Object(_catalog__WEBPACK_IMPORTED_MODULE_0__["getJSON"])();
   Object(_Loader__WEBPACK_IMPORTED_MODULE_2__["default"])(false);
   const direction = value.split('-')[0];
-  const type = value.split('-')[1];
-  typeSortFilter(direction, type, json);
+  const type = value.split('-')[1]; // typeSortFilter(direction, type, json);
+
   let wrap = Object(_utilits__WEBPACK_IMPORTED_MODULE_1__["catalogWrap"])();
   Object(_utilits__WEBPACK_IMPORTED_MODULE_1__["getEmptyHTMLForWrap"])(wrap);
-  Object(_catalog__WEBPACK_IMPORTED_MODULE_0__["createCatalogItems"])(json, wrap);
+  Object(_catalog__WEBPACK_IMPORTED_MODULE_0__["getCatalogItems"])(json, wrap, {
+    direction,
+    type
+  });
 }
 
 function typeSortFilter(direction, type, json) {
@@ -2569,10 +2564,7 @@ function bottomFilter(type, json) {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 const forms = (form = null) => {
-  if (form === null) return null; // var f = document.forms.namedItem("booking");
-  // const f  =  document.querySelector('form')
-  // const formData = new FormData(f)
-
+  if (form === null) return null;
   console.log(form);
 };
 
@@ -2774,8 +2766,7 @@ function bindForm(selectors) {
     closePopup();
   });
   btnSubmit.addEventListener('click', e => {
-    e.preventDefault(); // submitForm(form);
-
+    e.preventDefault();
     Object(_form__WEBPACK_IMPORTED_MODULE_0__["default"])(form);
     closePopup(true);
   });
@@ -2788,7 +2779,6 @@ function bindForm(selectors) {
 }
 
 function showOkMessage(selectors, substrate, popup) {
-  // console.log(selectors)
   const messageForm = document.querySelector(selectors.message),
         btnClose = messageForm.querySelector(selectors.close),
         btnOk = messageForm.querySelector(selectors.ok),

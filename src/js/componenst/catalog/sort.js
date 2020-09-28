@@ -1,4 +1,4 @@
-import { getJSON, createCatalogItems } from "./catalog";
+import { getJSON, createCatalogItems, getCatalogItems } from "./catalog";
 import { catalogWrap, getEmptyHTMLForWrap } from "../utilits";
 import Loader from "./Loader";
 
@@ -65,7 +65,7 @@ function addActiveClassForList(items){
 function controlEventsSortItems(target, btnSort, items){ 
     if(target.tagName  ===  "LI" &&  target.dataset.item === "true" ){
         changeActiveFilter(target, btnSort, items);
-        sort(target.dataset.list);
+        Sort(target.dataset.list);
     }
 }
 
@@ -82,22 +82,22 @@ function changeActiveFilter(active, btnSort, items){
     controlVisibleSortItems(btnArrow, items);
 }
 
-async function sort(value){
+async function Sort(value){
     Loader(true);
 
     const json  = await getJSON();
-    
     
     Loader(false);
 
     const direction =  value.split('-')[0];
     const  type = value.split('-')[1];
 
-    typeSortFilter(direction, type, json);
+    // typeSortFilter(direction, type, json);
     
     let wrap = catalogWrap();
     getEmptyHTMLForWrap(wrap);
-    createCatalogItems(json, wrap);
+
+    getCatalogItems(json, wrap, {direction, type} );
 }
 
 export function typeSortFilter(direction, type, json){

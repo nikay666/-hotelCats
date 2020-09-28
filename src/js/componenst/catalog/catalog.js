@@ -6,7 +6,7 @@ const  url  = './assets/catalogList.json';
 
 
 export const createCards = (data) => {
-    console.log(data);
+
     let cards = '';
     data.forEach(item => {
 
@@ -29,35 +29,39 @@ export async function getJSON(){
     }
 }
 
+
+
+
+
 export function  createCatalogItems(json, wrap){
     const cards = createCards(json);
     toHTML(cards, wrap);
 }
 
-async function getCatalogItems(wrap) {
-    try {
-        const  json = await getJSON();
-        const defaultSort =  {
-            direction: 'top',
-            type: 'square'
-        };
+const defaultSort =  {
+    direction: 'top',
+    type: 'square'
+};
+const defaultFilter = {}
 
-        typeSortFilter(defaultSort.direction,  defaultSort.type,  json);
-        createCatalogItems(json, wrap);
 
-    } catch (error) {
-        console.log(error);
-    }
+//TODO  Сделать так  чтобы  оно  работало из  разных мест, сохраняя  в  себе результат
+export function getCatalogItems(json, wrap, sort = defaultSort, filter =  defaultFilter ) {
+
+    typeSortFilter(sort.direction,  sort.type,  json);
+
+    createCatalogItems(json, wrap);
 }
 
 
-const catalog = ()  =>  {
+const catalog =async ()  =>  {
     const wrap = catalogWrap();
     if(wrap === null || wrap === undefined){
         return;
     } 
+    const  json = await getJSON();
 
-    getCatalogItems(wrap);
+    getCatalogItems(json, wrap);
 };
 
 
