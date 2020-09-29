@@ -1999,7 +1999,7 @@ const Loader = value => {
 /*!**********************************************!*\
   !*** ./src/js/componenst/catalog/catalog.js ***!
   \**********************************************/
-/*! exports provided: createCards, getJSON, createCatalogItems, getCatalogItems, default */
+/*! exports provided: createCards, getJSON, createCatalogItems, getSortJSON, getCatalogItems, default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -2007,10 +2007,13 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "createCards", function() { return createCards; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getJSON", function() { return getJSON; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "createCatalogItems", function() { return createCatalogItems; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getSortJSON", function() { return getSortJSON; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getCatalogItems", function() { return getCatalogItems; });
 /* harmony import */ var _catalog_template__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./catalog.template */ "./src/js/componenst/catalog/catalog.template.js");
 /* harmony import */ var _utilits__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../utilits */ "./src/js/componenst/utilits.js");
 /* harmony import */ var _sort__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./sort */ "./src/js/componenst/catalog/sort.js");
+/* harmony import */ var _filter__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./filter */ "./src/js/componenst/catalog/filter.js");
+
 
 
 
@@ -2040,11 +2043,19 @@ const defaultSort = {
   direction: 'top',
   type: 'square'
 };
-const defaultFilter = {}; //TODO  Сделать так  чтобы  оно  работало из  разных мест, сохраняя  в  себе результат
-
-function getCatalogItems(json, wrap, sort = defaultSort, filter = defaultFilter) {
+const defaultFilter = {};
+function getSortJSON(json, sort) {
   Object(_sort__WEBPACK_IMPORTED_MODULE_2__["typeSortFilter"])(sort.direction, sort.type, json);
-  createCatalogItems(json, wrap);
+  return json;
+} //TODO  Сделать так  чтобы  оно  работало из  разных мест, сохраняя  в  себе результат
+
+function getCatalogItems(json, wrap, sort = defaultSort, p_filter) {
+  // const store = json
+  // let sort = p_sort || defaultSort
+  // let filter =  p_filter || defaultFilter
+  // typeSortFilter(sort.direction,  sort.type,  store);
+  const state = getSortJSON(json, sort);
+  createCatalogItems(state, wrap);
 }
 
 const catalog = async () => {
@@ -2142,12 +2153,14 @@ function getOptions(options) {
 /*!*********************************************!*\
   !*** ./src/js/componenst/catalog/filter.js ***!
   \*********************************************/
-/*! exports provided: controlInputsFilter, default */
+/*! exports provided: getChecketInputs, controlInputsFilter, filters, default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getChecketInputs", function() { return getChecketInputs; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "controlInputsFilter", function() { return controlInputsFilter; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "filters", function() { return filters; });
 /* harmony import */ var core_js_modules_web_dom_collections_iterator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! core-js/modules/web.dom-collections.iterator */ "./node_modules/core-js/modules/web.dom-collections.iterator.js");
 /* harmony import */ var core_js_modules_web_dom_collections_iterator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_web_dom_collections_iterator__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _catalog__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./catalog */ "./src/js/componenst/catalog/catalog.js");
@@ -2191,18 +2204,27 @@ function listenerFilerEvents(wrap) {
       controlInputsFilter(wrap);
     }
   });
-} //  служебная
+}
 
-
-async function controlInputsFilter(wrapFilter) {
-  Object(_Loader__WEBPACK_IMPORTED_MODULE_4__["default"])(true);
+function getChecketInputs(wrapFilter) {
   const inputs = wrapFilter.querySelectorAll(`[data-filter]`);
   const checked = getChecked(inputs);
   const optionsCheck = getChekedByType(checked, 'options');
   const squareCheck = getChekedByType(checked, 'square');
-  const price = getPrice(inputs, 'price');
+  return {
+    inputs,
+    checked,
+    optionsCheck,
+    squareCheck
+  };
+} //  служебная
+
+async function controlInputsFilter(wrapFilter) {
+  Object(_Loader__WEBPACK_IMPORTED_MODULE_4__["default"])(true);
+  const inputsObj = getChecketInputs(wrapFilter);
+  const price = getPrice(inputsObj.inputs, 'price');
   const json = await Object(_catalog__WEBPACK_IMPORTED_MODULE_1__["getJSON"])();
-  const res = filters(json, squareCheck, optionsCheck, price);
+  const res = filters(json, inputsObj.squareCheck, inputsObj.optionsCheck, price);
   let wrap = Object(_utilits__WEBPACK_IMPORTED_MODULE_5__["catalogWrap"])();
   Object(_utilits__WEBPACK_IMPORTED_MODULE_5__["getEmptyHTMLForWrap"])(wrap);
   res.length === 0 ? Object(_utilits__WEBPACK_IMPORTED_MODULE_5__["noItems"])(wrap) : Object(_catalog__WEBPACK_IMPORTED_MODULE_1__["createCatalogItems"])(res, wrap);
@@ -2237,7 +2259,6 @@ function filters(json, squareCheck, optionsCheck, price) {
 
   return res;
 } //  служебная
-
 
 function getChecked(inputs) {
   const checked = [];

@@ -1,4 +1,4 @@
-import { getJSON, createCatalogItems } from "./catalog";
+import { getJSON, createCatalogItems, getCatalogItems } from "./catalog";
 import { bindBtns, initialFilter, filterPrice, filterSquare, filterOptions } from './filter.template';
 import {defaultBtnSort, bindBtnSort, typeSortFilter} from './sort';
 import Loader from "./Loader";
@@ -41,23 +41,29 @@ function listenerFilerEvents(wrap){
 }
 
 
-//  служебная
-export async function controlInputsFilter(wrapFilter ){
-    Loader(true);
+export  function getChecketInputs(wrapFilter){
     const inputs = wrapFilter.querySelectorAll(`[data-filter]`);
     const checked =  getChecked(inputs); 
     const optionsCheck = getChekedByType(checked, 'options')
     const squareCheck = getChekedByType(checked, 'square')
-   
-    const price = getPrice(inputs, 'price')
+
+    return  {
+        inputs,checked,optionsCheck,squareCheck
+    }
+}
+//  служебная
+export async function controlInputsFilter(wrapFilter ){
+    Loader(true);
+    const  inputsObj = getChecketInputs(wrapFilter)
+    const price = getPrice(inputsObj.inputs, 'price')
 
     const json  = await getJSON();
-    const res = filters(json, squareCheck, optionsCheck, price);
+    const res = filters(json, inputsObj.squareCheck, inputsObj.optionsCheck, price);
 
     let wrap = catalogWrap();
     getEmptyHTMLForWrap(wrap);
-
     res.length === 0 ? noItems(wrap) : createCatalogItems(res, wrap);
+    
     Loader(false)
 }
 
@@ -74,7 +80,7 @@ function getPrice(inputs,  type){
     return price
 }
 
-function filters(json, squareCheck, optionsCheck, price){
+export function filters(json, squareCheck, optionsCheck, price){
     let res = json;
 
     if(squareCheck.length !==  0 ){
