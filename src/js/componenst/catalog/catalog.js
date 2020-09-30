@@ -65,6 +65,31 @@ export function getCatalogItems(json, wrap, sort = defaultSort , p_filter ) {
 }
 
 
+class Store{
+    constructor(){
+        this.json = await getJSON();
+    }
+    getSortJson(){
+        //mutation  this.json
+    }
+    getFilterJson(){
+        //mutation  this.json
+    }
+    getJSON(){
+        this.getFilterJson()
+        this.getSortJson()
+    }
+    clear(){
+
+    }
+}
+
+
+export function listerSortFilter(){
+
+}
+
+
 const catalog =async ()  =>  {
     const wrap = catalogWrap();
     if(wrap === null || wrap === undefined){
@@ -73,6 +98,7 @@ const catalog =async ()  =>  {
     const  json = await getJSON();
 
     getCatalogItems(json, wrap);
+
 };
 
 
