@@ -1,4 +1,4 @@
-import { getJSON, createCatalogItems, getCatalogItems } from "./catalog";
+import { getJSON, createCatalogItems, getCatalogItems, Store } from "./catalog";
 import { bindBtns, initialFilter, filterPrice, filterSquare, filterOptions } from './filter.template';
 import {defaultBtnSort, bindBtnSort, typeSortFilter} from './sort';
 import Loader from "./Loader";
@@ -60,10 +60,18 @@ export async function controlInputsFilter(wrapFilter ){
     const json  = await getJSON();
     const res = filters(json, inputsObj.squareCheck, inputsObj.optionsCheck, price);
 
+    const filterObj = {
+        squareCheck:  inputsObj.squareCheck,
+        optionsCheck: inputsObj.optionsCheck,
+        price: price
+    }
+
+    Store.setFilter(filterObj)
+    
     let wrap = catalogWrap();
     getEmptyHTMLForWrap(wrap);
     res.length === 0 ? noItems(wrap) : createCatalogItems(res, wrap);
-    
+
     Loader(false)
 }
 
@@ -129,7 +137,7 @@ function filtersControl(nodes){
     listenerFilerEvents(nodes.wrapFilter);
     nodes.filterItems.forEach(item => {
         const dataAttr = item.dataset.filter;
-        console.log(dataAttr)
+        // console.log(dataAttr)
     });
 }
 

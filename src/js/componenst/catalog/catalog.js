@@ -1,8 +1,6 @@
 import { getTemplate} from "./catalog.template";
 import { catalogWrap,toHTML, timeoutForTesting } from "../utilits";
 import { typeSortFilter } from "./sort";
-import   {filters} from './filter'
-
 
 const  url  = './assets/catalogList.json';
 
@@ -44,60 +42,61 @@ const defaultSort =  {
     direction: 'top',
     type: 'square'
 };
-const defaultFilter = {}
-
-
-export function getSortJSON(json,sort){
-    typeSortFilter(sort.direction,  sort.type,  json);
-    return  json
-} 
 
 //TODO  Сделать так  чтобы  оно  работало из  разных мест, сохраняя  в  себе результат
-export function getCatalogItems(json, wrap, sort = defaultSort , p_filter ) {
-    // const store = json
-    // let sort = p_sort || defaultSort
-    // let filter =  p_filter || defaultFilter
-
-    // typeSortFilter(sort.direction,  sort.type,  store);
-    const state =  getSortJSON(json,sort)
-
-    createCatalogItems(state, wrap);
+export function getCatalogItems(json, wrap, sort = defaultSort) {
+     
+    typeSortFilter(sort.direction,  sort.type,  json);
+    Store.setSort(sort)
+    createCatalogItems(json, wrap);
 }
 
 
-class Store{
-    constructor(){
-        this.json = await getJSON();
+export class Store{
+    static setJSON(json){
+         console.log('set', json)
+        this.json=  json
     }
-    getSortJson(){
+    static setSort(sort){
+        console.log(sort)
+    }
+    static setFilter(filter){
+        console.log(filter)
+    }
+   
+    static getSortJson(){
         //mutation  this.json
+        return this.json
     }
-    getFilterJson(){
+    static  getFilterJson(){
         //mutation  this.json
+        return this.json
     }
-    getJSON(){
+     static async  getJSON(){
         this.getFilterJson()
         this.getSortJson()
+        console.log('Store', this.json)
+        return  this.json
     }
+
     clear(){
-
+        this.json = []
     }
 }
 
 
-export function listerSortFilter(){
-
-}
-
-
-const catalog =async ()  =>  {
+const catalog = async ()  =>  {
     const wrap = catalogWrap();
     if(wrap === null || wrap === undefined){
         return;
     } 
-    const  json = await getJSON();
-
+    // const  json = await getJSON();
+    // const store  =  new Store()
+    const  data =  await getJSON();
+    Store.setJSON(data) 
+    const json = await Store.getJSON();
     getCatalogItems(json, wrap);
+    
 
 };
 

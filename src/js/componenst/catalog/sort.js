@@ -1,4 +1,4 @@
-import { getJSON, createCatalogItems, getCatalogItems } from "./catalog";
+import { getJSON, createCatalogItems, getCatalogItems, Store } from "./catalog";
 import { catalogWrap, getEmptyHTMLForWrap } from "../utilits";
 import Loader from "./Loader";
 
@@ -85,8 +85,9 @@ function changeActiveFilter(active, btnSort, items){
 async function Sort(value){
     Loader(true);
 
-    const json  = await getJSON();
-    
+    // const json  = await getJSON();
+    const json  =await Store.getJSON();
+    console.log('SORT', json)
     Loader(false);
 
     const direction =  value.split('-')[0];
