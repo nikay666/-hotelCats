@@ -2012,6 +2012,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _catalog_template__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./catalog.template */ "./src/js/componenst/catalog/catalog.template.js");
 /* harmony import */ var _utilits__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../utilits */ "./src/js/componenst/utilits.js");
 /* harmony import */ var _sort__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./sort */ "./src/js/componenst/catalog/sort.js");
+/* harmony import */ var _filter__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./filter */ "./src/js/componenst/catalog/filter.js");
+
 
 
 
@@ -2049,31 +2051,41 @@ function getCatalogItems(json, wrap, sort = defaultSort) {
 }
 class Store {
   static setJSON(json) {
+    this.sort = {};
+    this.filter = {};
     console.log('set', json);
     this.json = json;
   }
 
   static setSort(sort) {
-    console.log(sort);
+    this.sort = sort;
+    console.log(this.sort);
   }
 
   static setFilter(filter) {
-    console.log(filter);
+    this.filter = filter;
+    console.log(this.filter);
   }
 
   static getSortJson() {
-    //mutation  this.json
+    getCatalogItems(this.sort.direction, this.sort.type, this.json);
     return this.json;
   }
 
   static getFilterJson() {
-    //mutation  this.json
+    Object(_filter__WEBPACK_IMPORTED_MODULE_3__["filters"])(this.json, this.filter.squareCheck, this.filter.optionsCheck, this.filter.price);
     return this.json;
   }
 
   static async getJSON() {
-    this.getFilterJson();
-    this.getSortJson();
+    //
+    const value = Object.keys(this.sort).length !== 0 && Object.keys(this.filter).length !== 0;
+
+    if (value) {
+      this.getFilterJson();
+      this.getSortJson();
+    }
+
     console.log('Store', this.json);
     return this.json;
   }

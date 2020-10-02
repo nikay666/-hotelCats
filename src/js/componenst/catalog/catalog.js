@@ -1,6 +1,7 @@
 import { getTemplate} from "./catalog.template";
 import { catalogWrap,toHTML, timeoutForTesting } from "../utilits";
 import { typeSortFilter } from "./sort";
+import { filters } from "./filter";
 
 const  url  = './assets/catalogList.json';
 
@@ -54,27 +55,36 @@ export function getCatalogItems(json, wrap, sort = defaultSort) {
 
 export class Store{
     static setJSON(json){
-         console.log('set', json)
+        this.sort =  {}
+        this.filter =  {}
+        console.log('set', json)
         this.json=  json
     }
     static setSort(sort){
-        console.log(sort)
+        this.sort = sort 
+        console.log(this.sort)
     }
     static setFilter(filter){
-        console.log(filter)
+        this.filter = filter 
+        console.log(this.filter)
     }
    
     static getSortJson(){
-        //mutation  this.json
+        getCatalogItems(this.sort.direction, this.sort.type, this.json)
         return this.json
     }
     static  getFilterJson(){
-        //mutation  this.json
+        filters(this.json, this.filter.squareCheck, this.filter.optionsCheck, this.filter.price)
         return this.json
     }
      static async  getJSON(){
-        this.getFilterJson()
-        this.getSortJson()
+        //
+        const value = Object.keys(this.sort).length !== 0  && Object.keys(this.filter).length !== 0
+        if(value){
+            this.getFilterJson()
+            this.getSortJson()
+        }
+      
         console.log('Store', this.json)
         return  this.json
     }
