@@ -1,5 +1,5 @@
 import { getTemplate} from "./catalog.template";
-import { catalogWrap,toHTML, timeoutForTesting } from "../utilits";
+import { catalogWrap,toHTML, timeoutForTesting, getEmptyHTMLForWrap } from "../utilits";
 import { typeSortFilter } from "./sort";
 import { filters } from "./filter";
 
@@ -45,17 +45,24 @@ const defaultSort =  {
 };
 
 //TODO  Сделать так  чтобы  оно  работало из  разных мест, сохраняя  в  себе результат
-export function getCatalogItems(json, wrap, sort = defaultSort) {
-     
-    typeSortFilter(sort.direction,  sort.type,  json);
-    Store.setSort(sort)
+export async  function getCatalogItems() {
+    // console.log('SORT',sort)
+    // Store.setSort(sort)
+
+    // const  json =  await Store.getJSON();
+    // typeSortFilter(sort.direction,  sort.type,  json);
+
+    let wrap = catalogWrap();
+    getEmptyHTMLForWrap(wrap);
+    const  json = await Store.getJSON()
+
     createCatalogItems(json, wrap);
 }
 
 
 export class Store{
     static setJSON(json){
-        this.sort =  {}
+        this.sort =  defaultSort
         this.filter =  {}
         console.log('set', json)
         this.json=  json
@@ -67,10 +74,11 @@ export class Store{
     static setFilter(filter){
         this.filter = filter 
         console.log(this.filter)
-    }
-   
+    } 
+
     static getSortJson(){
-        getCatalogItems(this.sort.direction, this.sort.type, this.json)
+        // getCatalogItems(this.sort.direction, this.sort.type, this.json)
+        typeSortFilter(this.sort.direction, this.sort.type,  this.json)
         return this.json
     }
     static  getFilterJson(){
@@ -104,8 +112,8 @@ const catalog = async ()  =>  {
     // const store  =  new Store()
     const  data =  await getJSON();
     Store.setJSON(data) 
-    const json = await Store.getJSON();
-    getCatalogItems(json, wrap);
+    // const json = await Store.getJSON();
+    getCatalogItems();
     
 
 };

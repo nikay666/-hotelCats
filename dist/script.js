@@ -2044,14 +2044,19 @@ const defaultSort = {
   type: 'square'
 }; //TODO  Сделать так  чтобы  оно  работало из  разных мест, сохраняя  в  себе результат
 
-function getCatalogItems(json, wrap, sort = defaultSort) {
-  Object(_sort__WEBPACK_IMPORTED_MODULE_2__["typeSortFilter"])(sort.direction, sort.type, json);
-  Store.setSort(sort);
+async function getCatalogItems() {
+  // console.log('SORT',sort)
+  // Store.setSort(sort)
+  // const  json =  await Store.getJSON();
+  // typeSortFilter(sort.direction,  sort.type,  json);
+  let wrap = Object(_utilits__WEBPACK_IMPORTED_MODULE_1__["catalogWrap"])();
+  Object(_utilits__WEBPACK_IMPORTED_MODULE_1__["getEmptyHTMLForWrap"])(wrap);
+  const json = await Store.getJSON();
   createCatalogItems(json, wrap);
 }
 class Store {
   static setJSON(json) {
-    this.sort = {};
+    this.sort = defaultSort;
     this.filter = {};
     console.log('set', json);
     this.json = json;
@@ -2068,7 +2073,8 @@ class Store {
   }
 
   static getSortJson() {
-    getCatalogItems(this.sort.direction, this.sort.type, this.json);
+    // getCatalogItems(this.sort.direction, this.sort.type, this.json)
+    Object(_sort__WEBPACK_IMPORTED_MODULE_2__["typeSortFilter"])(this.sort.direction, this.sort.type, this.json);
     return this.json;
   }
 
@@ -2106,9 +2112,9 @@ const catalog = async () => {
 
 
   const data = await getJSON();
-  Store.setJSON(data);
-  const json = await Store.getJSON();
-  getCatalogItems(json, wrap);
+  Store.setJSON(data); // const json = await Store.getJSON();
+
+  getCatalogItems();
 };
 
 /* harmony default export */ __webpack_exports__["default"] = (catalog);
@@ -2569,19 +2575,18 @@ function changeActiveFilter(active, btnSort, items) {
 
 async function Sort(value) {
   Object(_Loader__WEBPACK_IMPORTED_MODULE_2__["default"])(true); // const json  = await getJSON();
+  // const json  = await Store.getJSON();
+  // console.log('SORT', json)
 
-  const json = await _catalog__WEBPACK_IMPORTED_MODULE_0__["Store"].getJSON();
-  console.log('SORT', json);
-  Object(_Loader__WEBPACK_IMPORTED_MODULE_2__["default"])(false);
   const direction = value.split('-')[0];
   const type = value.split('-')[1]; // typeSortFilter(direction, type, json);
 
-  let wrap = Object(_utilits__WEBPACK_IMPORTED_MODULE_1__["catalogWrap"])();
-  Object(_utilits__WEBPACK_IMPORTED_MODULE_1__["getEmptyHTMLForWrap"])(wrap);
-  Object(_catalog__WEBPACK_IMPORTED_MODULE_0__["getCatalogItems"])(json, wrap, {
+  _catalog__WEBPACK_IMPORTED_MODULE_0__["Store"].setSort({
     direction,
     type
   });
+  Object(_catalog__WEBPACK_IMPORTED_MODULE_0__["getCatalogItems"])();
+  Object(_Loader__WEBPACK_IMPORTED_MODULE_2__["default"])(false);
 }
 
 function typeSortFilter(direction, type, json) {

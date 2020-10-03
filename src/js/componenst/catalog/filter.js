@@ -67,10 +67,11 @@ export async function controlInputsFilter(wrapFilter ){
     }
 
     Store.setFilter(filterObj)
-    
+
     let wrap = catalogWrap();
     getEmptyHTMLForWrap(wrap);
     res.length === 0 ? noItems(wrap) : createCatalogItems(res, wrap);
+
 
     Loader(false)
 }

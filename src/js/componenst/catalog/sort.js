@@ -86,19 +86,18 @@ async function Sort(value){
     Loader(true);
 
     // const json  = await getJSON();
-    const json  =await Store.getJSON();
-    console.log('SORT', json)
-    Loader(false);
+    // const json  = await Store.getJSON();
+    // console.log('SORT', json)
 
     const direction =  value.split('-')[0];
     const  type = value.split('-')[1];
 
     // typeSortFilter(direction, type, json);
-    
-    let wrap = catalogWrap();
-    getEmptyHTMLForWrap(wrap);
+    Store.setSort({direction, type})
 
-    getCatalogItems(json, wrap, {direction, type} );
+    getCatalogItems();
+
+    Loader(false);
 }
 
 export function typeSortFilter(direction, type, json){
