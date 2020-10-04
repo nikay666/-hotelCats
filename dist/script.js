@@ -2052,6 +2052,7 @@ async function getCatalogItems() {
   let wrap = Object(_utilits__WEBPACK_IMPORTED_MODULE_1__["catalogWrap"])();
   Object(_utilits__WEBPACK_IMPORTED_MODULE_1__["getEmptyHTMLForWrap"])(wrap);
   const json = await Store.getJSON();
+  console.log('getCataloggItems', json);
   createCatalogItems(json, wrap);
 }
 class Store {
@@ -2069,29 +2070,31 @@ class Store {
 
   static setFilter(filter) {
     this.filter = filter;
-    console.log(this.filter);
+    console.log('FILTER', this.filter);
   }
 
   static getSortJson() {
     // getCatalogItems(this.sort.direction, this.sort.type, this.json)
-    Object(_sort__WEBPACK_IMPORTED_MODULE_2__["typeSortFilter"])(this.sort.direction, this.sort.type, this.json);
-    return this.json;
+    this.json = Object(_sort__WEBPACK_IMPORTED_MODULE_2__["typeSortFilter"])(this.sort.direction, this.sort.type, this.json);
+    console.log('getSortJSON', this.json); // return this.json
   }
 
   static getFilterJson() {
-    Object(_filter__WEBPACK_IMPORTED_MODULE_3__["filters"])(this.json, this.filter.squareCheck, this.filter.optionsCheck, this.filter.price);
-    return this.json;
+    console.log('BEFORE', this.json);
+    this.json = Object(_filter__WEBPACK_IMPORTED_MODULE_3__["filters"])(this.json, this.filter.squareCheck, this.filter.optionsCheck, this.filter.price);
+    console.log('getFIlterJSON', this.json);
   }
 
   static async getJSON() {
     //
-    const value = Object.keys(this.sort).length !== 0 && Object.keys(this.filter).length !== 0;
+    const value = Object.keys(this.filter).length !== 0;
 
     if (value) {
       this.getFilterJson();
-      this.getSortJson();
     }
 
+    console.log('SORT', this.sort);
+    this.getSortJson();
     console.log('Store', this.json);
     return this.json;
   }
@@ -2278,10 +2281,12 @@ async function controlInputsFilter(wrapFilter) {
     optionsCheck: inputsObj.optionsCheck,
     price: price
   };
+  console.log('filterObj', filterObj);
   _catalog__WEBPACK_IMPORTED_MODULE_1__["Store"].setFilter(filterObj);
-  let wrap = Object(_utilits__WEBPACK_IMPORTED_MODULE_5__["catalogWrap"])();
-  Object(_utilits__WEBPACK_IMPORTED_MODULE_5__["getEmptyHTMLForWrap"])(wrap);
-  res.length === 0 ? Object(_utilits__WEBPACK_IMPORTED_MODULE_5__["noItems"])(wrap) : Object(_catalog__WEBPACK_IMPORTED_MODULE_1__["createCatalogItems"])(res, wrap);
+  Object(_catalog__WEBPACK_IMPORTED_MODULE_1__["getCatalogItems"])(); // let wrap = catalogWrap();
+  // getEmptyHTMLForWrap(wrap);
+  // res.length === 0 ? noItems(wrap) : createCatalogItems(res, wrap);
+
   Object(_Loader__WEBPACK_IMPORTED_MODULE_4__["default"])(false);
 }
 
@@ -2311,6 +2316,7 @@ function filters(json, squareCheck, optionsCheck, price) {
     res = Object(_filter_template__WEBPACK_IMPORTED_MODULE_2__["filterPrice"])(res, price);
   }
 
+  console.log('RES', res);
   return res;
 } //  служебная
 
@@ -2597,6 +2603,8 @@ function typeSortFilter(direction, type, json) {
   if (direction === 'bottom') {
     bottomFilter(type, json);
   }
+
+  return json;
 }
 
 function topFilter(type, json) {
@@ -2611,6 +2619,7 @@ function topFilter(type, json) {
 
     return 0;
   });
+  return json;
 }
 
 function bottomFilter(type, json) {
@@ -2625,6 +2634,7 @@ function bottomFilter(type, json) {
 
     return 0;
   });
+  return json;
 }
 
 /***/ }),

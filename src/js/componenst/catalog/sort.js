@@ -107,6 +107,7 @@ export function typeSortFilter(direction, type, json){
     if(direction === 'bottom'){
         bottomFilter(type, json);
     }
+    return json
 }
 
 function topFilter(type, json){
@@ -119,6 +120,7 @@ function topFilter(type, json){
         }
         return 0;
      });
+     return json
 }
 
 function bottomFilter(type, json){
@@ -131,4 +133,5 @@ function bottomFilter(type, json){
         }
         return 0;
     });
+    return json
 }

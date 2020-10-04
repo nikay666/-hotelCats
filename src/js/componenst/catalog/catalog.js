@@ -54,7 +54,9 @@ export async  function getCatalogItems() {
 
     let wrap = catalogWrap();
     getEmptyHTMLForWrap(wrap);
+
     const  json = await Store.getJSON()
+    console.log('getCataloggItems', json)
 
     createCatalogItems(json, wrap);
 }
@@ -73,29 +75,34 @@ export class Store{
     }
     static setFilter(filter){
         this.filter = filter 
-        console.log(this.filter)
+        console.log('FILTER', this.filter)
     } 
 
     static getSortJson(){
         // getCatalogItems(this.sort.direction, this.sort.type, this.json)
-        typeSortFilter(this.sort.direction, this.sort.type,  this.json)
-        return this.json
+        this.json = typeSortFilter(this.sort.direction, this.sort.type,  this.json)
+        console.log('getSortJSON',this.json)
+        // return this.json
     }
     static  getFilterJson(){
-        filters(this.json, this.filter.squareCheck, this.filter.optionsCheck, this.filter.price)
-        return this.json
+        console.log('BEFORE', this.json)
+        this.json = filters(this.json, this.filter.squareCheck, this.filter.optionsCheck, this.filter.price)
+        console.log('getFIlterJSON', this.json)
     }
      static async  getJSON(){
         //
-        const value = Object.keys(this.sort).length !== 0  && Object.keys(this.filter).length !== 0
+
+        const value = Object.keys(this.filter).length !== 0
         if(value){
             this.getFilterJson()
-            this.getSortJson()
         }
+        console.log('SORT',this.sort)
+        this.getSortJson()
       
         console.log('Store', this.json)
         return  this.json
     }
+
 
     clear(){
         this.json = []

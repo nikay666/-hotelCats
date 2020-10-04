@@ -66,11 +66,13 @@ export async function controlInputsFilter(wrapFilter ){
         price: price
     }
 
+    console.log('filterObj',filterObj)
     Store.setFilter(filterObj)
+    getCatalogItems()
 
-    let wrap = catalogWrap();
-    getEmptyHTMLForWrap(wrap);
-    res.length === 0 ? noItems(wrap) : createCatalogItems(res, wrap);
+    // let wrap = catalogWrap();
+    // getEmptyHTMLForWrap(wrap);
+    // res.length === 0 ? noItems(wrap) : createCatalogItems(res, wrap);
 
 
     Loader(false)
@@ -101,7 +103,7 @@ export function filters(json, squareCheck, optionsCheck, price){
     if(price.size > 0){
         res = filterPrice(res, price)
     }
-
+    console.log('RES', res)
     return res
 }
 
