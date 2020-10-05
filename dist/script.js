@@ -2023,6 +2023,7 @@ const createCards = data => {
   data.forEach(item => {
     cards += Object(_catalog_template__WEBPACK_IMPORTED_MODULE_0__["getTemplate"])(item);
   });
+  console.log('DATA', data, data.length);
   return cards;
 };
 async function getJSON() {
@@ -2036,6 +2037,7 @@ async function getJSON() {
   }
 }
 function createCatalogItems(json, wrap) {
+  console.log('!!!', json, json.length);
   const cards = createCards(json);
   Object(_utilits__WEBPACK_IMPORTED_MODULE_1__["toHTML"])(cards, wrap);
 }
@@ -2045,62 +2047,50 @@ const defaultSort = {
 }; //TODO  Сделать так  чтобы  оно  работало из  разных мест, сохраняя  в  себе результат
 
 async function getCatalogItems() {
-  // console.log('SORT',sort)
-  // Store.setSort(sort)
-  // const  json =  await Store.getJSON();
-  // typeSortFilter(sort.direction,  sort.type,  json);
   let wrap = Object(_utilits__WEBPACK_IMPORTED_MODULE_1__["catalogWrap"])();
+  wrap.innerHTML = '123';
   Object(_utilits__WEBPACK_IMPORTED_MODULE_1__["getEmptyHTMLForWrap"])(wrap);
+  console.log('00000', wrap);
   const json = await Store.getJSON();
-  console.log('getCataloggItems', json);
-  createCatalogItems(json, wrap);
+  json.length === 0 ? Object(_utilits__WEBPACK_IMPORTED_MODULE_1__["noItems"])(wrap) : createCatalogItems(json, wrap);
 }
 class Store {
-  static setJSON(json) {
+  static async getJSONFromServer() {
+    this.json = await getJSON();
+  }
+
+  static async init() {
+    this.getJSONFromServer();
     this.sort = defaultSort;
     this.filter = {};
-    console.log('set', json);
-    this.json = json;
   }
 
   static setSort(sort) {
     this.sort = sort;
-    console.log(this.sort);
   }
 
   static setFilter(filter) {
     this.filter = filter;
-    console.log('FILTER', this.filter);
   }
 
   static getSortJson() {
-    // getCatalogItems(this.sort.direction, this.sort.type, this.json)
     this.json = Object(_sort__WEBPACK_IMPORTED_MODULE_2__["typeSortFilter"])(this.sort.direction, this.sort.type, this.json);
-    console.log('getSortJSON', this.json); // return this.json
   }
 
   static getFilterJson() {
-    console.log('BEFORE', this.json);
     this.json = Object(_filter__WEBPACK_IMPORTED_MODULE_3__["filters"])(this.json, this.filter.squareCheck, this.filter.optionsCheck, this.filter.price);
-    console.log('getFIlterJSON', this.json);
   }
 
   static async getJSON() {
-    //
+    await this.getJSONFromServer();
     const value = Object.keys(this.filter).length !== 0;
 
     if (value) {
       this.getFilterJson();
     }
 
-    console.log('SORT', this.sort);
     this.getSortJson();
-    console.log('Store', this.json);
     return this.json;
-  }
-
-  clear() {
-    this.json = [];
   }
 
 }
@@ -2110,13 +2100,9 @@ const catalog = async () => {
 
   if (wrap === null || wrap === undefined) {
     return;
-  } // const  json = await getJSON();
-  // const store  =  new Store()
+  }
 
-
-  const data = await getJSON();
-  Store.setJSON(data); // const json = await Store.getJSON();
-
+  await Store.init();
   getCatalogItems();
 };
 
@@ -2273,9 +2259,9 @@ function getChecketInputs(wrapFilter) {
 async function controlInputsFilter(wrapFilter) {
   Object(_Loader__WEBPACK_IMPORTED_MODULE_4__["default"])(true);
   const inputsObj = getChecketInputs(wrapFilter);
-  const price = getPrice(inputsObj.inputs, 'price');
-  const json = await Object(_catalog__WEBPACK_IMPORTED_MODULE_1__["getJSON"])();
-  const res = filters(json, inputsObj.squareCheck, inputsObj.optionsCheck, price);
+  const price = getPrice(inputsObj.inputs, 'price'); // const json  = await getJSON();
+  // const res = filters(json, inputsObj.squareCheck, inputsObj.optionsCheck, price);
+
   const filterObj = {
     squareCheck: inputsObj.squareCheck,
     optionsCheck: inputsObj.optionsCheck,

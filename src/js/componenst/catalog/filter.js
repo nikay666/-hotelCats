@@ -11,7 +11,7 @@ function popupFilter(nodes){
 
 function listenerFilerEvents(wrap){
     const inputs = wrap.querySelectorAll('[data-filter="price"]');
-    const  buttons = wrap. querySelectorAll('[data-filter="button"]');
+    const  buttons = wrap.querySelectorAll('[data-filter="button"]');
 
     inputs.forEach(input =>{
        input.addEventListener('keyup', (e) => {
@@ -22,7 +22,6 @@ function listenerFilerEvents(wrap){
 
     buttons.forEach(button => {
         button.addEventListener('click', (e) => { 
-
             const target = e.target;
             if(target.dataset.f_button){
                 controlButtonsFilter(target, wrap);
@@ -35,7 +34,6 @@ function listenerFilerEvents(wrap){
 
         if(target.type === "checkbox"){
             controlInputsFilter(wrap);
-
         }
     });
 }
@@ -57,9 +55,6 @@ export async function controlInputsFilter(wrapFilter ){
     const  inputsObj = getChecketInputs(wrapFilter)
     const price = getPrice(inputsObj.inputs, 'price')
 
-    const json  = await getJSON();
-    const res = filters(json, inputsObj.squareCheck, inputsObj.optionsCheck, price);
-
     const filterObj = {
         squareCheck:  inputsObj.squareCheck,
         optionsCheck: inputsObj.optionsCheck,
@@ -69,10 +64,6 @@ export async function controlInputsFilter(wrapFilter ){
     console.log('filterObj',filterObj)
     Store.setFilter(filterObj)
     getCatalogItems()
-
-    // let wrap = catalogWrap();
-    // getEmptyHTMLForWrap(wrap);
-    // res.length === 0 ? noItems(wrap) : createCatalogItems(res, wrap);
 
 
     Loader(false)

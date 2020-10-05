@@ -1,5 +1,5 @@
 import { getTemplate} from "./catalog.template";
-import { catalogWrap,toHTML, timeoutForTesting, getEmptyHTMLForWrap } from "../utilits";
+import { catalogWrap,toHTML, timeoutForTesting, getEmptyHTMLForWrap, noItems } from "../utilits";
 import { typeSortFilter } from "./sort";
 import { filters } from "./filter";
 
@@ -7,13 +7,13 @@ const  url  = './assets/catalogList.json';
 
 
 export const createCards = (data) => {
-
     let cards = '';
-    data.forEach(item => {
 
+    data.forEach(item => {
         cards += getTemplate(item);
     });
 
+    console.log('DATA', data, data.length)
     return  cards;
 
 };
@@ -30,11 +30,8 @@ export async function getJSON(){
     }
 }
 
-
-
-
-
 export function  createCatalogItems(json, wrap){
+    console.log('!!!', json, json.length)
     const cards = createCards(json);
     toHTML(cards, wrap);
 }
@@ -46,66 +43,50 @@ const defaultSort =  {
 
 //TODO  Сделать так  чтобы  оно  работало из  разных мест, сохраняя  в  себе результат
 export async  function getCatalogItems() {
-    // console.log('SORT',sort)
-    // Store.setSort(sort)
-
-    // const  json =  await Store.getJSON();
-    // typeSortFilter(sort.direction,  sort.type,  json);
-
     let wrap = catalogWrap();
     getEmptyHTMLForWrap(wrap);
 
     const  json = await Store.getJSON()
-    console.log('getCataloggItems', json)
 
-    createCatalogItems(json, wrap);
+    json.length === 0 ? noItems(wrap) : createCatalogItems(json, wrap);
 }
 
 
 export class Store{
-    static setJSON(json){
-        this.sort =  defaultSort
-        this.filter =  {}
-        console.log('set', json)
-        this.json=  json
+    
+    static async getJSONFromServer(){
+        this.json  =  await getJSON();
+    }
+
+    static async init(){
+        this.getJSONFromServer()
+        this.sort = defaultSort
+        this.filter = {}
     }
     static setSort(sort){
         this.sort = sort 
-        console.log(this.sort)
     }
     static setFilter(filter){
         this.filter = filter 
-        console.log('FILTER', this.filter)
     } 
 
     static getSortJson(){
-        // getCatalogItems(this.sort.direction, this.sort.type, this.json)
         this.json = typeSortFilter(this.sort.direction, this.sort.type,  this.json)
-        console.log('getSortJSON',this.json)
-        // return this.json
     }
     static  getFilterJson(){
-        console.log('BEFORE', this.json)
         this.json = filters(this.json, this.filter.squareCheck, this.filter.optionsCheck, this.filter.price)
-        console.log('getFIlterJSON', this.json)
     }
-     static async  getJSON(){
-        //
 
+    static async  getJSON(){
+        await this.getJSONFromServer()
         const value = Object.keys(this.filter).length !== 0
+
         if(value){
             this.getFilterJson()
         }
-        console.log('SORT',this.sort)
         this.getSortJson()
-      
-        console.log('Store', this.json)
+        
         return  this.json
-    }
-
-
-    clear(){
-        this.json = []
     }
 }
 
@@ -115,14 +96,8 @@ const catalog = async ()  =>  {
     if(wrap === null || wrap === undefined){
         return;
     } 
-    // const  json = await getJSON();
-    // const store  =  new Store()
-    const  data =  await getJSON();
-    Store.setJSON(data) 
-    // const json = await Store.getJSON();
+    await Store.init() 
     getCatalogItems();
-    
-
 };
 
 
