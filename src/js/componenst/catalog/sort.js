@@ -77,24 +77,16 @@ function changeActiveFilter(active, btnSort, items){
     activeFilter.dataset.list = active.dataset.list;
     textContent.textContent = active.textContent;
 
-    console.log(btnArrow);
-
     controlVisibleSortItems(btnArrow, items);
 }
 
 async function Sort(value){
     Loader(true);
 
-    // const json  = await getJSON();
-    // const json  = await Store.getJSON();
-    // console.log('SORT', json)
-
     const direction =  value.split('-')[0];
     const  type = value.split('-')[1];
 
-    // typeSortFilter(direction, type, json);
     Store.setSort({direction, type})
-
     getCatalogItems();
 
     Loader(false);

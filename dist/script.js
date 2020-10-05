@@ -2023,35 +2023,28 @@ const createCards = data => {
   data.forEach(item => {
     cards += Object(_catalog_template__WEBPACK_IMPORTED_MODULE_0__["getTemplate"])(item);
   });
-  console.log('DATA', data, data.length);
   return cards;
 };
 async function getJSON() {
   try {
     const response = await fetch(url);
-    const json = await response.json(); // await timeoutForTesting(3000)
-
+    const json = await response.json();
     return json;
   } catch (error) {
     console.log(error);
   }
 }
 function createCatalogItems(json, wrap) {
-  console.log('!!!', json, json.length);
   const cards = createCards(json);
   Object(_utilits__WEBPACK_IMPORTED_MODULE_1__["toHTML"])(cards, wrap);
 }
 const defaultSort = {
   direction: 'top',
   type: 'square'
-}; //TODO  Сделать так  чтобы  оно  работало из  разных мест, сохраняя  в  себе результат
-
+};
 async function getCatalogItems() {
-  let wrap = Object(_utilits__WEBPACK_IMPORTED_MODULE_1__["catalogWrap"])();
-  wrap.innerHTML = '123';
-  Object(_utilits__WEBPACK_IMPORTED_MODULE_1__["getEmptyHTMLForWrap"])(wrap);
-  console.log('00000', wrap);
   const json = await Store.getJSON();
+  const wrap = Object(_utilits__WEBPACK_IMPORTED_MODULE_1__["getEmptyHTMLForWrap"])(Object(_utilits__WEBPACK_IMPORTED_MODULE_1__["catalogWrap"])());
   json.length === 0 ? Object(_utilits__WEBPACK_IMPORTED_MODULE_1__["noItems"])(wrap) : createCatalogItems(json, wrap);
 }
 class Store {
@@ -2095,10 +2088,16 @@ class Store {
 
 }
 
-const catalog = async () => {
+const isEmptyCatalog = () => {
   const wrap = Object(_utilits__WEBPACK_IMPORTED_MODULE_1__["catalogWrap"])();
 
   if (wrap === null || wrap === undefined) {
+    return true;
+  }
+};
+
+const catalog = async () => {
+  if (isEmptyCatalog()) {
     return;
   }
 
@@ -2230,7 +2229,7 @@ function listenerFilerEvents(wrap) {
       const target = e.target;
 
       if (target.dataset.f_button) {
-        controlButtonsFilter(target, wrap);
+        controlButtonsFilter(wrap);
       }
     });
   });
@@ -2259,20 +2258,14 @@ function getChecketInputs(wrapFilter) {
 async function controlInputsFilter(wrapFilter) {
   Object(_Loader__WEBPACK_IMPORTED_MODULE_4__["default"])(true);
   const inputsObj = getChecketInputs(wrapFilter);
-  const price = getPrice(inputsObj.inputs, 'price'); // const json  = await getJSON();
-  // const res = filters(json, inputsObj.squareCheck, inputsObj.optionsCheck, price);
-
+  const price = getPrice(inputsObj.inputs, 'price');
   const filterObj = {
     squareCheck: inputsObj.squareCheck,
     optionsCheck: inputsObj.optionsCheck,
     price: price
   };
-  console.log('filterObj', filterObj);
   _catalog__WEBPACK_IMPORTED_MODULE_1__["Store"].setFilter(filterObj);
-  Object(_catalog__WEBPACK_IMPORTED_MODULE_1__["getCatalogItems"])(); // let wrap = catalogWrap();
-  // getEmptyHTMLForWrap(wrap);
-  // res.length === 0 ? noItems(wrap) : createCatalogItems(res, wrap);
-
+  Object(_catalog__WEBPACK_IMPORTED_MODULE_1__["getCatalogItems"])();
   Object(_Loader__WEBPACK_IMPORTED_MODULE_4__["default"])(false);
 }
 
@@ -2302,7 +2295,6 @@ function filters(json, squareCheck, optionsCheck, price) {
     res = Object(_filter_template__WEBPACK_IMPORTED_MODULE_2__["filterPrice"])(res, price);
   }
 
-  console.log('RES', res);
   return res;
 } //  служебная
 
@@ -2561,18 +2553,13 @@ function changeActiveFilter(active, btnSort, items) {
   const textContent = activeFilter.querySelector('[data-content="text"]');
   activeFilter.dataset.list = active.dataset.list;
   textContent.textContent = active.textContent;
-  console.log(btnArrow);
   controlVisibleSortItems(btnArrow, items);
 }
 
 async function Sort(value) {
-  Object(_Loader__WEBPACK_IMPORTED_MODULE_2__["default"])(true); // const json  = await getJSON();
-  // const json  = await Store.getJSON();
-  // console.log('SORT', json)
-
+  Object(_Loader__WEBPACK_IMPORTED_MODULE_2__["default"])(true);
   const direction = value.split('-')[0];
-  const type = value.split('-')[1]; // typeSortFilter(direction, type, json);
-
+  const type = value.split('-')[1];
   _catalog__WEBPACK_IMPORTED_MODULE_0__["Store"].setSort({
     direction,
     type
@@ -2932,6 +2919,7 @@ const toHTML = (cards, wrap) => {
 };
 function getEmptyHTMLForWrap(wrap) {
   wrap.innerHTML = '';
+  return wrap;
 }
 const timeoutForTesting = m => new Promise(r => setTimeout(r, m));
 const noItems = wrap => {

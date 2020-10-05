@@ -11,6 +11,7 @@ export const toHTML = (cards,  wrap) => {
 
 export function getEmptyHTMLForWrap(wrap){
     wrap.innerHTML  =  '';
+    return wrap
 }
 
 export const timeoutForTesting = m => new Promise(r => setTimeout(r, m))

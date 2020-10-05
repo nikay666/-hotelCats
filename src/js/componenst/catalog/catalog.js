@@ -8,21 +8,16 @@ const  url  = './assets/catalogList.json';
 
 export const createCards = (data) => {
     let cards = '';
-
     data.forEach(item => {
         cards += getTemplate(item);
     });
-
-    console.log('DATA', data, data.length)
     return  cards;
-
 };
 
 export async function getJSON(){
     try {
         const response = await fetch(url);
         const  json = await response.json();
-        // await timeoutForTesting(3000)
         return  json;
 
     } catch (error) {
@@ -31,7 +26,6 @@ export async function getJSON(){
 }
 
 export function  createCatalogItems(json, wrap){
-    console.log('!!!', json, json.length)
     const cards = createCards(json);
     toHTML(cards, wrap);
 }
@@ -41,16 +35,12 @@ const defaultSort =  {
     type: 'square'
 };
 
-//TODO  Сделать так  чтобы  оно  работало из  разных мест, сохраняя  в  себе результат
+
 export async  function getCatalogItems() {
-    let wrap = catalogWrap();
-    getEmptyHTMLForWrap(wrap);
-
     const  json = await Store.getJSON()
-
+    const wrap = getEmptyHTMLForWrap(catalogWrap());
     json.length === 0 ? noItems(wrap) : createCatalogItems(json, wrap);
 }
-
 
 export class Store{
     
@@ -85,17 +75,21 @@ export class Store{
             this.getFilterJson()
         }
         this.getSortJson()
-        
         return  this.json
     }
 }
 
-
-const catalog = async ()  =>  {
+const  isEmptyCatalog = () =>{ 
     const wrap = catalogWrap();
     if(wrap === null || wrap === undefined){
-        return;
+        return true
     } 
+}
+
+const catalog = async ()  =>  {
+    if(isEmptyCatalog()){
+        return
+    }
     await Store.init() 
     getCatalogItems();
 };

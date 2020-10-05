@@ -1,4 +1,4 @@
-import { getJSON, createCatalogItems, getCatalogItems, Store } from "./catalog";
+import { getJSON, createCatalogItems, getCatalogItems, Store, getWrap } from "./catalog";
 import { bindBtns, initialFilter, filterPrice, filterSquare, filterOptions } from './filter.template';
 import {defaultBtnSort, bindBtnSort, typeSortFilter} from './sort';
 import Loader from "./Loader";
@@ -24,7 +24,7 @@ function listenerFilerEvents(wrap){
         button.addEventListener('click', (e) => { 
             const target = e.target;
             if(target.dataset.f_button){
-                controlButtonsFilter(target, wrap);
+                controlButtonsFilter(wrap);
             }
         });
     });
@@ -37,7 +37,6 @@ function listenerFilerEvents(wrap){
         }
     });
 }
-
 
 export  function getChecketInputs(wrapFilter){
     const inputs = wrapFilter.querySelectorAll(`[data-filter]`);
@@ -61,11 +60,8 @@ export async function controlInputsFilter(wrapFilter ){
         price: price
     }
 
-    console.log('filterObj',filterObj)
     Store.setFilter(filterObj)
     getCatalogItems()
-
-
     Loader(false)
 }
 
@@ -94,7 +90,6 @@ export function filters(json, squareCheck, optionsCheck, price){
     if(price.size > 0){
         res = filterPrice(res, price)
     }
-    console.log('RES', res)
     return res
 }
 
