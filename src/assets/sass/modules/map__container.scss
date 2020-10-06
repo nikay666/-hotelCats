@@ -40,6 +40,12 @@
         &-content{
             padding: 70px 100px 70px 100px;
         } 
+        &-content{
+            order: 2;
+        }
+        &-map{
+            order: 1;
+        }
     }
     @media (max-width: 992px) {
 
