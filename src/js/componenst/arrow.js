@@ -30,12 +30,10 @@ const createArrow = () => {
         <span class="material-icons btn__arrow-top" >expand_less</span>
     </div>
     `;
-
     document.body.insertAdjacentHTML("beforeend", arrow);
 };
 
 const scrollToTop = () => {
-    console.log('click')
     window.scrollTo({
         top:0, 
         behavior: "smooth"
@@ -45,10 +43,8 @@ const scrollToTop = () => {
 const arrow = () => {
     createArrow();
     const arrow = document.querySelector('.btn__arrow');
-
     scrolling(arrow);
     arrow.addEventListener('click', scrollToTop);
-
 };
 
 export default arrow;

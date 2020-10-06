@@ -1,5 +1,4 @@
-import { getJSON, createCatalogItems, getCatalogItems, Store } from "./catalog";
-import { catalogWrap, getEmptyHTMLForWrap } from "../utilits";
+import { getCatalogItems, Store } from "./catalog";
 import Loader from "./Loader";
 
 function controlArrowSort(arrow){
@@ -85,7 +84,6 @@ async function Sort(value){
 
     const direction =  value.split('-')[0];
     const  type = value.split('-')[1];
-
     Store.setSort({direction, type})
     getCatalogItems();
 

@@ -6,13 +6,10 @@ const Loader  = (value) => {
         </div>
         `;
         const wrap = document.querySelector('body');
-    
         wrap.insertAdjacentHTML("afterbegin", loader);
     } else{
         const loader = document.getElementById('loader');
         loader.remove();
     }
-
-
 }
 export  default Loader;

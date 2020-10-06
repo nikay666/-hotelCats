@@ -359,6 +359,7 @@
     height: 20%;
     transform: rotate(115deg); }
   .popup__message {
+    z-index: 1000;
     padding: 70px 70px 40px 70px; }
     .popup__message .btn__booking {
       margin-top: 40px; }
@@ -376,7 +377,7 @@
     left: 50%;
     transform: translate(-50%, -50%);
     z-index: -101;
-    width: 500px;
+    width: 570px;
     box-shadow: 0px 0px 25px rgba(153, 153, 153, 0.25);
     border-radius: 10px;
     background-color: #FFFEFD;
@@ -388,7 +389,6 @@
     .popup__booking.active, .popup__message.active {
       visibility: visible;
       opacity: 1;
-      width: 570px;
       z-index: 101; }
   .popup__message {
     transition: .1s  ease-in-out; }

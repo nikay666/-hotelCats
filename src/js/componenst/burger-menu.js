@@ -5,7 +5,6 @@ const burgerMenu = (selectorBurger, selectorMenu, activeClass) => {
     btnBurger.classList.remove(activeClass);  
     menu.classList.remove(activeClass);
 
-
     btnBurger.addEventListener('click', () => {
         if(menu.classList.contains(activeClass)){
             remove(btnBurger, menu, activeClass);
@@ -13,7 +12,6 @@ const burgerMenu = (selectorBurger, selectorMenu, activeClass) => {
              add(btnBurger, menu, activeClass);
         }
     });
-    
 };
 
 function remove(btn, menu, cls){

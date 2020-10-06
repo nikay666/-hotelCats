@@ -1,4 +1,5 @@
 import forms from "./form";
+import { getTemplateModals } from './utilits'
 
 function bindForm(selectors){
     const popup = document.querySelector(selectors.popup),
@@ -23,6 +24,7 @@ function bindForm(selectors){
             substrate.style.display = 'none';
             popup.classList.remove(activeClass);
         }
+        form.reset()
     };
    
     btnOpen.forEach(btn => {
@@ -50,6 +52,7 @@ function bindForm(selectors){
     const init = () => {
         closePopup();
     };
+
     init();
 }
 function showOkMessage(selectors, substrate, popup ) {
@@ -91,6 +94,13 @@ function showOkMessage(selectors, substrate, popup ) {
 
     init();
     
+}
+
+
+export const initModals = () => {
+    const body = document.body;
+    const popup =  getTemplateModals()
+    body.insertAdjacentHTML('beforeend', popup)
 }
 
 const modals = () => {

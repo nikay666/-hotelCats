@@ -1,5 +1,5 @@
 import { getTemplate} from "./catalog.template";
-import { catalogWrap,toHTML, timeoutForTesting, getEmptyHTMLForWrap, noItems } from "../utilits";
+import { catalogWrap,toHTML, getEmptyHTMLForWrap, noItems } from "../utilits";
 import { typeSortFilter } from "./sort";
 import { filters } from "./filter";
 

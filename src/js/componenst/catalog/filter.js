@@ -1,8 +1,7 @@
-import { getJSON, createCatalogItems, getCatalogItems, Store, getWrap } from "./catalog";
+import { getCatalogItems, Store } from "./catalog";
 import { bindBtns, initialFilter, filterPrice, filterSquare, filterOptions } from './filter.template';
-import {defaultBtnSort, bindBtnSort, typeSortFilter} from './sort';
+import {defaultBtnSort, bindBtnSort} from './sort';
 import Loader from "./Loader";
-import { catalogWrap, getEmptyHTMLForWrap, noItems } from "../utilits";
 
 
 function popupFilter(nodes){
@@ -40,7 +39,7 @@ function listenerFilerEvents(wrap){
 
 export  function getChecketInputs(wrapFilter){
     const inputs = wrapFilter.querySelectorAll(`[data-filter]`);
-    const checked =  getChecked(inputs); 
+    const checked = getChecked(inputs); 
     const optionsCheck = getChekedByType(checked, 'options')
     const squareCheck = getChekedByType(checked, 'square')
 
@@ -138,22 +137,14 @@ function filterSortInit (nodes) {
 }
 
 const filter = async () => {
-
     const nodes  = initialFilter();
-
     if(nodes  ===  false) return;
-    popupFilter(nodes);
-    // Loader(true);
-
-    // const data = await getJSON();
-    // Loader(false);
-    
+    popupFilter(nodes); 
     filtersControl(nodes);
     filterSortInit(nodes);
 };
 
 export default filter;
-
 
 //  служебная
 function maskInputsOnlyNumers(e){

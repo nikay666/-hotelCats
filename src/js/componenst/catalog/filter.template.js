@@ -22,7 +22,6 @@ export const initialFilter = () =>{
     };
 };
 
-
 function chengeClass (className, change, node)  {
     if(change === 'add'){
         node.popupSubstrate.classList.add(className);
@@ -45,8 +44,6 @@ export  const bindBtns = (nodes) => {
         chengeClass(activeClass, 'remove', nodes);
     });
 };
-
-
 
 export function filterOptions(res, optionsCheck ){
     res = res.filter(item => {
