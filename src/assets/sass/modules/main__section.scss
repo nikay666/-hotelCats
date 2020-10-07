@@ -14,21 +14,17 @@
         overflow: visible;
         @media (max-width: 768px) {
             justify-content: start;
-            
-         
         }
     }
 
 
     & .banner{
-        &__content{
-            // overflow: hidden;    
+        &__content{  
             margin: 0 150px;     
             align-items: center;
 
             &-title{
                 font-size: 62px;
-                // line-height: 140%;
             }
             &-text{
                 font-size: 20px;
@@ -47,7 +43,6 @@
                 &-text{
                     font-size: 20px;
                 }
-                
             }
         }
     }
