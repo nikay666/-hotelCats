@@ -12,9 +12,14 @@ p, a, h1,h2,h3,h4,strong, input, label{
 	line-height: 140%;
 	color: $black;
 }
+html{
+	width: 100vw;
+}
 body{
 	background-color: $white;
 	position: relative;
+	width: 100vw;
+	overflow-x: hidden;
 }
 .h1{
 	font-family: $f_rubik;

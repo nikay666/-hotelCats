@@ -27,7 +27,6 @@
 
             &.active{
                 background-color: $orange;
-                
             }
 
             &:hover:not(.active){
@@ -37,7 +36,6 @@
         } 
         &:hover{
             cursor: pointer;
-        
         }
     }
     &-arrows{
@@ -57,7 +55,6 @@
             box-shadow: 0px 0px 10px rgba($black, 0.1);
             margin: 0 5px;
             transition: .2s  ease-in-out;
-
 
             &:hover{
                 cursor: pointer;

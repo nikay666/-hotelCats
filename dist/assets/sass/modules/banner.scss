@@ -10,7 +10,6 @@
     &__content{
         margin: 0 200px;
 
-
         &-suptitle{
             font-family: $f_rubik;
             font-weight: normal;
@@ -96,11 +95,6 @@
                 font-size: 24px;
                 margin-bottom: 10px;
             }
-            &-text{
-            }
-
-            &-img{
-            }
             &-decoration{
                 height: 60%;
             }
@@ -141,8 +135,4 @@
             }
         }
     }
-
-
-
-
 }

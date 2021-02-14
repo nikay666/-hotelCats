@@ -5,6 +5,24 @@ import arrow from './componenst/arrow';
 import gallery from './componenst/gallery';
 import catalog  from  './componenst/catalog/catalog';
 import filter from './componenst/catalog/filter';
+import firebase from "firebase/app";
+import 'firebase/database';
+
+
+const firebaseConfig = {
+    apiKey: "AIzaSyCWGbl-ILVQvTCmGN9OAQghLnMcEKSFvm8",
+    authDomain: "hotel-cats.firebaseapp.com",
+    projectId: "hotel-cats",
+    storageBucket: "hotel-cats.appspot.com",
+    messagingSenderId: "416318614306",
+    appId: "1:416318614306:web:2eff4194dfa87acdde537b"
+};
+  // Initialize Firebase
+  firebase.initializeApp(firebaseConfig);
+
+const database = firebase.database();
+console.log(database)
+
 
 try {
     initModals();

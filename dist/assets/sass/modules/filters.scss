@@ -1,7 +1,6 @@
 .catalog__filters{
 
     @media (max-width: 768px) {
-        
         &.active{
             position: fixed;
             width: 60%;
@@ -148,8 +147,6 @@
 .btn__filter{
     font-family: $f_rubik;
     font-size: 14px;
-
-    // white-space: nowrap;
 
     border: 2px solid $yellow;
     box-sizing: border-box;
