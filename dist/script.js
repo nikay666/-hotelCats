@@ -20101,11 +20101,18 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _utilits__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../utilits */ "./src/js/componenst/utilits.js");
 /* harmony import */ var _sort__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./sort */ "./src/js/componenst/catalog/sort.js");
 /* harmony import */ var _filter__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./filter */ "./src/js/componenst/catalog/filter.js");
+/* harmony import */ var firebase_app__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! firebase/app */ "./node_modules/firebase/app/dist/index.esm.js");
+/* harmony import */ var firebase_database__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! firebase/database */ "./node_modules/firebase/database/dist/index.esm.js");
+/* harmony import */ var _filrebaseConfig__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../filrebaseConfig */ "./src/js/filrebaseConfig.js");
 
 
 
 
-const url = './assets/catalogList.json';
+
+
+
+firebase_app__WEBPACK_IMPORTED_MODULE_4__["default"].initializeApp(_filrebaseConfig__WEBPACK_IMPORTED_MODULE_6__["firebaseConfig"]);
+const database = firebase_app__WEBPACK_IMPORTED_MODULE_4__["default"].database();
 const createCards = data => {
   let cards = '';
   data.forEach(item => {
@@ -20114,13 +20121,17 @@ const createCards = data => {
   return cards;
 };
 async function getJSON() {
-  try {
-    const response = await fetch(url);
-    const json = await response.json();
-    return json;
-  } catch (error) {
-    console.log(error);
-  }
+  const data = database.ref("/products").get().then(function (snapshot) {
+    if (snapshot.exists()) {
+      console.log(snapshot.val());
+      return snapshot.val();
+    } else {
+      console.log("No data available");
+    }
+  }).catch(function (error) {
+    console.error(error);
+  });
+  return data;
 }
 function createCatalogItems(json, wrap) {
   const cards = createCards(json);
@@ -21085,6 +21096,27 @@ const getTemplateModals = () => {
 
 /***/ }),
 
+/***/ "./src/js/filrebaseConfig.js":
+/*!***********************************!*\
+  !*** ./src/js/filrebaseConfig.js ***!
+  \***********************************/
+/*! exports provided: firebaseConfig */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "firebaseConfig", function() { return firebaseConfig; });
+const firebaseConfig = {
+  apiKey: "AIzaSyCWGbl-ILVQvTCmGN9OAQghLnMcEKSFvm8",
+  authDomain: "hotel-cats.firebaseapp.com",
+  projectId: "hotel-cats",
+  storageBucket: "hotel-cats.appspot.com",
+  messagingSenderId: "416318614306",
+  appId: "1:416318614306:web:2eff4194dfa87acdde537b"
+};
+
+/***/ }),
+
 /***/ "./src/js/main.js":
 /*!************************!*\
   !*** ./src/js/main.js ***!
@@ -21101,8 +21133,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _componenst_gallery__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./componenst/gallery */ "./src/js/componenst/gallery.js");
 /* harmony import */ var _componenst_catalog_catalog__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./componenst/catalog/catalog */ "./src/js/componenst/catalog/catalog.js");
 /* harmony import */ var _componenst_catalog_filter__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./componenst/catalog/filter */ "./src/js/componenst/catalog/filter.js");
-/* harmony import */ var firebase_app__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! firebase/app */ "./node_modules/firebase/app/dist/index.esm.js");
-/* harmony import */ var firebase_database__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! firebase/database */ "./node_modules/firebase/database/dist/index.esm.js");
 
 
 
@@ -21110,20 +21140,6 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-
-
-const firebaseConfig = {
-  apiKey: "AIzaSyCWGbl-ILVQvTCmGN9OAQghLnMcEKSFvm8",
-  authDomain: "hotel-cats.firebaseapp.com",
-  projectId: "hotel-cats",
-  storageBucket: "hotel-cats.appspot.com",
-  messagingSenderId: "416318614306",
-  appId: "1:416318614306:web:2eff4194dfa87acdde537b"
-}; // Initialize Firebase
-
-firebase_app__WEBPACK_IMPORTED_MODULE_7__["default"].initializeApp(firebaseConfig);
-const database = firebase_app__WEBPACK_IMPORTED_MODULE_7__["default"].database();
-console.log(database);
 
 try {
   Object(_componenst_modals__WEBPACK_IMPORTED_MODULE_1__["initModals"])();

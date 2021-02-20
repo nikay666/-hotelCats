@@ -2,8 +2,12 @@ import { getTemplate} from "./catalog.template";
 import { catalogWrap,toHTML, getEmptyHTMLForWrap, noItems } from "../utilits";
 import { typeSortFilter } from "./sort";
 import { filters } from "./filter";
+import firebase from "firebase/app";
+import 'firebase/database';
+import { firebaseConfig } from "../../filrebaseConfig";
 
-const  url  = './assets/catalogList.json';
+firebase.initializeApp(firebaseConfig);
+const database = firebase.database();
 
 
 export const createCards = (data) => {
@@ -15,17 +19,22 @@ export const createCards = (data) => {
 };
 
 export async function getJSON(){
-    try {
-        const response = await fetch(url);
-        const  json = await response.json();
-        return  json;
+    const data = database.ref("/products").get().then(function(snapshot) {
+        if (snapshot.exists()) {
+            console.log(snapshot.val());
+            return snapshot.val()
+        }
+        else {
+            console.log("No data available");
+        }
+        }).catch(function(error) {
+        console.error(error);
+    });
 
-    } catch (error) {
-        console.log(error);
-    }
+    return data
 }
 
-export function  createCatalogItems(json, wrap){
+export function createCatalogItems(json, wrap){
     const cards = createCards(json);
     toHTML(cards, wrap);
 }
