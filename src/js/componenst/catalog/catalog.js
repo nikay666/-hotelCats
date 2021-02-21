@@ -5,6 +5,7 @@ import { filters } from "./filter";
 import firebase from "firebase/app";
 import 'firebase/database';
 import { firebaseConfig } from "../../filrebaseConfig";
+import Loader from "./Loader";
 
 firebase.initializeApp(firebaseConfig);
 const database = firebase.database();
@@ -21,7 +22,6 @@ export const createCards = (data) => {
 export async function getJSON(){
     const data = database.ref("/products").get().then(function(snapshot) {
         if (snapshot.exists()) {
-            console.log(snapshot.val());
             return snapshot.val()
         }
         else {
@@ -30,7 +30,6 @@ export async function getJSON(){
         }).catch(function(error) {
         console.error(error);
     });
-
     return data
 }
 
@@ -54,7 +53,9 @@ export async  function getCatalogItems() {
 export class Store{
     
     static async getJSONFromServer(){
+        Loader(true)
         this.json  =  await getJSON();
+        Loader(false)
     }
 
     static async init(){
@@ -69,11 +70,28 @@ export class Store{
         this.filter = filter 
     } 
 
-    static getSortJson(){
-        this.json = typeSortFilter(this.sort.direction, this.sort.type,  this.json)
+    static async getSortJson(){
+        // this.json = typeSortFilter(this.sort.direction, this.sort.type,  this.json) 
+
+        const  query = firebase.database().ref('/products').orderByChild('price')
+        const data = await query.get().then(function(snapshot) {
+            if (snapshot.exists()) {
+                console.log(snapshot.val())
+                return snapshot.val()
+            }
+            else {
+                console.log("No data available");
+            }
+            }).catch(function(error) {
+            console.error(error);
+        });
+        console.log(data)
+        this.json = data
+         
     }
     static  getFilterJson(){
         this.json = filters(this.json, this.filter.squareCheck, this.filter.optionsCheck, this.filter.price)
+        
     }
 
     static async  getJSON(){
@@ -83,7 +101,7 @@ export class Store{
         if(value){
             this.getFilterJson()
         }
-        this.getSortJson()
+        await this.getSortJson()
         return  this.json
     }
 }
@@ -96,11 +114,13 @@ const  isEmptyCatalog = () =>{
 }
 
 const catalog = async ()  =>  {
+
     if(isEmptyCatalog()){
         return
     }
     await Store.init() 
     getCatalogItems();
+
 };
 
 

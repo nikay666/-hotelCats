@@ -20104,6 +20104,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var firebase_app__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! firebase/app */ "./node_modules/firebase/app/dist/index.esm.js");
 /* harmony import */ var firebase_database__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! firebase/database */ "./node_modules/firebase/database/dist/index.esm.js");
 /* harmony import */ var _filrebaseConfig__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../filrebaseConfig */ "./src/js/filrebaseConfig.js");
+/* harmony import */ var _Loader__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./Loader */ "./src/js/componenst/catalog/Loader.js");
+
 
 
 
@@ -20123,7 +20125,6 @@ const createCards = data => {
 async function getJSON() {
   const data = database.ref("/products").get().then(function (snapshot) {
     if (snapshot.exists()) {
-      console.log(snapshot.val());
       return snapshot.val();
     } else {
       console.log("No data available");
@@ -20148,7 +20149,9 @@ async function getCatalogItems() {
 }
 class Store {
   static async getJSONFromServer() {
+    Object(_Loader__WEBPACK_IMPORTED_MODULE_7__["default"])(true);
     this.json = await getJSON();
+    Object(_Loader__WEBPACK_IMPORTED_MODULE_7__["default"])(false);
   }
 
   static async init() {
@@ -20165,8 +20168,21 @@ class Store {
     this.filter = filter;
   }
 
-  static getSortJson() {
-    this.json = Object(_sort__WEBPACK_IMPORTED_MODULE_2__["typeSortFilter"])(this.sort.direction, this.sort.type, this.json);
+  static async getSortJson() {
+    // this.json = typeSortFilter(this.sort.direction, this.sort.type,  this.json) 
+    const query = firebase_app__WEBPACK_IMPORTED_MODULE_4__["default"].database().ref('/products').orderByChild('price');
+    const data = await query.get().then(function (snapshot) {
+      if (snapshot.exists()) {
+        console.log(snapshot.val());
+        return snapshot.val();
+      } else {
+        console.log("No data available");
+      }
+    }).catch(function (error) {
+      console.error(error);
+    });
+    console.log(data);
+    this.json = data;
   }
 
   static getFilterJson() {
@@ -20181,7 +20197,7 @@ class Store {
       this.getFilterJson();
     }
 
-    this.getSortJson();
+    await this.getSortJson();
     return this.json;
   }
 
