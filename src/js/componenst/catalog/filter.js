@@ -3,7 +3,6 @@ import { bindBtns, initialFilter, filterPrice, filterSquare, filterOptions } fro
 import {defaultBtnSort, bindBtnSort} from './sort';
 import Loader from "./Loader";
 
-
 function popupFilter(nodes){
     bindBtns(nodes);
 }
@@ -13,8 +12,7 @@ function listenerFilerEvents(wrap){
     const  buttons = wrap.querySelectorAll('[data-filter="button"]');
 
     inputs.forEach(input =>{
-       input.addEventListener('keyup', (e) => {
-           maskInputsOnlyNumers(e);
+       input.addEventListener('input', (e) => {
            controlInputsFilter(wrap)
        });
     });
@@ -60,7 +58,7 @@ export async function controlInputsFilter(wrapFilter ){
     }
 
     Store.setFilter(filterObj)
-    getCatalogItems()
+    Store.render()
     Loader(false)
 }
 
@@ -77,17 +75,24 @@ function getPrice(inputs,  type){
     return price
 }
 
-export function filters(json, squareCheck, optionsCheck, price){
+const isMoreZero = (value) =>{
+    if(value >  0 ){
+        return true
+    }
+    return  false
+}
+
+export function filters(json, filterList){
     let res = json;
 
-    if(squareCheck.length !==  0 ){
-        res =  filterSquare(res,  squareCheck);
+    if(isMoreZero(filterList.squareCheck.length) ){
+        res =  filterSquare(res,  filterList.squareCheck);
     }
-    if(optionsCheck.length !== 0){
-        res = filterOptions(res,  optionsCheck);
+    if(isMoreZero(filterList.optionsCheck.length)){
+        res = filterOptions(res,  filterList.optionsCheck);
     }
-    if(price.size > 0){
-        res = filterPrice(res, price)
+    if(isMoreZero(filterList.price.size)){
+        res = filterPrice(res, filterList.price)
     }
     return res
 }
@@ -121,37 +126,22 @@ function controlButtonsFilter(target,wrapFilter){
     }
 }
 
-function filtersControl(nodes){
-    listenerFilerEvents(nodes.wrapFilter);
-    nodes.filterItems.forEach(item => {
-        const dataAttr = item.dataset.filter;
-        // console.log(dataAttr)
-    });
-}
-
 function filterSortInit (nodes) {
-    const  btnSort =   nodes.btnControlSort;
+    const btnSort = nodes.btnControlSort;
     const items = nodes.btnControlSort.querySelectorAll('li');
     defaultBtnSort(items);
     bindBtnSort(btnSort, items);
 }
 
 const filter = async () => {
-    const nodes  = initialFilter();
-    if(nodes  ===  false) return;
+    const nodes = initialFilter();
+    if(nodes === false) return;
     popupFilter(nodes); 
-    filtersControl(nodes);
+    listenerFilerEvents(nodes.wrapFilter);
     filterSortInit(nodes);
 };
 
 export default filter;
 
-//  служебная
-function maskInputsOnlyNumers(e){
-    if(e.key.match(/\D/ig) ) {
-        if(e.key === 'Backspace' ) return;
-        e.preventDefault();
-    }
-}
 
 

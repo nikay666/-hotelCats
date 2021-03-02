@@ -20087,7 +20087,7 @@ const Loader = value => {
 /*!**********************************************!*\
   !*** ./src/js/componenst/catalog/catalog.js ***!
   \**********************************************/
-/*! exports provided: createCards, getJSON, createCatalogItems, getCatalogItems, Store, default */
+/*! exports provided: createCards, getJSON, createCatalogItems, getCatalogItems, getCatalogItemsJson, Store, default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -20096,6 +20096,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getJSON", function() { return getJSON; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "createCatalogItems", function() { return createCatalogItems; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getCatalogItems", function() { return getCatalogItems; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getCatalogItemsJson", function() { return getCatalogItemsJson; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "Store", function() { return Store; });
 /* harmony import */ var _catalog_template__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./catalog.template */ "./src/js/componenst/catalog/catalog.template.js");
 /* harmony import */ var _utilits__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../utilits */ "./src/js/componenst/utilits.js");
@@ -20114,7 +20115,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 firebase_app__WEBPACK_IMPORTED_MODULE_4__["default"].initializeApp(_filrebaseConfig__WEBPACK_IMPORTED_MODULE_6__["firebaseConfig"]);
-const database = firebase_app__WEBPACK_IMPORTED_MODULE_4__["default"].database();
+const database = firebase_app__WEBPACK_IMPORTED_MODULE_4__["default"].database().ref("/products");
 const createCards = data => {
   let cards = '';
   data.forEach(item => {
@@ -20123,7 +20124,8 @@ const createCards = data => {
   return cards;
 };
 async function getJSON() {
-  const data = database.ref("/products").get().then(function (snapshot) {
+  Object(_Loader__WEBPACK_IMPORTED_MODULE_7__["default"])(true);
+  const data = database.get().then(function (snapshot) {
     if (snapshot.exists()) {
       return snapshot.val();
     } else {
@@ -20132,6 +20134,7 @@ async function getJSON() {
   }).catch(function (error) {
     console.error(error);
   });
+  Object(_Loader__WEBPACK_IMPORTED_MODULE_7__["default"])(false);
   return data;
 }
 function createCatalogItems(json, wrap) {
@@ -20147,6 +20150,23 @@ async function getCatalogItems() {
   const wrap = Object(_utilits__WEBPACK_IMPORTED_MODULE_1__["getEmptyHTMLForWrap"])(Object(_utilits__WEBPACK_IMPORTED_MODULE_1__["catalogWrap"])());
   json.length === 0 ? Object(_utilits__WEBPACK_IMPORTED_MODULE_1__["noItems"])(wrap) : createCatalogItems(json, wrap);
 }
+async function getCatalogItemsJson(json) {
+  const wrap = Object(_utilits__WEBPACK_IMPORTED_MODULE_1__["getEmptyHTMLForWrap"])(Object(_utilits__WEBPACK_IMPORTED_MODULE_1__["catalogWrap"])());
+  json.length === 0 ? Object(_utilits__WEBPACK_IMPORTED_MODULE_1__["noItems"])(wrap) : createCatalogItems(json, wrap);
+}
+
+const getSortQuery = async sort => {
+  return await database.orderByChild(sort.type).get().then(function (snapshot) {
+    if (snapshot.exists()) {
+      return snapshot.val();
+    } else {
+      console.log("No data available");
+    }
+  }).catch(function (error) {
+    console.error(error);
+  });
+};
+
 class Store {
   static async getJSONFromServer() {
     Object(_Loader__WEBPACK_IMPORTED_MODULE_7__["default"])(true);
@@ -20169,36 +20189,31 @@ class Store {
   }
 
   static async getSortJson() {
-    // this.json = typeSortFilter(this.sort.direction, this.sort.type,  this.json) 
-    const query = firebase_app__WEBPACK_IMPORTED_MODULE_4__["default"].database().ref('/products').orderByChild('price');
-    const data = await query.get().then(function (snapshot) {
-      if (snapshot.exists()) {
-        console.log(snapshot.val());
-        return snapshot.val();
-      } else {
-        console.log("No data available");
-      }
-    }).catch(function (error) {
-      console.error(error);
-    });
-    console.log(data);
-    this.json = data;
+    const data = await getSortQuery(this.sort);
+    this.sort.direction === 'top' ? this.json = data : this.json = data.reverse();
   }
 
   static getFilterJson() {
-    this.json = Object(_filter__WEBPACK_IMPORTED_MODULE_3__["filters"])(this.json, this.filter.squareCheck, this.filter.optionsCheck, this.filter.price);
+    this.json = Object(_filter__WEBPACK_IMPORTED_MODULE_3__["filters"])(this.json, this.filter);
   }
 
   static async getJSON() {
     await this.getJSONFromServer();
     const value = Object.keys(this.filter).length !== 0;
+    await this.getSortJson();
 
     if (value) {
       this.getFilterJson();
+      return this.json;
     }
 
-    await this.getSortJson();
     return this.json;
+  }
+
+  static async render() {
+    await this.getSortJson();
+    this.getFilterJson();
+    getCatalogItemsJson(this.json);
   }
 
 }
@@ -20332,8 +20347,7 @@ function listenerFilerEvents(wrap) {
   const inputs = wrap.querySelectorAll('[data-filter="price"]');
   const buttons = wrap.querySelectorAll('[data-filter="button"]');
   inputs.forEach(input => {
-    input.addEventListener('keyup', e => {
-      maskInputsOnlyNumers(e);
+    input.addEventListener('input', e => {
       controlInputsFilter(wrap);
     });
   });
@@ -20378,7 +20392,7 @@ async function controlInputsFilter(wrapFilter) {
     price: price
   };
   _catalog__WEBPACK_IMPORTED_MODULE_1__["Store"].setFilter(filterObj);
-  Object(_catalog__WEBPACK_IMPORTED_MODULE_1__["getCatalogItems"])();
+  _catalog__WEBPACK_IMPORTED_MODULE_1__["Store"].render();
   Object(_Loader__WEBPACK_IMPORTED_MODULE_4__["default"])(false);
 }
 
@@ -20393,19 +20407,27 @@ function getPrice(inputs, type) {
   return price;
 }
 
-function filters(json, squareCheck, optionsCheck, price) {
+const isMoreZero = value => {
+  if (value > 0) {
+    return true;
+  }
+
+  return false;
+};
+
+function filters(json, filterList) {
   let res = json;
 
-  if (squareCheck.length !== 0) {
-    res = Object(_filter_template__WEBPACK_IMPORTED_MODULE_2__["filterSquare"])(res, squareCheck);
+  if (isMoreZero(filterList.squareCheck.length)) {
+    res = Object(_filter_template__WEBPACK_IMPORTED_MODULE_2__["filterSquare"])(res, filterList.squareCheck);
   }
 
-  if (optionsCheck.length !== 0) {
-    res = Object(_filter_template__WEBPACK_IMPORTED_MODULE_2__["filterOptions"])(res, optionsCheck);
+  if (isMoreZero(filterList.optionsCheck.length)) {
+    res = Object(_filter_template__WEBPACK_IMPORTED_MODULE_2__["filterOptions"])(res, filterList.optionsCheck);
   }
 
-  if (price.size > 0) {
-    res = Object(_filter_template__WEBPACK_IMPORTED_MODULE_2__["filterPrice"])(res, price);
+  if (isMoreZero(filterList.price.size)) {
+    res = Object(_filter_template__WEBPACK_IMPORTED_MODULE_2__["filterPrice"])(res, filterList.price);
   }
 
   return res;
@@ -20439,13 +20461,6 @@ function controlButtonsFilter(target, wrapFilter) {
   }
 }
 
-function filtersControl(nodes) {
-  listenerFilerEvents(nodes.wrapFilter);
-  nodes.filterItems.forEach(item => {
-    const dataAttr = item.dataset.filter; // console.log(dataAttr)
-  });
-}
-
 function filterSortInit(nodes) {
   const btnSort = nodes.btnControlSort;
   const items = nodes.btnControlSort.querySelectorAll('li');
@@ -20457,18 +20472,11 @@ const filter = async () => {
   const nodes = Object(_filter_template__WEBPACK_IMPORTED_MODULE_2__["initialFilter"])();
   if (nodes === false) return;
   popupFilter(nodes);
-  filtersControl(nodes);
+  listenerFilerEvents(nodes.wrapFilter);
   filterSortInit(nodes);
 };
 
-/* harmony default export */ __webpack_exports__["default"] = (filter); //  служебная
-
-function maskInputsOnlyNumers(e) {
-  if (e.key.match(/\D/ig)) {
-    if (e.key === 'Backspace') return;
-    e.preventDefault();
-  }
-}
+/* harmony default export */ __webpack_exports__["default"] = (filter);
 
 /***/ }),
 
@@ -20686,37 +20694,30 @@ function typeSortFilter(direction, type, json) {
   }
 
   return json;
-}
-
-function topFilter(type, json) {
-  json.sort((a, b) => {
-    if (a[type] > b[type]) {
-      return 1;
-    }
-
-    if (a[type] < b[type]) {
-      return -1;
-    }
-
-    return 0;
-  });
-  return json;
-}
-
-function bottomFilter(type, json) {
-  json.sort((a, b) => {
-    if (a[type] < b[type]) {
-      return 1;
-    }
-
-    if (a[type] > b[type]) {
-      return -1;
-    }
-
-    return 0;
-  });
-  return json;
-}
+} // function topFilter(type, json){
+//     json.sort((a,b) => {
+//         if(a[type] > b[type] ){
+//             return 1;
+//         }
+//         if(a[type] < b[type]){
+//              return -1;
+//         }
+//         return 0;
+//      });
+//      return json
+// }
+// function bottomFilter(type, json){
+//     json.sort((a,b) => {
+//         if(a[type] < b[type] ){
+//             return 1;
+//         }
+//         if(a[type] > b[type]){
+//              return -1;
+//         }
+//         return 0;
+//     });
+//     return json
+// }
 
 /***/ }),
 

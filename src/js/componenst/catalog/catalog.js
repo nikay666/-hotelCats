@@ -8,8 +8,7 @@ import { firebaseConfig } from "../../filrebaseConfig";
 import Loader from "./Loader";
 
 firebase.initializeApp(firebaseConfig);
-const database = firebase.database();
-
+const database = firebase.database().ref("/products");
 
 export const createCards = (data) => {
     let cards = '';
@@ -20,9 +19,10 @@ export const createCards = (data) => {
 };
 
 export async function getJSON(){
-    const data = database.ref("/products").get().then(function(snapshot) {
+    Loader(true);
+    const data = database.get().then(function(snapshot) {
         if (snapshot.exists()) {
-            return snapshot.val()
+            return snapshot.val();
         }
         else {
             console.log("No data available");
@@ -30,7 +30,8 @@ export async function getJSON(){
         }).catch(function(error) {
         console.error(error);
     });
-    return data
+    Loader(false);
+    return data;
 }
 
 export function createCatalogItems(json, wrap){
@@ -45,64 +46,76 @@ const defaultSort =  {
 
 
 export async  function getCatalogItems() {
-    const  json = await Store.getJSON()
+    const json = await Store.getJSON();
     const wrap = getEmptyHTMLForWrap(catalogWrap());
     json.length === 0 ? noItems(wrap) : createCatalogItems(json, wrap);
+}
+
+export async  function getCatalogItemsJson(json) {
+    const wrap = getEmptyHTMLForWrap(catalogWrap());
+    json.length === 0 ? noItems(wrap) : createCatalogItems(json, wrap);
+}
+
+const getSortQuery = async (sort) => {
+    return await database.orderByChild(sort.type).get().then(function(snapshot) {
+        if (snapshot.exists()) {
+            return snapshot.val()
+        }
+        else {
+            console.log("No data available");
+        }
+        }).catch(function(error) {
+        console.error(error);
+    });
 }
 
 export class Store{
     
     static async getJSONFromServer(){
-        Loader(true)
+        Loader(true);
         this.json  =  await getJSON();
-        Loader(false)
+        Loader(false);
     }
 
     static async init(){
-        this.getJSONFromServer()
-        this.sort = defaultSort
-        this.filter = {}
+        this.getJSONFromServer();
+        this.sort = defaultSort;
+        this.filter = {};
     }
     static setSort(sort){
-        this.sort = sort 
+        this.sort = sort;
     }
     static setFilter(filter){
-        this.filter = filter 
+        this.filter = filter ;
     } 
 
     static async getSortJson(){
-        // this.json = typeSortFilter(this.sort.direction, this.sort.type,  this.json) 
+        const data = await getSortQuery(this.sort)
+        this.sort.direction === 'top' ?  this.json = data : this.json = data.reverse();
+    }
 
-        const  query = firebase.database().ref('/products').orderByChild('price')
-        const data = await query.get().then(function(snapshot) {
-            if (snapshot.exists()) {
-                console.log(snapshot.val())
-                return snapshot.val()
-            }
-            else {
-                console.log("No data available");
-            }
-            }).catch(function(error) {
-            console.error(error);
-        });
-        console.log(data)
-        this.json = data
-         
+    static getFilterJson(){
+        this.json = filters(this.json, this.filter)
     }
-    static  getFilterJson(){
-        this.json = filters(this.json, this.filter.squareCheck, this.filter.optionsCheck, this.filter.price)
-        
-    }
+
 
     static async  getJSON(){
         await this.getJSONFromServer()
         const value = Object.keys(this.filter).length !== 0
 
+        await this.getSortJson()
         if(value){
             this.getFilterJson()
+            return  this.json
         }
-        await this.getSortJson()
+   
         return  this.json
+    }
+
+    static async render(){
+        await this.getSortJson()
+        this.getFilterJson()
+        getCatalogItemsJson(this.json)
     }
 }
 

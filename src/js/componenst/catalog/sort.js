@@ -100,28 +100,28 @@ export function typeSortFilter(direction, type, json){
     return json
 }
 
-function topFilter(type, json){
-    json.sort((a,b) => {
-        if(a[type] > b[type] ){
-            return 1;
-        }
-        if(a[type] < b[type]){
-             return -1;
-        }
-        return 0;
-     });
-     return json
-}
+// function topFilter(type, json){
+//     json.sort((a,b) => {
+//         if(a[type] > b[type] ){
+//             return 1;
+//         }
+//         if(a[type] < b[type]){
+//              return -1;
+//         }
+//         return 0;
+//      });
+//      return json
+// }
 
-function bottomFilter(type, json){
-    json.sort((a,b) => {
-        if(a[type] < b[type] ){
-            return 1;
-        }
-        if(a[type] > b[type]){
-             return -1;
-        }
-        return 0;
-    });
-    return json
-}
+// function bottomFilter(type, json){
+//     json.sort((a,b) => {
+//         if(a[type] < b[type] ){
+//             return 1;
+//         }
+//         if(a[type] > b[type]){
+//              return -1;
+//         }
+//         return 0;
+//     });
+//     return json
+// }

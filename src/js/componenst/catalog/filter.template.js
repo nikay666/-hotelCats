@@ -35,7 +35,6 @@ function chengeClass (className, change, node)  {
 export  const bindBtns = (nodes) => {
     const activeClass = 'active';
 
-
     nodes.btnMobileFilters.addEventListener('click', () =>{ 
         chengeClass(activeClass, 'add',  nodes);
     });
