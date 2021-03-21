@@ -2,6 +2,8 @@
     width: 100vw;
     overflow-x: scroll;
     overflow-y: hidden;
+    scrollbar-width: thin;
+    scrollbar-color: transparent transparent;
     &::-webkit-scrollbar { width: 0; }
 
     &-cards{

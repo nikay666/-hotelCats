@@ -21064,9 +21064,9 @@ const getTemplateModals = () => {
                 <fieldset class="popup-date-group">
                     <span class="popup-date-text">Дата заезда</span>
                     <label for="">с</label>
-                    <input type="date" class="popup-date" name="">
+                    <input type="date" placeholder="дд.мм.гггг" class="popup-date" name="">
                     <label for="">по</label>
-                    <input type="date" class="popup-date" name="">
+                    <input type="date"  placeholder="дд.мм.гггг" class="popup-date" name="">
                 </fieldset>
                 <button type="submit" class="popups-submit btn__booking-dark btn__booking" >Отпрвить заявку
                     <span class="btn__booking-icon">

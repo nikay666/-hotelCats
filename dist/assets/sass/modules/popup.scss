@@ -70,19 +70,21 @@
         color: $black;
         font-family: $f_rubik;
         font-style: normal;
-        font-size: 16px;
+        font-size: 1rem;
         margin: 15px 0;
     }
     &-input, &-date{
         border-radius: 50px;
         border: 1px solid #D7D7D7;
+        background-color: $white;
         padding: 20px 30px;
-
+        font-size: 1rem;
     }
     &-input{
         margin: 10px 0;
         width: 100%;
         outline: none;
+     
 
         &:active, &:focus { outline: none; }
         &:active, &:focus {
@@ -90,11 +92,8 @@
         }
 
         &::placeholder{
-            color: $black;
+            color: rgba($black, 0.4);
             font-family: $f_rubik;
-            font-style: normal;
-            font-size: 16px;
-            line-height: 140%;
         }
     }
     &-date-group{
@@ -130,8 +129,8 @@
             position: absolute;
             right: 16px;
             z-index: 100;
-
         }
+
         &:active, &:focus { outline: none; }
         &:active, &:focus {
             box-shadow: 0px 0px 6px 3px $orange;

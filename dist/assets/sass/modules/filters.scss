@@ -68,6 +68,15 @@
                 border: 1px solid #E1E1E1;
                 width: 48%;
                 padding: 5px;
+
+                &[type="number"] {
+                    -moz-appearance: textfield;
+  
+                }
+                &[type="number"]:hover,
+                &[type="number"]:focus {
+                    -moz-appearance: auto;
+                }
             }
         }
     }
