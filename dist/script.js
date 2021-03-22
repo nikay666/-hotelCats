@@ -20028,6 +20028,7 @@ const arrow = () => {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 const burgerMenu = (selectorBurger, selectorMenu, activeClass) => {
+  const links = document.querySelectorAll('.main__menu-item > a');
   const btnBurger = document.querySelector(selectorBurger),
         menu = document.querySelector(selectorMenu);
   btnBurger.classList.remove(activeClass);
@@ -20038,6 +20039,11 @@ const burgerMenu = (selectorBurger, selectorMenu, activeClass) => {
     } else {
       add(btnBurger, menu, activeClass);
     }
+  });
+  links.forEach(link => {
+    link.addEventListener('click', () => {
+      remove(btnBurger, menu, activeClass);
+    });
   });
 };
 

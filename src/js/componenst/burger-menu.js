@@ -1,4 +1,6 @@
 const burgerMenu = (selectorBurger, selectorMenu, activeClass) => {
+    const links = document.querySelectorAll('.main__menu-item > a')
+
     const btnBurger = document.querySelector(selectorBurger),
           menu = document.querySelector(selectorMenu);
     
@@ -11,6 +13,11 @@ const burgerMenu = (selectorBurger, selectorMenu, activeClass) => {
         } else{
              add(btnBurger, menu, activeClass);
         }
+    });
+    links.forEach(link => {
+        link.addEventListener('click', () => {
+            remove(btnBurger, menu, activeClass);
+        })
     });
 };
 
