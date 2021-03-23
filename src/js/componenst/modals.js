@@ -43,11 +43,17 @@ function bindForm(selectors){
         closePopup();
     });
 
-    btnSubmit.addEventListener('click', (e) => {
+    form.addEventListener('submit', (e) => {
         e.preventDefault();
+        console.log(form)
         forms(form)
         closePopup(true);
     });
+    // btnSubmit.addEventListener('submit', (e) => {
+    //     e.preventDefault();
+    //     forms(form)
+    //     closePopup(true);
+    // });
 
     const init = () => {
         closePopup();

@@ -31,16 +31,28 @@ export const getTemplateModals = () =>{
             </button>
             <div class="popup-wrap">
                 <p class="popup-title">Забронировать номер</p>
-                <input type="text" class="popup-input" name="name" placeholder="Ваше имя">
+                <input type="text" class="popup-input" name="name" placeholder="Ваше имя" required>
                 <input type="text" class="popup-input" name="namePet" placeholder="Имя питомца">
-                <input type="tel" class="popup-input" name="phone" placeholder="Телефон">
+                <input type="tel"  pattern="^((\\+7|7|8)+([0-9]){10})$"  class="popup-input" name="phone" placeholder="Телефон" required>
                 <input type="email" class="popup-input" name="email" placeholder="E-mail">
                 <fieldset class="popup-date-group">
                     <span class="popup-date-text">Дата заезда</span>
                     <label for="">с</label>
-                    <input type="date" placeholder="дд.мм.гггг" class="popup-date" name="">
+                    <input 
+                        type="date" 
+                        placeholder="дд.мм.гггг" 
+                        class="popup-date" 
+                        name=""
+                        pattern="(^(((0[1-9]|1[0-9]|2[0-8])[\\/|\\-|\\.](0[1-9]|1[012]))|((29|30|31)[\\/|\\-|\\.](0[13578]|1[02]))|((29|30)[\\/|\\-|\\.](0[4,6,9]|11)))[\\/|\\-|\\.](19|[2-9][0-9])\\d\\d$)|(^29[\\/]02[\\/](19|[2-9][0-9])(00|04|08|12|16|20|24|28|32|36|40|44|48|52|56|60|64|68|72|76|80|84|88|92|96)$)"
+                    >
                     <label for="">по</label>
-                    <input type="date"  placeholder="дд.мм.гггг" class="popup-date" name="">
+                    <input 
+                        type="date"  
+                        placeholder="дд.мм.гггг" 
+                        class="popup-date" 
+                        name=""
+                        pattern="(^(((0[1-9]|1[0-9]|2[0-8])[\\/|\\-|\\.](0[1-9]|1[012]))|((29|30|31)[\\/|\\-|\\.](0[13578]|1[02]))|((29|30)[\\/|\\-|\\.](0[4,6,9]|11)))[\\/|\\-|\\.](19|[2-9][0-9])\\d\\d$)|(^29[\\/]02[\\/](19|[2-9][0-9])(00|04|08|12|16|20|24|28|32|36|40|44|48|52|56|60|64|68|72|76|80|84|88|92|96)$)"
+                    >
                 </fieldset>
                 <button type="submit" class="popups-submit btn__booking-dark btn__booking" >Отпрвить заявку
                     <span class="btn__booking-icon">
