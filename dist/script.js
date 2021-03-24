@@ -20799,6 +20799,20 @@ class Slider {
     this.slides[this.slideIndex].style.display = '';
   }
 
+  touchHandler() {
+    this.slides.forEach(slide => {
+      let start, end;
+      slide.addEventListener('touchstart', e => {
+        start = e.changedTouches[0].clientX;
+      });
+      slide.addEventListener('touchend', e => {
+        end = e.changedTouches[0].clientX;
+        const dif = start - end;
+        Math.abs(dif) < 60 ? null : dif > 0 ? this.changeSlide(1) : this.changeSlide(-1);
+      });
+    });
+  }
+
   changeSlide(n) {
     this.slideIndex += n;
     const count = this.count < 0 ? -1 : 1;
@@ -20850,6 +20864,7 @@ class Slider {
     this.binding();
     this.showSlides(this.slideIndex);
     this.changeDots(this.slideIndex);
+    this.touchHandler();
   }
 
 }
