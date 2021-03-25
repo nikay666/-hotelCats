@@ -20362,7 +20362,7 @@ function listenerFilerEvents(wrap) {
       const target = e.target;
 
       if (target.dataset.f_button) {
-        controlButtonsFilter(wrap);
+        controlButtonsFilter(e.target, wrap);
       }
     });
   });
@@ -20465,6 +20465,10 @@ function controlButtonsFilter(target, wrapFilter) {
     });
     controlInputsFilter(wrapFilter);
   }
+
+  if (target.dataset.f_button === 'apply') {
+    return true;
+  }
 }
 
 function filterSortInit(nodes) {
@@ -20513,6 +20517,8 @@ const initialFilter = () => {
   const filterAside = document.querySelector('.catalog__filters');
   const filterItems = document.querySelectorAll('.filter-item');
   const substrate = document.querySelector('.filter-substrate');
+  const btnApply = document.querySelector('[data-f_button="apply"]');
+  const btnClear = document.querySelector('[data-f_button="clear"]');
   return {
     wrapControlBtns: wrapFiltertns,
     btnMobileFilters: btnFilters,
@@ -20520,7 +20526,9 @@ const initialFilter = () => {
     btnControlSort: btnSort,
     wrapFilter: filterAside,
     filterItems: filterItems,
-    popupSubstrate: substrate
+    popupSubstrate: substrate,
+    btnApply: btnApply,
+    btnClear: btnClear
   };
 };
 
@@ -20538,6 +20546,12 @@ const bindBtns = nodes => {
   const activeClass = 'active';
   nodes.btnMobileFilters.addEventListener('click', () => {
     chengeClass(activeClass, 'add', nodes);
+  });
+  nodes.btnApply.addEventListener('click', () => {
+    chengeClass(activeClass, 'remove', nodes);
+  });
+  nodes.btnClear.addEventListener('click', () => {
+    chengeClass(activeClass, 'remove', nodes);
   });
   nodes.btnMobilePopupClose.addEventListener('click', () => {
     chengeClass(activeClass, 'remove', nodes);

@@ -21,7 +21,7 @@ function listenerFilerEvents(wrap){
         button.addEventListener('click', (e) => { 
             const target = e.target;
             if(target.dataset.f_button){
-                controlButtonsFilter(wrap);
+                controlButtonsFilter(e.target, wrap);
             }
         });
     });
@@ -123,6 +123,9 @@ function controlButtonsFilter(target,wrapFilter){
             : input.value ? input.value='' : null 
         })
         controlInputsFilter(wrapFilter)
+    }
+    if(target.dataset.f_button === 'apply'){
+        return true
     }
 }
 

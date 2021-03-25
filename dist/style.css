@@ -1659,3 +1659,13 @@ ul {
 
 fieldset {
   border: none; }
+
+.only-mobile {
+  opacity: 0;
+  visibility: hidden;
+  position: absolute; }
+  @media (max-width: 768px) {
+    .only-mobile {
+      opacity: 1;
+      visibility: visible;
+      position: relative; } }

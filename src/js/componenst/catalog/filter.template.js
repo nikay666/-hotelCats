@@ -11,6 +11,8 @@ export const initialFilter = () =>{
     const filterAside = document.querySelector('.catalog__filters');
     const filterItems  = document.querySelectorAll('.filter-item');
     const substrate  = document.querySelector('.filter-substrate');
+    const btnApply = document.querySelector('[data-f_button="apply"]');
+    const btnClear = document.querySelector('[data-f_button="clear"]');
     return {
         wrapControlBtns:  wrapFiltertns,
         btnMobileFilters: btnFilters,
@@ -18,7 +20,9 @@ export const initialFilter = () =>{
         btnControlSort: btnSort,
         wrapFilter: filterAside,
         filterItems: filterItems,
-        popupSubstrate: substrate
+        popupSubstrate: substrate,
+        btnApply: btnApply,
+        btnClear: btnClear,
     };
 };
 
@@ -37,6 +41,14 @@ export  const bindBtns = (nodes) => {
 
     nodes.btnMobileFilters.addEventListener('click', () =>{ 
         chengeClass(activeClass, 'add',  nodes);
+    });
+
+    nodes.btnApply.addEventListener('click', () => {
+        chengeClass(activeClass, 'remove', nodes);
+    });
+
+    nodes.btnClear.addEventListener('click', () => {
+        chengeClass(activeClass, 'remove', nodes);
     });
 
     nodes.btnMobilePopupClose.addEventListener('click', () =>{
