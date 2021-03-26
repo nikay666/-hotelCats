@@ -19981,7 +19981,8 @@ const hideArrow = arrow => {
 
 const scrolling = arrow => {
   window.addEventListener('scroll', () => {
-    if (document.documentElement.scrollTop >= HEIGHT) {
+    // console.log('scroll', document.scrollingElement.scrollTop)
+    if (document.scrollingElement.scrollTop >= HEIGHT) {
       if (arrow.dataset.show === 'false') {
         showArrow(arrow);
       }
