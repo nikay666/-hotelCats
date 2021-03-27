@@ -20623,10 +20623,14 @@ __webpack_require__.r(__webpack_exports__);
 
 
 function controlArrowSort(arrow) {
+  const icon = arrow.firstElementChild;
+  console.log(arrow);
+  console.log(icon);
+
   if (arrow.dataset.sort === "true") {
-    arrow.style.transform = "translateY(-50%) rotate(180deg)";
+    icon.style.transform = "translateY(-50%) rotate(180deg)";
   } else {
-    arrow.style.transform = '';
+    icon.style.transform = '';
   }
 }
 
@@ -20715,30 +20719,7 @@ function typeSortFilter(direction, type, json) {
   }
 
   return json;
-} // function topFilter(type, json){
-//     json.sort((a,b) => {
-//         if(a[type] > b[type] ){
-//             return 1;
-//         }
-//         if(a[type] < b[type]){
-//              return -1;
-//         }
-//         return 0;
-//      });
-//      return json
-// }
-// function bottomFilter(type, json){
-//     json.sort((a,b) => {
-//         if(a[type] < b[type] ){
-//             return 1;
-//         }
-//         if(a[type] > b[type]){
-//              return -1;
-//         }
-//         return 0;
-//     });
-//     return json
-// }
+}
 
 /***/ }),
 

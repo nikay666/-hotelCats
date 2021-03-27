@@ -1443,17 +1443,28 @@
   flex-direction: column;
   align-items: baseline;
   width: max-content;
-  padding: 0;
-  transition: .2s ease-in-out; }
+  padding: 0; }
   .btn__sort-arrow {
     position: absolute;
-    right: 5%;
-    top: 50%;
-    transform: translateY(-50%);
-    transition: .2s ease-in-out;
     user-select: none;
     border: none;
-    background: none; }
+    background: none;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: 25px;
+    outline: none;
+    cursor: pointer; }
+    .btn__sort-arrow span {
+      position: absolute;
+      right: 5%;
+      top: 50%;
+      transform: translateY(-50%);
+      z-index: -1;
+      transition: .2s ease-in-out; }
+    .btn__sort-arrow:focus {
+      border: 2px solid #FF7236; }
   .btn__sort.active {
     border-radius: 25px; }
   .btn__sort-btn {
