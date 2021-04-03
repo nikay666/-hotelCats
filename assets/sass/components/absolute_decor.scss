@@ -1,0 +1,19 @@
+.absolute_decor{
+    position: absolute;
+    z-index: -10;
+
+
+    &.why_dec,&.review_dec{
+        top:0;
+        right:0;
+        width: 367px;
+    }
+    &.rooms_dec{
+        left: 0;
+        top: 20%;
+        width: 484px;
+    }
+    &.review_dec{
+        transform: rotate(-45deg);
+    }
+}

@@ -1,0 +1,137 @@
+$mg_card-p: 8px;
+.card{
+    border: 1px solid;
+    width: 30%;
+    margin: 15px;
+
+    background: $white;
+    border: 1px solid #E1E1E1;
+    box-shadow: 0px 0px 25px rgba(208, 208, 208, 0.25);
+    border-radius: $br-card;
+    height: fit-content;
+
+    &:nth-child(3n){
+        margin-right: 0; 
+    }
+
+    @media (max-width: 1200px) {
+        margin: 5px;
+        margin-top: 15px;
+        margin-bottom: 15px;
+    }
+
+
+    @media (max-width: 1150px) {
+        width: 48%;
+        margin: 0;
+        margin-top: 15px;
+        margin-bottom: 15px;
+        &:nth-child(2n){
+            margin-right: 0; 
+        }
+    }
+
+    @media (max-width: 900px) {
+        width: 48%;
+    }
+    @media (max-width: 576px) {
+        width: 100%;
+    }
+
+    &__img{
+        width: 100%;
+        img{
+            object-fit: contain;
+            object-position: center;
+            width: 100%;
+        }
+    }
+
+    &__content{
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: baseline;
+        padding: 25px 20px 0;
+    }
+    p,  span{
+        font-family: $f_rubik;
+    }
+    &-text{
+        font-size: 14px;
+        margin: 9px 0;
+    }
+    &-price{
+        font-weight: 500;
+        font-size: 18px;
+        margin: 0 $mg_card-p;
+    }
+    &-title{
+        font-weight: 500;
+        font-size: 20px;
+    }
+
+    &__group{
+        display: flex;
+        &-icons{
+            display: flex;
+            margin-left: $mg_card-p;
+            align-items: center;
+            flex-wrap: wrap;
+            width: 50%;
+        }
+    }
+
+    .prompt{
+        &-icon{
+            margin: 0 $mg_card-p;
+            position: relative;
+
+            &:hover{
+                cursor: pointer;
+                .prompt-text{
+                    opacity: 1;
+                    visibility: visible;
+
+                }
+            }
+        }
+        &-text{
+            opacity: 0;
+            visibility: hidden;
+
+            position: absolute;
+            bottom: 160%;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 12px;
+            transition: .2s ease-in-out;
+            padding: 10px;
+            background-color: $white;
+            border: 1px solid $yellow;
+            border-radius: $br-card;
+            white-space: nowrap;
+            box-shadow: 0px 4px 12px rgba(173, 152, 143, 0.18);
+
+            &::before{
+                content: '';
+                position: absolute;
+    
+                bottom: -46%;
+                left: 50%;
+                transform: translateX(-50%);
+                border: 8px solid transparent;
+                border-top: 8px solid $white;
+
+                filter: drop-shadow(0 1px 0 $yellow);
+            }
+
+            &:hover{
+                cursor: pointer;
+            }
+        }
+    }
+    .btn__booking{
+        align-self: center;
+    }
+}

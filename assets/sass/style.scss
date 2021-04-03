@@ -1,0 +1,64 @@
+@import './var.scss';
+@import url('https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&family=Rubik:wght@300;400;500;700&display=swap');
+@import './modules/modules.scss';
+@import './components/ui.scss';
+*{
+	box-sizing: border-box;
+	margin: 0;
+	padding: 0;
+}
+p, a, h1,h2,h3,h4,strong, input, label{
+	font-family: $f_rubik;
+	line-height: 140%;
+	color: $black;
+}
+html{
+	width: 100vw;
+	scroll-behavior: smooth;
+}
+body{
+	background-color: $white;
+	position: relative;
+	width: 100vw;
+	overflow-x: hidden;
+}
+.h1{
+	font-family: $f_rubik;
+	font-style: normal;
+	font-weight: bold;
+	font-size: 36px;
+
+	@media (max-width: 768px) {
+		font-size: 28px;
+	}
+}
+.like-h2{
+	font-family: $f_rubik;
+	font-style: normal;
+	font-weight: bold;
+	font-size: 36px;
+	text-align: center;
+}
+iframe{
+	border: none;
+}
+.material-icons{
+	font-family: 'Material Icons';
+}
+ul{
+	list-style: none;
+}
+fieldset{
+	border:  none;
+}
+.only-mobile{
+	opacity: 0;
+	visibility: hidden;
+	position: absolute;
+
+	@media (max-width: 768px) {
+		opacity: 1;
+		visibility: visible;
+		position: relative;
+	}
+}

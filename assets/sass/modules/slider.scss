@@ -1,0 +1,75 @@
+.slider{
+    position: relative;
+
+    &-nav{
+        width: 100%;
+        position: relative;
+        height: 60px;
+        display: block;
+        margin-top: 15px;
+
+    }
+    &-dots{
+        height: 100%;
+        position: absolute;
+        bottom: 0;
+        left: 50%;
+        transform: translateX(-50%);
+
+        .slider-dot{
+            display: inline-block;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background-color: rgba($black, .3);
+            transition: .2s ease-in-out;
+            margin:5px;
+
+            &.active{
+                background-color: $orange;
+            }
+
+            &:hover:not(.active){
+                background-color: $yellow;
+                transform: scale(1.1);
+            }
+        } 
+        &:hover{
+            cursor: pointer;
+        }
+    }
+    &-arrows{
+        height: 100%;
+        position: absolute;
+        right: 0;
+        bottom: 0;
+        display: flex;
+
+        .slider-arrow{
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            box-shadow: 0px 0px 10px rgba($black, 0.1);
+            margin: 0 5px;
+            transition: .2s  ease-in-out;
+
+            &:hover{
+                cursor: pointer;
+                box-shadow: 0px 0px 10px rgba($black, 0.2);
+                transform: scale(1.1);
+            }
+            .arrow-r{
+                transform: rotate(180deg);
+            }
+        }
+    }
+
+    @media (max-width: 992px) {
+        &-arrows{
+            display: none;
+        }
+    }
+}

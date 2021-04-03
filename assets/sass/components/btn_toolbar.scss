@@ -1,0 +1,129 @@
+@mixin btn {
+    background: $white;
+    border: none;
+    cursor: pointer;
+    font-family: $f_rubik;
+    font-size: 14px;
+}
+.btn__toolbar{
+    @include btn;
+    box-shadow: 0px 2px 12px rgba(173, 152, 143, 0.18);
+    border-radius: 25px;
+    border-radius: $br-btn;
+    padding: 12px 30px;
+
+    opacity: 0;
+    height: hidden;
+    z-index: -1000;
+    
+    &.active{
+        opacity: 1;
+        visibility: visible;
+        z-index: 1;
+    }
+    @media (max-width: 768px) {
+            margin: 0 10px;
+    }
+    @media (max-width: 576px) {
+        margin: 0;
+        margin-right: 10px;
+    }
+
+}
+.btn__sort{
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: baseline;
+    width: max-content;
+    padding: 0;
+
+
+
+    &-arrow{
+        position: absolute;
+        user-select: none;
+        border: none;
+        background: none;
+
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        border-radius: 25px;
+        outline: none;
+
+        cursor: pointer;
+
+        span{
+            position: absolute;
+            right: 5%;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: -1;
+            
+            transition: .2s ease-in-out;
+        }
+
+        &:focus{
+            border: 2px solid $orange;
+        }
+
+    }
+
+    &.active{
+        border-radius: 25px;
+
+    }
+
+    &-btn{
+        @include btn;
+        width: 100%;
+        visibility: hidden;
+        opacity: 0;
+        transition: all .2s ease-in-out,  opacity 0s  ease, background-color .1s  ease-in-out ;
+        height: 0;
+        padding-left: 28px;
+        padding-right: 48px;
+        border-radius: 25px;
+
+
+
+        &.active{
+            position: relative;
+            visibility: visible;
+            opacity: 1;
+            height: auto;
+            padding-top: 12px;
+            padding-bottom: 12px;
+
+            &:hover, &:focus{
+                background-color: rgba($yellow,.5);
+            }
+        }
+        
+        &.active-filter{
+            z-index: 5;
+            box-shadow: 0px 2px 12px rgba(173, 152, 143, 0.18);
+        
+            &.open{
+                border-bottom-color: rgba($yellow,1);
+            }
+            &:hover, &:focus{
+                background-color: $white;
+            }
+            
+        }
+    }
+}
+
+.btn__filters{
+    display: flex;
+    align-items: center;
+
+     svg{
+        width: 15px;
+        height: 15px;
+        margin-right: 10px;
+    }
+}

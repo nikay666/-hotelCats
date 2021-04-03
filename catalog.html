@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Hotel Cats Catalog</title>
+
+    <link rel="stylesheet" href="./style.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+</head>
+<body>
+    <header class="header">
+        <div class="main__menu-container">
+            <div class="logo">
+                <a href="/" class="logo-link">
+                    <img src="./assets/img/logo.png" alt="" class="logo-img">
+                </a>
+            </div>
+            <nav class="main__menu">
+                <ul class="main__menu-wrap">
+                    <li class="main__menu-item">
+                        <a href="/catalog.html">Каталог</a>
+                    </li>
+                    <li class="main__menu-item">
+                        <a href="/#why">Почему мы?</a>
+                    </li>
+                    <li class="main__menu-item">
+                        <a href="/#rooms">Номера</a>
+                    </li>
+                    <li class="main__menu-item">
+                        <a href="/#reviews">Отзывы</a>
+                    </li>
+                    <li class="main__menu-item">
+                        <a href="/#map">Как нас найти</a>
+                    </li>
+                </ul>
+                <div class="mobile__more">
+                    <div class="mobile__more-item">
+                        <a href="tel:+8 (800) 333-55-99">8 (800) 333-55-99 </a>
+                    </div>
+                    <div class="mobile__more-item">
+                        <div class="social__links">
+                            <a href="" class="social__links-item">
+                                <img src="./assets/icons/facebook.svg" alt="">
+                            </a>
+                            <a href="" class="social__links-item">
+                                <img src="./assets/icons/instagram.svg" alt="">
+                            </a>
+                            <a href="" class="social__links-item">
+                                <img src="./assets/icons/vk.svg" alt="">
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </nav>
+            <button class="burger__menu" aria-label="Открыть меню">
+                <span class="burger__menu-span"></span>
+                <span class="burger__menu-span"></span>
+                <span class="burger__menu-span"></span>
+            </button>
+        </div>
+    </header>
+    <main>
+        <div class="catalog">
+            <!-- Catalog  Header  -->
+            <div class="catalog__header">
+                <h1 class="catalog__header-title h1">Наши номера</h1>
+
+                <div class="catalog__header-buttons">
+                    <button class="btn__filters btn__toolbar active">
+                        <svg  enable-background="new 0 0 512 512"  viewBox="0 0 512 512" ><g><path d="m187.304 252.717c8.045 11.642 5.64 1.941 5.64 233.997 0 20.766 23.692 32.651 40.39 20.23 71.353-53.797 85.609-58.456 85.609-83.619 0-169.104-1.971-159.594 5.64-170.608l115.869-157.718h-369.016z"/><path d="m484.221 12.86c-4.14-7.93-12.26-12.86-21.199-12.86h-414.156c-19.305 0-30.664 21.777-19.59 37.6.091.152-1.257-1.693 20.12 27.4h413.095c18.217-24.793 30.394-35.505 21.73-52.14z"/></g></svg>
+                        Фильтры
+                    </button>
+
+                    <ul class="btn__sort btn__toolbar active">
+
+                        <li data-active="activeFilter" data-list="top-square" class="btn__sort-btn active active-filter">
+                            <span data-content="text" class="textContent" aria-label="Сортировка по увеличениию">
+                                &#8593; По площади 
+                            </span>
+                            <button aria-label="Раскрыть список" class="btn__sort-arrow" data-sort="false" data-content="arrow" >
+                                 <span class="material-icons btn__sort-icon">expand_more</span>
+                                
+                            </button>
+                        </li>
+                        <li 
+                            data-list="top-square" 
+                            data-item="true" 
+                            class="btn__sort-btn" 
+                        >&#8593; По площади 
+                        </li>
+                        <li 
+                            data-list="bottom-square"  
+                            data-item="true" 
+                            class="btn__sort-btn" 
+                        >&#8595;По площади</li>
+                        <li 
+                            data-list="top-price" 
+                            data-item="true"  
+                            class="btn__sort-btn" 
+                        >&#8593; По цене</li>
+                        <li 
+                            data-list="bottom-price" 
+                            data-item="true" 
+                            class="btn__sort-btn" 
+                        >&#8595;По цене</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="catalog__wrap-content">
+                <!-- aside filters  -->
+                <div class="filter-substrate"></div>
+                <aside class="catalog__filters" >
+                    <button class='filter-close popup__close' aria-label="Закрыть" tabindex="-1">
+                        <span class="popup__close-btn"></span>
+                        <span class="popup__close-btn"></span>
+                    </button>
+                    <fieldset class="filter-item"  data-filter="price">
+                        <legend class="filter-title">Цена за сутки, ₽</legend>
+                        <div class="group__fromTo">
+                            <input type="number" name="from" data-filter="price" data-price="from" class="filter__input-text" placeholder="от 100"  min="100">
+                            <input type="number" name="to" data-filter="price" data-price="to"  class="filter__input-text" placeholder="до 600" max="600">
+                        </div>
+                    </fieldset>
+                    <fieldset class="filter-item" data-filter="square">
+                        <legend class="filter-title">Площадь</legend>
+                        <div class="group__checklist">
+                            <div class="group__checklist-item">
+                                <input type="checkbox" data-filter="square" class="custom-checkbox" id="0,63" name="0,63"
+                                >
+                                <label for="0,63" >0,63 м<sup aria-label="квадратных">2</sup></label>
+                            </div>
+                            <div class="group__checklist-item">
+                                <input type="checkbox" data-filter="square" class="custom-checkbox" id="0,90" name="0,90">
+                                <label for="0,90">0,90 м<sup>2</sup></label>
+                            </div>
+                            <div class="group__checklist-item">
+                                <input type="checkbox" data-filter="square" class="custom-checkbox" id="1,13" name="1,13">
+                                <label for="1,13" >1,13 м<sup>2</sup></label>
+                            </div>
+                            <div class="group__checklist-item">
+                                <input type="checkbox" data-filter="square" class="custom-checkbox" id="1,56" name="1,56">
+                                <label for="1,56" >1,56 м<sup>2</sup></label>
+                            </div>
+                            <div class="group__checklist-item">
+                                <input type="checkbox" data-filter="square" class="custom-checkbox" id="2,56" name="2,56">
+                                <label for="2,56">2,56 м<sup>2</sup></label>
+                            </div>
+                            <div class="group__checklist-item">
+                                <input type="checkbox" data-filter="square" class="custom-checkbox" id="2,88" name="2,88">
+                                <label for="2,88">2,88 м<sup>2</sup></label>
+                            </div>
+                        </div>
+                    </fieldset>
+                    <fieldset class="filter-item" data-filter="equipment">
+                        <legend class="filter-title">Оснащение номера</legend>
+                        <div class="group__checklist">
+
+                            <div class="group__checklist-item">
+                                <input type="checkbox"  data-filter="options" class="custom-checkbox" id="empty" name="empty"
+                                >
+                                <label for="empty">Пустой номер</label>
+                            </div>
+                            <div class="group__checklist-item">
+                                <input type="checkbox" data-filter="options" class="custom-checkbox" id="bed" name="bed">
+                                <label for="bed">Лежак</label>
+                            </div>
+                            <div class="group__checklist-item">
+                                <input type="checkbox" data-filter="options"  class="custom-checkbox" id="sharpener" name="sharpener">
+                                <label for="sharpener">Когтеточка</label>
+                            </div>
+                            <div class="group__checklist-item">
+                                <input type="checkbox" data-filter="options" class="custom-checkbox" id="clew" name="clew">
+                                <label for="clew">Игровой-комплекс</label>
+                            </div>
+                            <div class="group__checklist-item">
+                                <input type="checkbox" data-filter="options" class="custom-checkbox" id="home" name="home"
+                                >
+                                <label for="home">Домик</label>
+                            </div>
+
+                        </div>
+                    </fieldset>
+                    <button data-filter="button" data-f_button="apply" class="btn__filter btn__filter-fill only-mobile popup-close">Применить</button>
+                    <button data-filter="button" data-f_button="clear" class="btn__filter">Сбросить</button>
+                </aside>
+                <!-- products  -->
+                <div class="catalog__products">
+                    <!-- cards  -->
+                </div>
+            </div>
+            <!-- banner  -->
+            <div class="banner">
+            
+                    <div class="banner__content">
+                        <h1 class="banner__content-title"><span class="less-font">Каждый 7-й день</span></br> бесплатно!</h1>
+                        <div class="banner__content-text">Акция действует при размещении
+                            в номерах “Люкс” и “Супер-Люкс”
+                        </div>
+        
+                        <button class="btn__booking  toggle-popup" data-purpose="booking">Забронировать
+                           <span class="btn__booking-icon">
+                                <svg class="btn__booking-img svg" width="21" height="18" viewBox="0 0 21 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M16.8031 6.52459C13.8387 8.22475 14.3435 13.1874 17.5591 13.1874C18.9459 13.1874 20.1462 12.1449 20.6806 10.812C21.9148 7.73361 19.3483 5.06439 16.8031 6.52459Z" fill="#FFFEFD"/>
+                                    <path d="M13.7585 7.13911C17.3153 7.13911 18.3803 1.0992 15.0011 0.106215C13.4616 -0.346048 11.7109 0.739136 11.1486 2.72287C10.5177 4.94631 11.7589 7.13911 13.7585 7.13911Z" fill="#FFFEFD"/>
+                                    <path d="M12.8437 17.8903C12.3498 17.7537 11.4731 17.6658 10.5555 17.6531C9.58551 17.6389 8.56997 17.7084 7.9129 17.8903C6.13824 18.3847 3.72348 17.1886 4.25331 14.7045C4.74338 12.408 6.50422 12.5389 6.92062 10.3625C7.34017 8.16298 8.97061 7.10147 10.5555 7.18444C12.0223 7.26144 13.4499 8.31922 13.8389 10.363C14.2529 12.5409 16.0101 12.4088 16.4994 14.7045C17.0312 17.1906 14.6114 18.3802 12.8437 17.8903Z" fill="#FFFEFD"/>
+                                    <path d="M7.49859 7.13932C8.50467 7.13932 9.36873 6.55499 9.84887 5.66068C11.2762 3.00141 8.93197 -0.680001 6.25571 0.10841C2.87074 1.10414 3.94372 7.13932 7.49859 7.13932Z" fill="#FFFEFD"/>
+                                    <path d="M5.89091 11.2099C7.03297 8.41561 4.32591 5.00232 1.74052 6.07629C-1.37374 7.36979 -0.000207816 12.9487 3.42404 12.9487C4.52296 12.9487 5.45682 12.2722 5.89091 11.2099Z" fill="#FFFEFD"/>
+                                    <path d="M12.8437 17.8902C12.3497 17.7537 11.473 17.6657 10.5554 17.653V7.1844C12.0223 7.2614 13.4498 8.31917 13.8388 10.363C14.2528 12.5408 16.01 12.4087 16.4994 14.7045C17.0311 17.1905 14.6113 18.3801 12.8437 17.8902Z" fill="#FFFEFD"/>
+                                </svg>
+                           </span>
+                        </button>
+    
+                        <img class="banner__content-paw" src="./assets/img/paw.svg" alt="">
+          
+                        <picture>
+                            <source class="banner__content-img" srcset="./assets/img/cat-poster-mobile.png" media="(max-width: 576px)">
+                            <img class="banner__content-img" src="./assets/img/cat-poster.png" alt="Кот">
+                        </picture>
+                    </div>
+                
+                    
+            </div>
+        </div>
+        <!-- Map  -->
+        <div class="map__container" id="map">
+        <div class="map__container-wrap">
+            <div class="map__container-content">
+                <h2 class="like-h2">Как нас найти</h2>
+                <div class="map__container-info">
+                    <p class="map__container-title">Адрес</p>
+                    <p class="map__container-text">Санкт-Петербург,
+                        ул Большая Конюшенная, д 19</p>
+                </div>
+                <div class="map__container-info">
+                    <p class="map__container-title">Режим работы</p>
+                    <p class="map__container-text">Ежедневно, с 9:00 до 20:00</p>
+                </div>
+                <div class="map__container-info">
+                    <p class="map__container-title">Телефон</p>
+                    <a href="tel:+78003335599" target="_blank" referrerpolicy="no-referrer" class="map__container-text">8 (800) 333-55-99</a>
+                </div>
+                <div class="map__container-info">
+                    <p class="map__container-title">E-mail</p>
+                    <a href="mailto:info@cat-hotel.ru" target="_blank" referrerpolicy="no-referrer"  class="map__container-text">info@cat-hotel.ru</a>
+                </div>
+                <div class="social__links">
+                    <a href="https://facebook.com" target="_blank" referrerpolicy="no-referrer" class="social__links-item">
+                        <img src="./assets/icons/facebook.svg" alt="">
+                    </a>
+                    <a href="https://instagram.com" target="_blank" referrerpolicy="no-referrer" class="social__links-item">
+                        <img src="./assets/icons/instagram.svg" alt="">
+                    </a>
+                    <a href="https://vk.com" target="_blank" referrerpolicy="no-referrer" class="social__links-item">
+                        <img src="./assets/icons/vk.svg" alt="">
+                    </a>
+                </div>
+
+            </div>
+            <iframe class="map__container-map" src="https://yandex.ru/map-widget/v1/?um=constructor%3A4e0e9cb75701b0275460a33f73ece143fb998cdcd137810d758e86119effef40&amp;source=constructor"></iframe>
+        </div>
+    </div>
+    </main>
+    <footer class="footer">
+        <!-- <div class="footer__top"> -->
+            <div class="main__menu-container footer__top">
+                <div class="logo">
+                    <a href="" class="logo-link">
+                        <img src="./assets/img/logo.png" alt="" class="logo-img">
+                    </a>
+                </div>
+                <nav class="main__menu">
+                    <ul class="main__menu-wrap">
+                        <li class="main__menu-item">
+                            <a href="/catalog.html">Каталог</a>
+                        </li>
+                        <li class="main__menu-item">
+                            <a href="#why">Почему мы?</a>
+                        </li>
+                        <li class="main__menu-item">
+                            <a href="#rooms">Номера</a>
+                        </li>
+                        <li class="main__menu-item">
+                            <a href="#reviews">Отзывы</a>
+                        </li>
+                        <li class="main__menu-item">
+                            <a href="#map">Как нас найти</a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        <!-- </div> -->
+        <div class="footer__bottom">
+            <a href="#" class="footer__bottom-link">&#169; 2019 Все права защищены</a>
+            <a href="#" class="footer__bottom-link made_with_love">Made with <span class="heart">&#9829;</span></a>
+            <a href="#"  class="footer__bottom-link">Политика конфиденциальности</a>
+        </div>
+
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>

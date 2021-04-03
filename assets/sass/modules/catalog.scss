@@ -1,0 +1,100 @@
+.catalog{
+    padding: 0  98px;
+    &__header{
+        display: flex;
+        width: 100%;
+        justify-content: space-between;
+        margin: 70px 0 60px;
+        height: 40px;
+
+        &-buttons{
+            display: flex;
+            align-items: baseline;
+            
+            @media (max-width: 768px) {
+                align-items: end;
+                height: 100%;
+            }
+        }
+        @media (max-width: 576px) {
+            flex-wrap: wrap;
+            height: 80px;
+
+            .h1{
+                margin-bottom: 40px;
+            }
+            &-buttons{
+                width: 100%;
+                justify-content: space-between;
+            }
+        }
+    }
+
+
+    &__wrap-content{
+        width: 100%;
+        display: flex
+
+    }
+
+    $width:  20%;
+    $width_900px: 30%;
+
+    &__filters{
+        width: $width;
+
+        @media (max-width:900px ) {
+            width: $width_900px;
+        }
+        @media (max-width: 768px) {
+            visibility: hidden;
+            height: 0;
+            width: 0;
+            opacity: 0;
+            z-index: -10;
+
+            &.active{
+                visibility: visible;
+                height: 100%;
+                width: 100%;
+                opacity: 1;
+                z-index: 10;
+            }
+        }
+    }
+
+    &__products{
+        width: 100%;
+        margin-left: 90px;
+
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: start;
+
+        margin-bottom: 140px;
+
+        @media(max-width: 1300px) {
+            margin-left: 50px;
+        }
+        @media (max-width: 1200px) {
+            margin-left: 30px;
+            margin-bottom: 100px;
+        }
+        @media (max-width: 1150px) {
+            justify-content: space-between;
+        }
+        @media (max-width: 768px) {
+            margin-left: 0;
+        }
+    }
+    @media (max-width: 1200px) {
+        padding: 0 80px;
+    }
+    @media (max-width: 768px) {
+        padding: 0  45px;
+    }
+    @media (max-width: 576px) {
+        padding: 0  15px;
+    }
+
+}
