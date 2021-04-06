@@ -20547,6 +20547,7 @@ const bindBtns = nodes => {
   const activeClass = 'active';
   nodes.btnMobileFilters.addEventListener('click', () => {
     chengeClass(activeClass, 'add', nodes);
+    document.body.style.overflow = 'hidden';
   });
   nodes.btnApply.addEventListener('click', () => {
     chengeClass(activeClass, 'remove', nodes);

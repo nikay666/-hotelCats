@@ -1,10 +1,13 @@
 {
+  "homepage": "https://nikay666.github.io/hotelCats/",
   "name": "loan",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build":"gulp build-prod-js ",
+    "deploy": "gh-pages -d dist"
   },
   "author": "",
   "license": "ISC",
@@ -30,6 +33,7 @@
     "webpack-stream": "^5.2.1"
   },
   "dependencies": {
-    "firebase": "^8.2.9"
+    "firebase": "^8.2.9",
+    "gh-pages": "^3.1.0"
   }
 }

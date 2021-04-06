@@ -41,6 +41,7 @@ export  const bindBtns = (nodes) => {
 
     nodes.btnMobileFilters.addEventListener('click', () =>{ 
         chengeClass(activeClass, 'add',  nodes);
+        document.body.style.overflow = 'hidden'
     });
 
     nodes.btnApply.addEventListener('click', () => {
